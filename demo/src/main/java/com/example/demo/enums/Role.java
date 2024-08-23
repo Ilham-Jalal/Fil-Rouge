@@ -1,2 +1,5 @@
-package com.example.demo.enums;public enum Role {
+package com.example.demo.enums;
+
+public enum Role {
+    ADMIN,USER,LIVREUR
 }
