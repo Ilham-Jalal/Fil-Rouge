@@ -36,7 +36,7 @@ public class UserService {
     public User signUpUser(SignUpRequest signUpRequest) {
         String hashedPassword = passwordEncoder.encode(signUpRequest.getPassword());
 
-        Utilisateur user = new Utilisateur();
+        User user = new User();
         user.setRole(Role.USER);
         user.setUsername(signUpRequest.getUsername());
         user.setEmail(signUpRequest.getEmail());

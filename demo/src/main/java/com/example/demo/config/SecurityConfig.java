@@ -33,11 +33,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
                                 .requestMatchers("/login").permitAll()
+                                .requestMatchers("/signup").permitAll()
+                                .requestMatchers("/add/**").permitAll()
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/technician/**").hasRole("TECHNICIAN")
-                                .requestMatchers("/incidents/all/**").permitAll()
-                                .requestMatchers("/equipment/all/**").permitAll()
+                                .requestMatchers("/livreur/**").hasRole("LIVREUR")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin.disable())
