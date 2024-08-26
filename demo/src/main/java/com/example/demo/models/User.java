@@ -14,8 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
-@Entity
+@MappedSuperclass
 public class User implements UserDetails {
 
     @Id

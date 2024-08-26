@@ -31,8 +31,7 @@ public class UserController {
 
     @PostMapping("/add/{role}")
     public ResponseEntity<User> addUserByAdmin(@PathVariable Role role, @RequestBody SignUpRequest signUpRequest) {
-            User user = userService.addUserByAdmin(role, signUpRequest);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-
+        User user = userService.addUserByAdmin(role, signUpRequest);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 }
