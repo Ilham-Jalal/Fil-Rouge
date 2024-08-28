@@ -37,16 +37,17 @@ public class UserService {
         return utilisateurRepository.findById(id).orElseThrow(() -> new UserNotFoundExeption("User not found"));
     }
 
-    public Optional<Admin> findAdminByUsername(String username) {
-        return Optional.ofNullable(adminRepository.findByUsername(username));
-    }
-
-    public Optional<Livreur> findLivreurByUsername(String username) {
-        return Optional.ofNullable(livreurRepository.findByUsername(username));
-    }
-
     public Optional<Utilisateur> findUtilisateurByUsername(String username) {
-        return Optional.ofNullable(utilisateurRepository.findByUsername(username));
+        return utilisateurRepository.findByUsername(username);
+    }
+
+    public Livreur findLivreurByUsername(String username) {
+        return livreurRepository.findByUsername(username);
+    }
+
+    public Admin findAdminByUsername(String username) {
+        System.out.println(STR."zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\{username}");
+        return adminRepository.findByUsername(username);
     }
 
 
