@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Exeption.AnnonceNotFoundException;
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
 import com.example.demo.models.Annonce;
@@ -27,9 +28,7 @@ public class AnnonceService {
     }
 
     public Annonce updateAnnonce(Long id, Annonce updatedAnnonce) {
-        Optional<Annonce> existingAnnonce = annonceRepository.findById(id);
-        if (existingAnnonce.isPresent()) {
-            Annonce annonce = existingAnnonce.get();
+        return annonceRepository.findById(id).map(annonce -> {
             annonce.setTitle(updatedAnnonce.getTitle());
             annonce.setDescription(updatedAnnonce.getDescription());
             annonce.setPrice(updatedAnnonce.getPrice());
@@ -38,10 +37,9 @@ public class AnnonceService {
             annonce.setLivraison(updatedAnnonce.getLivraison());
             annonce.setUtilisateur(updatedAnnonce.getUtilisateur());
             return annonceRepository.save(annonce);
-        } else {
-            throw new RuntimeException("Annonce not found");
-        }
+        }).orElseThrow(() -> new AnnonceNotFoundException("Annonce with ID " + id + " not found"));
     }
+
 
     public void deleteAnnonce(Long id) {
         annonceRepository.deleteById(id);

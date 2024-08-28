@@ -41,11 +41,11 @@ public class UserService {
         return utilisateurRepository.findByUsername(username);
     }
 
-    public Livreur findLivreurByUsername(String username) {
+    public Optional<Livreur> findLivreurByUsername(String username) {
         return livreurRepository.findByUsername(username);
     }
 
-    public Admin findAdminByUsername(String username) {
+    public Optional<Admin> findAdminByUsername(String username) {
         System.out.println(STR."zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\{username}");
         return adminRepository.findByUsername(username);
     }
