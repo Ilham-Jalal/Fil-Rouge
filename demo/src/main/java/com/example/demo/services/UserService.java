@@ -41,6 +41,7 @@ public class UserService {
         return utilisateurRepository.findByUsername(username);
     }
 
+
     public Optional<Livreur> findLivreurByUsername(String username) {
         return livreurRepository.findByUsername(username);
     }

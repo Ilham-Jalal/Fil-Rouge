@@ -8,6 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AnnonceRepository extends JpaRepository<Annonce, Long> {
+    List<Annonce> findByUtilisateur_Id(Long id);
     List<Annonce> findByCategory(Categorie category);
     List<Annonce> findByDisponibilite(Disponibilite disponibilite);
+    List<Annonce> findByTitleOrDescriptionOrCategoryOrPriceBetween(String title, String description, Categorie category, double minPrice, double maxPrice);
+
 }
+
