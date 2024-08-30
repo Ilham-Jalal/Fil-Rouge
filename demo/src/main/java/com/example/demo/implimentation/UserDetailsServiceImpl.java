@@ -30,7 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         .orElseGet(() -> livreurRepository.findByUsername(username)
                                 .map(livreur -> (User) livreur)
                                 .orElseThrow(() -> new UsernameNotFoundException("User not found"))));
-
         return user;
     }
 }

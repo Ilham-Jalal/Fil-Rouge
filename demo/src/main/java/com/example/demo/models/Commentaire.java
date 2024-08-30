@@ -32,6 +32,9 @@ public class Commentaire {
     @JsonIgnore
     @JoinColumn(name = "annonce_id")
     private Annonce annonce;
-
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreation = LocalDateTime.now();
+    }
 
 }
