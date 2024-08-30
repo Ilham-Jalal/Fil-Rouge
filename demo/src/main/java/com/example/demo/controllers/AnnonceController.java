@@ -4,7 +4,6 @@ import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
 import com.example.demo.models.Annonce;
 
-import com.example.demo.models.User;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.AnnonceService;
 import com.example.demo.services.UserService;
@@ -77,29 +76,29 @@ public class AnnonceController {
         return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
 
-//    @GetMapping("/category/{category}")
-//    public ResponseEntity<List<Annonce>> getAnnoncesByCategory(@PathVariable Categorie category) {
-//        List<Annonce> annonces = annonceService.findAnnoncesByCategory(category);
-//        return new ResponseEntity<>(annonces, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/disponibilite/{disponibilite}")
-//    public ResponseEntity<List<Annonce>> getAnnoncesByDisponibilite(@PathVariable Disponibilite disponibilite) {
-//        List<Annonce> annonces = annonceService.findAnnoncesByDisponibilite(disponibilite);
-//        return new ResponseEntity<>(annonces, HttpStatus.OK);
-//    }
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Annonce>> getAnnoncesByCategory(@PathVariable Categorie category) {
+        List<Annonce> annonces = annonceService.findAnnoncesByCategory(category);
+        return new ResponseEntity<>(annonces, HttpStatus.OK);
+    }
+
+    @GetMapping("/disponibilite/{disponibilite}")
+    public ResponseEntity<List<Annonce>> getAnnoncesByDisponibilite(@PathVariable Disponibilite disponibilite) {
+        List<Annonce> annonces = annonceService.findAnnoncesByDisponibilite(disponibilite);
+        return new ResponseEntity<>(annonces, HttpStatus.OK);
+    }
 
     @GetMapping("/search")
-    public List<Annonce> searchAnnonces(@RequestParam(required = false) String title,
-                                        @RequestParam(required = false) String description,
-                                        @RequestParam(required = false) Categorie category,
-                                        @RequestParam(required = false) Double minPrice,
-                                        @RequestParam(required = false) Double maxPrice) {
+    public List<Annonce> searchAnnonces(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Categorie category,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice) {
 
         double minPriceValue = (minPrice != null) ? minPrice : 0.0;
         double maxPriceValue = (maxPrice != null) ? maxPrice : Double.MAX_VALUE;
 
         return annonceService.searchAnnonces(title, description, category, minPriceValue, maxPriceValue);
     }
-
 }

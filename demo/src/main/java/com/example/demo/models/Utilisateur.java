@@ -2,7 +2,8 @@ package com.example.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -10,13 +11,18 @@ import java.util.List;
 @Setter
 @Entity
 public class Utilisateur extends User {
-    @OneToMany(mappedBy = "utilisateur")
+
+    @OneToMany(mappedBy = "fromUser")
     @JsonIgnore
-    private List<Annonce> ticketAnnonce;
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "toUser")
+    @JsonIgnore
+    private List<Message> receivedMessages;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
-    private List<Message> messages;
+    private List<Annonce> ticketAnnonce;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore

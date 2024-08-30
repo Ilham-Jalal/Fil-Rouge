@@ -63,7 +63,11 @@ public class AnnonceService {
     public List<Annonce> findAnnoncesByDisponibilite(Disponibilite disponibilite) {
         return annonceRepository.findByDisponibilite(disponibilite);
     }
+//    public List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
+//        return annonceRepository.findByTitleOrDescriptionOrCategoryOrPriceBetween(title, description, category, minPrice, maxPrice);
+//    }
+
     public List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
-        return annonceRepository.findByTitleOrDescriptionOrCategoryOrPriceBetween(title, description, category, minPrice, maxPrice);
+        return annonceRepository.searchAnnonces(title, description, category, minPrice, maxPrice);
     }
 }

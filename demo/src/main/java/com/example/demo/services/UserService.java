@@ -47,7 +47,6 @@ public class UserService {
     }
 
     public Optional<Admin> findAdminByUsername(String username) {
-        System.out.println(STR."zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\{username}");
         return adminRepository.findByUsername(username);
     }
 
