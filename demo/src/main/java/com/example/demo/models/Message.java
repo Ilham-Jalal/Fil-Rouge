@@ -31,8 +31,14 @@ public class Message {
     @JoinColumn(name = "to_user_id")
     private Utilisateur toUser;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "parent_message_id")
+    private Message parentMessage;
+
     @PrePersist
     protected void onCreate() {
         this.timestamp = LocalDateTime.now();
     }
+
 }
