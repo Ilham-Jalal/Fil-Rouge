@@ -30,7 +30,6 @@ public class MessageService {
 
         return messageRepository.save(message);
     }
-
     public Message replyToMessage(Utilisateur fromUser, Long parentMessageId, String content) {
         Message parentMessage = messageRepository.findById(parentMessageId)
                 .orElseThrow(() -> new EntityNotFoundException("Message not found"));
@@ -45,11 +44,9 @@ public class MessageService {
 
         return messageRepository.save(replyMessage);
     }
-
     public List<Message> getSentMessages(Long userId) {
         return messageRepository.findByFromUserId(userId);
     }
-
     public List<Message> getReceivedMessages(Long userId) {
         return messageRepository.findByToUserId(userId);
     }

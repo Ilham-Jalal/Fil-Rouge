@@ -93,15 +93,3 @@ public class UserService {
     }
 }
 
-//
-//    public List<User> getTechnicians() {
-//        return userRepository.findAll()
-//                .stream()
-//                .filter(user -> user instanceof TechnicianIT)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public Integer findIdUserByUsername(String username){
-//        return  userRepository.findIdByUsername(username);
-//    }
-
