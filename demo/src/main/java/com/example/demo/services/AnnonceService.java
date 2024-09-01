@@ -40,7 +40,6 @@ public class AnnonceService {
             annonce.setCategory(updatedAnnonce.getCategory());
             annonce.setDisponibilite(updatedAnnonce.getDisponibilite());
             annonce.setLivraison(updatedAnnonce.getLivraison());
-            // Do not set utilisateur here if it should remain unchanged
             return annonceRepository.save(annonce);
         }).orElseThrow(() -> new AnnonceNotFoundException("Annonce with ID " + id + " not found"));
     }
@@ -63,9 +62,7 @@ public class AnnonceService {
     public List<Annonce> findAnnoncesByDisponibilite(Disponibilite disponibilite) {
         return annonceRepository.findByDisponibilite(disponibilite);
     }
-//    public List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
-//        return annonceRepository.findByTitleOrDescriptionOrCategoryOrPriceBetween(title, description, category, minPrice, maxPrice);
-//    }
+
 
     public List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
         return annonceRepository.searchAnnonces(title, description, category, minPrice, maxPrice);

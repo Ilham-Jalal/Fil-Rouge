@@ -51,4 +51,8 @@ public class Annonce {
     @OneToMany(mappedBy = "annonce")
     @JsonIgnore
     private List<Favori> favoris;
+
+    @OneToMany(mappedBy = "annonce")
+    @JsonIgnore
+    private List<Transaction> transactions;
 }

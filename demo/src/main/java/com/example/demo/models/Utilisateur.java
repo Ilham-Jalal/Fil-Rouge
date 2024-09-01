@@ -35,4 +35,12 @@ public class Utilisateur extends User {
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
     private List<Favori> favoris;
+
+    @OneToMany(mappedBy = "vendeur")
+    @JsonIgnore
+    private List<Transaction> transactions;
+
+    @OneToMany(mappedBy = "acheteur")
+    @JsonIgnore
+    private List<Transaction> transactionList;
 }

@@ -91,5 +91,17 @@ public class UserService {
 
         return user;
     }
+
+    public Optional<Utilisateur> getUtilisateurById(Long id) {
+        return utilisateurRepository.findById(id);
+    }
+
+    public void deleteUtilisateur(Long id) {
+        utilisateurRepository.deleteById(id);
+    }
+
+    public List<Utilisateur> getAllUtilisateurs() {
+        return utilisateurRepository.findAll();
+    }
 }
 
