@@ -4,9 +4,11 @@ import com.example.demo.Exeption.AnnonceNotFoundException;
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
 import com.example.demo.models.Annonce;
+import com.example.demo.models.Livraison;
 import com.example.demo.models.User;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.AnnonceRepository;
+import com.example.demo.repositorys.LivraisonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +20,20 @@ public class AnnonceService {
 
     private final AnnonceRepository annonceRepository;
 
+    private final LivraisonRepository livraisonRepository;
+
     @Autowired
-    public AnnonceService(AnnonceRepository annonceRepository) {
+    public AnnonceService(AnnonceRepository annonceRepository, LivraisonRepository livraisonRepository) {
         this.annonceRepository = annonceRepository;
+        this.livraisonRepository = livraisonRepository;
     }
 
     public Annonce createAnnonce(Annonce annonce, Utilisateur user) {
         annonce.setCreationDate(LocalDateTime.now());
-        annonce.setUtilisateur(user);
         return annonceRepository.save(annonce);
     }
     public List<Annonce> getAnnonceByUser(Long userId) {
-        return annonceRepository.findByUtilisateur_Id(userId);
+        return annonceRepository.findByVendeurId(userId);
     }
 
     public Annonce updateAnnonce(Long id, Annonce updatedAnnonce) {
@@ -63,6 +67,20 @@ public class AnnonceService {
         return annonceRepository.findByDisponibilite(disponibilite);
     }
 
+    public Optional<Annonce> assignerLivraison(Long annonceId, Long livraisonId) {
+        Optional<Annonce> annonceOpt = annonceRepository.findById(annonceId);
+        Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
+
+        if (annonceOpt.isPresent() && livraisonOpt.isPresent()) {
+            Annonce annonce = annonceOpt.get();
+            Livraison livraison = livraisonOpt.get();
+            annonce.setLivraison(livraison);
+            annonceRepository.save(annonce);
+            return Optional.of(annonce);
+        }
+
+        return Optional.empty();
+    }
 
     public List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
         return annonceRepository.searchAnnonces(title, description, category, minPrice, maxPrice);

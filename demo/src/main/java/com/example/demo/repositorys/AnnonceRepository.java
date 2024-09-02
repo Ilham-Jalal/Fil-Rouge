@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface AnnonceRepository extends JpaRepository<Annonce, Long> {
-    List<Annonce> findByUtilisateur_Id(Long id);
+//    List<Annonce> findByUtilisateur_Id(Long id);
     List<Annonce> findByCategory(Categorie category);
     List<Annonce> findByDisponibilite(Disponibilite disponibilite);
     @Query("SELECT a FROM Annonce a WHERE " +
@@ -20,6 +20,9 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Long> {
             "(?3 IS NULL OR a.category = ?3) AND " +
             "(a.price BETWEEN ?4 AND ?5)")
     List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice);
+    List<Annonce> findByVendeurId(Long vendeurId);
+    List<Annonce> findByAcheteur_Id(Long acheteurId);
+
 }
 
 

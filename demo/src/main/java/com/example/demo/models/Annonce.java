@@ -34,10 +34,17 @@ public class Annonce {
 
     @Enumerated(EnumType.STRING)
     private Disponibilite disponibilite;
+
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "utilisateur_id")
-    private Utilisateur utilisateur;
+    @JoinColumn(name = "vendeur_id")
+    private Utilisateur vendeur;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "acheteur_id")
+    private Utilisateur acheteur;
+
 
     @ManyToOne
     @JsonIgnore
@@ -52,7 +59,5 @@ public class Annonce {
     @JsonIgnore
     private List<Favori> favoris;
 
-    @OneToMany(mappedBy = "annonce")
-    @JsonIgnore
-    private List<Transaction> transactions;
+
 }

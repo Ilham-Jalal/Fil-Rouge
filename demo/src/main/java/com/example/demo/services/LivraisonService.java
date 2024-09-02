@@ -1,12 +1,13 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.PaymentRequest;
 import com.example.demo.enums.StatutLivraison;
 import com.example.demo.models.Livraison;
 import com.example.demo.models.Livreur;
-import com.example.demo.models.Transaction;
+import com.example.demo.repositorys.AnnonceRepository;
 import com.example.demo.repositorys.LivraisonRepository;
 import com.example.demo.repositorys.LivreurRepository;
-import com.example.demo.repositorys.TransactionRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,9 @@ public class LivraisonService {
     @Autowired
     private LivraisonRepository livraisonRepository;
 
+
     @Autowired
-    private TransactionRepository transactionRepository;
+    private AnnonceRepository annonceRepository;
 
     @Autowired
     private LivreurRepository livreurRepository;
@@ -43,29 +45,21 @@ public class LivraisonService {
         return Optional.empty();
     }
 
-    public Optional<Livraison> confirmerLivraison(Long livraisonId, double montant) {
-        Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
 
-        if (livraisonOpt.isPresent()) {
-            Livraison livraison = livraisonOpt.get();
-            livraison.setStatut(StatutLivraison.LIVRÉ);
-            livraison.setDateLivraison(LocalDateTime.now());
-            livraisonRepository.save(livraison);
 
-            Transaction transaction = new Transaction();
-            transaction.setDateTransaction(LocalDateTime.now());
-            transaction.setMontant(montant);
-            transaction.setVendeur(livraison.getUtilisateur());
-            transaction.setAcheteur(livraison.getAnnonces().get(0).getUtilisateur());
-            transaction.setAnnonce(livraison.getAnnonces().get(0));
-            transactionRepository.save(transaction);
+    public Livraison confirmerLivraison(Long livraisonId, double montant) {
+        Livraison livraison = livraisonRepository.findById(livraisonId)
+                .orElseThrow(() -> new EntityNotFoundException("Livraison not found"));
 
-            return Optional.of(livraison);
+        if (!livraison.getStatut().equals(StatutLivraison.EN_COURS)) {
         }
+        livraison.setStatut(StatutLivraison.LIVRÉ);
+        livraison.setDateLivraison(LocalDateTime.now());
+        livraison.setMontant(montant);
+        livraisonRepository.save(livraison);
 
-        return Optional.empty();
+        return livraison;
     }
-
     public Livraison createLivraison(Livraison livraison) {
         return livraisonRepository.save(livraison);
     }

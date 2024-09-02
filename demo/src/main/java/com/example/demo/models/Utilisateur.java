@@ -12,6 +12,14 @@ import java.util.List;
 @Entity
 public class Utilisateur extends User {
 
+    @OneToMany(mappedBy = "vendeur")
+    @JsonIgnore
+    private List<Annonce> ventes;
+
+    @OneToMany(mappedBy = "acheteur")
+    @JsonIgnore
+    private List<Annonce> achats;
+
     @OneToMany(mappedBy = "fromUser")
     @JsonIgnore
     private List<Message> sentMessages;
@@ -19,10 +27,6 @@ public class Utilisateur extends User {
     @OneToMany(mappedBy = "toUser")
     @JsonIgnore
     private List<Message> receivedMessages;
-
-    @OneToMany(mappedBy = "utilisateur")
-    @JsonIgnore
-    private List<Annonce> ticketAnnonce;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
@@ -35,12 +39,4 @@ public class Utilisateur extends User {
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
     private List<Favori> favoris;
-
-    @OneToMany(mappedBy = "vendeur")
-    @JsonIgnore
-    private List<Transaction> transactions;
-
-    @OneToMany(mappedBy = "acheteur")
-    @JsonIgnore
-    private List<Transaction> transactionList;
 }

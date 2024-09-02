@@ -23,6 +23,7 @@ public class Livraison {
 
     @Column(nullable = false)
     private String adresse;
+    private double montant;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

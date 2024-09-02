@@ -92,6 +92,17 @@ public class UserService {
         return user;
     }
 
+    public List<Annonce> getHistoriqueVentes(Long utilisateurId) {
+        return utilisateurRepository.findById(utilisateurId)
+                .map(Utilisateur::getVentes)
+                .orElseThrow(() -> new UserNotFoundExeption("Utilisateur non trouvé"));
+    }
+
+    public List<Annonce> getHistoriqueAchats(Long utilisateurId) {
+        return utilisateurRepository.findById(utilisateurId)
+                .map(Utilisateur::getAchats)
+                .orElseThrow(() -> new UserNotFoundExeption("Utilisateur non trouvé"));
+    }
     public Optional<Utilisateur> getUtilisateurById(Long id) {
         return utilisateurRepository.findById(id);
     }
