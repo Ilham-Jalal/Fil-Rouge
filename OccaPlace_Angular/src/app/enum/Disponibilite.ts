@@ -1,0 +1,4 @@
+export enum Disponibilite {
+  DISPONIBLE='DISPONIBLE',
+  NON_DISPONIBLE='NON_DISPONIBLE'
+}

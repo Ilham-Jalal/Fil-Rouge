@@ -14,7 +14,6 @@ import java.util.List;
 @Setter
 @Entity
 public class Livreur extends User {
-    private String deliveryZone;
 
     @OneToMany(mappedBy = "livreur")
     @JsonIgnore
