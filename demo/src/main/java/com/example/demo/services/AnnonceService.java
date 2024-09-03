@@ -68,6 +68,20 @@ public class AnnonceService {
         }
         annonceRepository.deleteById(id);
     }
+    public Optional<Annonce> assignerLivraison(Long annonceId, Long livraisonId) {
+        Optional<Annonce> annonceOpt = annonceRepository.findById(annonceId);
+        Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
+
+        if (annonceOpt.isPresent() && livraisonOpt.isPresent()) {
+            Annonce annonce = annonceOpt.get();
+            Livraison livraison = livraisonOpt.get();
+            annonce.setLivraison(livraison);
+            annonceRepository.save(annonce);
+            return Optional.of(annonce);
+        }
+
+        return Optional.empty();
+    }
 
     public List<AnnonceResponseDTO> findAllAnnonces() {
         return annonceRepository.findAll().stream()
@@ -86,6 +100,11 @@ public class AnnonceService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
+    public List<AnnonceResponseDTO> findAnnoncesByUser(Long userId) {
+        return annonceRepository.findByVendeurId(userId).stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
 
     public List<AnnonceResponseDTO> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
         return annonceRepository.searchAnnonces(title, description, category, minPrice, maxPrice).stream()
@@ -93,18 +112,28 @@ public class AnnonceService {
                 .collect(Collectors.toList());
     }
 
-    private AnnonceResponseDTO mapToResponseDTO(Annonce annonce) {
+    public AnnonceResponseDTO mapToResponseDTO(Annonce annonce) {
+        if (annonce == null) {
+            return null;
+        }
+
         AnnonceResponseDTO dto = new AnnonceResponseDTO();
         dto.setId(annonce.getId());
         dto.setTitle(annonce.getTitle());
         dto.setDescription(annonce.getDescription());
-        dto.setPrice(annonce.getPrice());
         dto.setCategory(annonce.getCategory());
         dto.setDisponibilite(annonce.getDisponibilite());
-        dto.setCreationDate(annonce.getCreationDate());
-        dto.setVendeurId(annonce.getVendeur().getId());
-        dto.setAcheteurId(annonce.getAcheteur() != null ? annonce.getAcheteur().getId() : null);
-        dto.setLivraisonId(annonce.getLivraison() != null ? annonce.getLivraison().getId() : null);
+        dto.setPrice(annonce.getPrice());
+
+        if (annonce.getVendeur() != null) {
+            dto.setVendeurId(annonce.getVendeur().getId());
+            dto.setVendeurName(annonce.getVendeur().getUsername());
+        } else {
+            dto.setVendeurId(null);
+            dto.setVendeurName(null);
+        }
+
         return dto;
     }
+
 }

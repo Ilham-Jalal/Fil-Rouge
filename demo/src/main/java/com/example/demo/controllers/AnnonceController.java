@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Exeption.AnnonceNotFoundException;
+import com.example.demo.Exeption.UtilisateurNonTrouveException;
 import com.example.demo.dto.AnnonceCreateDTO;
 import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;
@@ -39,7 +41,7 @@ public class AnnonceController {
         Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            throw new UtilisateurNonTrouveException("Utilisateur non trouvé pour le nom d'utilisateur: " + username);
         }
 
         Utilisateur user = optionalUser.get();
@@ -48,30 +50,39 @@ public class AnnonceController {
     }
 
     @GetMapping("/annonces")
-    public ResponseEntity<List<AnnonceResponseDTO>> getAnnocesByUser() {
+    public ResponseEntity<List<AnnonceResponseDTO>> getAnnoncesByUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            throw new UtilisateurNonTrouveException("Utilisateur non trouvé pour le nom d'utilisateur: " + username);
         }
 
         Utilisateur user = optionalUser.get();
-        List<AnnonceResponseDTO> annonces = annonceService.findAllAnnonces(); // Assuming this should be user's annonces
+        List<AnnonceResponseDTO> annonces = annonceService.findAnnoncesByUser(user.getId());
         return ResponseEntity.ok(annonces);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<AnnonceResponseDTO> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceUpdateDTO updatedAnnonceDTO) {
-        AnnonceResponseDTO updatedAnnonce = annonceService.updateAnnonce(id, updatedAnnonceDTO);
-        return new ResponseEntity<>(updatedAnnonce, HttpStatus.OK);
+        try {
+            AnnonceResponseDTO updatedAnnonce = annonceService.updateAnnonce(id, updatedAnnonceDTO);
+            return new ResponseEntity<>(updatedAnnonce, HttpStatus.OK);
+        } catch (AnnonceNotFoundException e) {
+            throw e;
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAnnonce(@PathVariable Long id) {
-        annonceService.deleteAnnonce(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            annonceService.deleteAnnonce(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (AnnonceNotFoundException e) {
+            throw e;
+        }
     }
 
     @GetMapping
