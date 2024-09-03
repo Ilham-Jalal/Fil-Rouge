@@ -1,0 +1,28 @@
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" formControlName="username" />
+    <div *ngIf="isControlInvalid('username')">
+      Username is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="isControlInvalid('email')">
+      <div *ngIf="signUpForm.controls['email'].errors?.['required']">Email is required.</div>
+      <div *ngIf="signUpForm.controls['email'].errors?.['email']">Invalid email format.</div>
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" formControlName="password" type="password" />
+    <div *ngIf="isControlInvalid('password')">
+      Password is required.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+</form>

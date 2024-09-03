@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.SignUpRequest;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.enums.Role;
 import com.example.demo.models.Annonce;
 import com.example.demo.models.User;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 public class UserController {
 
     private final UserService userService;
@@ -35,9 +37,9 @@ public class UserController {
     }
 
     @PostMapping("/admin/add/{role}")
-    public ResponseEntity<User> addUserByAdmin(@PathVariable Role role, @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<User> addUserByAdmin(@PathVariable Role role, @RequestBody UserDTO userDTO) {
         try {
-            User user = userService.addUserByAdmin(role, signUpRequest);
+            User user = userService.addUserByAdmin(role, userDTO);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

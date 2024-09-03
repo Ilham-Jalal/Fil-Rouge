@@ -6,6 +6,7 @@ import { LoginRequest } from '../dto/LoginRequest';
 import { SignUpRequest } from '../dto/SignUpRequest';
 import {Role} from "../enum/Role";
 import {User} from "../model/User";
+import {UserDTO} from "../dto/UserDTO";
 
 @Injectable({
   providedIn: 'root'

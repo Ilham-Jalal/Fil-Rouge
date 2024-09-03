@@ -6,11 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -18,6 +19,10 @@ import { AuthInterceptor } from './interceptor/auth-interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     LoginComponent,
+    SignUpComponent,
+    AddUserComponent,
+    AddUserComponent,
+    AddUserComponent
   ],
 
     providers: [

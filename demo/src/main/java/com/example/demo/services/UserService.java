@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.Exeption.UserNotFoundExeption;
 import com.example.demo.dto.SignUpRequest;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.enums.Role;
 import com.example.demo.models.*;
 import com.example.demo.repositorys.AdminRepository;
@@ -63,26 +64,25 @@ public class UserService {
         return utilisateurRepository.save(user);
     }
 
-    public User addUserByAdmin(Role role, SignUpRequest signUpRequest) {
-        String hashedPassword = passwordEncoder.encode(signUpRequest.getPassword());
+    public User addUserByAdmin(Role role, UserDTO userDTO) {
+        String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
 
         User user;
         switch (role) {
             case ADMIN:
                 Admin admin = new Admin();
                 admin.setRole(Role.ADMIN);
-                admin.setUsername(signUpRequest.getUsername());
-                admin.setEmail(signUpRequest.getEmail());
+                admin.setUsername(userDTO.getUsername());
+                admin.setEmail(userDTO.getEmail());
                 admin.setPassword(hashedPassword);
                 user = adminRepository.save(admin);
                 break;
             case LIVREUR:
                 Livreur livreur = new Livreur();
                 livreur.setRole(Role.LIVREUR);
-                livreur.setUsername(signUpRequest.getUsername());
-                livreur.setEmail(signUpRequest.getEmail());
+                livreur.setUsername(userDTO.getUsername());
+                livreur.setEmail(userDTO.getEmail());
                 livreur.setPassword(hashedPassword);
-                livreur.setDeliveryZone(signUpRequest.getDeliveryZone());
                 user = livreurRepository.save(livreur);
                 break;
             default:
