@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.Commentaire;
+import com.example.demo.dto.CommentaireDto;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.CommentaireService;
 import com.example.demo.services.UserService;
@@ -25,22 +25,24 @@ public class CommentaireController {
     private UserService userService;
 
     @GetMapping
-    public List<Commentaire> getAllCommentaires() {
+    public List<CommentaireDto> getAllCommentaires() {
         return commentaireService.getAllCommentaires();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Commentaire> getCommentaireById(@PathVariable Long id) {
-        Optional<Commentaire> commentaire = commentaireService.getCommentaireById(id);
-        if (commentaire.isPresent()) {
-            return ResponseEntity.ok(commentaire.get());
+    public ResponseEntity<CommentaireDto> getCommentaireById(@PathVariable Long id) {
+        Optional<CommentaireDto> commentaireDto = commentaireService.getCommentaireById(id);
+        if (commentaireDto.isPresent()) {
+            return ResponseEntity.ok(commentaireDto.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Commentaire> createCommentaire(@RequestBody Commentaire commentaire) {
+    @PostMapping("/{annonceId}")
+    public ResponseEntity<CommentaireDto> createCommentaire(
+            @RequestBody CommentaireDto commentaireDto,
+            @PathVariable Long annonceId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
@@ -50,14 +52,15 @@ public class CommentaireController {
         }
 
         Utilisateur user = optionalUser.get();
-        Commentaire savedCommentaire = commentaireService.createCommentaire(commentaire, user);
-        return new ResponseEntity<>(savedCommentaire, HttpStatus.CREATED);
+        CommentaireDto savedCommentaireDto = commentaireService.createCommentaire(commentaireDto, annonceId, user);
+        return new ResponseEntity<>(savedCommentaireDto, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<Commentaire> updateCommentaire(@PathVariable Long id, @RequestBody Commentaire commentaire) {
-        Optional<Commentaire> updatedCommentaire = commentaireService.updateCommentaire(id, commentaire);
-        return updatedCommentaire.map(ResponseEntity::ok)
+    public ResponseEntity<CommentaireDto> updateCommentaire(@PathVariable Long id, @RequestBody CommentaireDto commentaireDto) {
+        Optional<CommentaireDto> updatedCommentaireDto = commentaireService.updateCommentaire(id, commentaireDto);
+        return updatedCommentaireDto.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
