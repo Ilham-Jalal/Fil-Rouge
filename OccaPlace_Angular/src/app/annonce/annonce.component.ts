@@ -19,6 +19,7 @@ export class AnnonceComponent implements OnInit {
   newCommentaire: { contenu: string } = { contenu: '' };
   selectedAnnonce?: AnnonceResponseDTO;
   updateAnnonceData: AnnonceUpdateDTO = {};
+  editCommentaire?: CommentaireDto;
 
   categorieKeys = Object.keys(Categorie);
   disponibiliteKeys = Object.keys(Disponibilite);
@@ -57,16 +58,53 @@ export class AnnonceComponent implements OnInit {
     });
   }
 
+  updateAnnonce(): void {
+    if (this.selectedAnnonce) {
+      const updatedAnnonce: AnnonceUpdateDTO = {
+        title: this.updateAnnonceData.title || '',
+        description: this.updateAnnonceData.description || '',
+        price: this.updateAnnonceData.price || 0,
+        category: this.updateAnnonceData.category || Categorie.AUTRE,
+        disponibilite: this.updateAnnonceData.disponibilite || Disponibilite.DISPONIBLE
+      };
+
+      this.annonceService.updateAnnonce(this.selectedAnnonce.id, updatedAnnonce).subscribe({
+        next: () => {
+          const index = this.annonces.findIndex(a => a.id === this.selectedAnnonce?.id);
+          if (index !== -1) {
+            this.annonces[index] = <AnnonceResponseDTO>{
+              creationDate: "",
+              id: 0,
+              vendeurId: 0,
+              vendeurName: "", ...this.selectedAnnonce, ...updatedAnnonce
+            };
+          }
+          this.resetForm();
+        },
+        error: (err) => console.error('Erreur lors de la mise à jour de l\'annonce', err)
+      });
+    }
+  }
+
+  deleteAnnonce(id: number): void {
+    this.annonceService.deleteAnnonce(id).subscribe({
+      next: () => {
+        this.annonces = this.annonces.filter(a => a.id !== id);
+      },
+      error: (err) => console.error('Erreur lors de la suppression de l\'annonce', err)
+    });
+  }
+
   selectAnnonce(annonce: AnnonceResponseDTO): void {
-    this.selectedAnnonce = annonce;
+    this.selectedAnnonce = { ...annonce };
     this.updateAnnonceData = {
-      title: annonce.title,
-      description: annonce.description,
-      price: annonce.price,
-      category: annonce.category,
-      disponibilite: annonce.disponibilite
+      title: this.selectedAnnonce.title,
+      description: this.selectedAnnonce.description,
+      price: this.selectedAnnonce.price,
+      category: this.selectedAnnonce.category,
+      disponibilite: this.selectedAnnonce.disponibilite
     };
-    this.getCommentairesForAnnonce(annonce.id);
+    this.getCommentairesForAnnonce(this.selectedAnnonce.id);
   }
 
   getCommentairesForAnnonce(annonceId: number): void {
@@ -96,29 +134,38 @@ export class AnnonceComponent implements OnInit {
     }
   }
 
-  updateAnnonce(): void {
-    if (this.selectedAnnonce) {
-      this.annonceService.updateAnnonce(this.selectedAnnonce.id, this.updateAnnonceData).subscribe({
-        next: (updatedAnnonce) => {
-          const index = this.annonces.findIndex(a => a.id === updatedAnnonce.id);
+  updateCommentaire(commentaire: CommentaireDto): void {
+    if (this.editCommentaire && this.selectedAnnonce) {
+      this.commentaireService.updateCommentaire(this.editCommentaire.id, this.editCommentaire).subscribe({
+        next: (updatedCommentaire) => {
+          const index = this.commentaires.findIndex(c => c.id === updatedCommentaire.id);
           if (index !== -1) {
-            this.annonces[index] = updatedAnnonce;
+            this.commentaires[index] = updatedCommentaire;
           }
-          this.resetForm();
+          this.editCommentaire = undefined; // Réinitialiser après la mise à jour
         },
-        error: (err) => console.error('Erreur lors de la mise à jour de l\'annonce', err)
+        error: (err) => console.error('Erreur lors de la mise à jour du commentaire', err)
       });
     }
   }
 
-  deleteAnnonce(id: number): void {
-    this.annonceService.deleteAnnonce(id).subscribe({
-      next: () => {
-        this.annonces = this.annonces.filter(a => a.id !== id);
-        this.resetForm();
-      },
-      error: (err) => console.error('Erreur lors de la suppression de l\'annonce', err)
-    });
+  deleteCommentaire(id: number | undefined): void {
+    if (id !== undefined) {
+      this.commentaireService.deleteCommentaire(id).subscribe({
+        next: () => {
+          this.commentaires = this.commentaires.filter(c => c.id !== id);
+        },
+        error: (err) => console.error('Erreur lors de la suppression du commentaire', err)
+      });
+    }
+  }
+
+  editComment(commentaire: CommentaireDto): void {
+    this.editCommentaire = { ...commentaire };
+  }
+
+  cancelEdit(): void {
+    this.editCommentaire = undefined;
   }
 
   resetForm(): void {
@@ -131,5 +178,6 @@ export class AnnonceComponent implements OnInit {
     };
     this.selectedAnnonce = undefined;
     this.commentaires = [];
+    this.editCommentaire = undefined;
   }
 }

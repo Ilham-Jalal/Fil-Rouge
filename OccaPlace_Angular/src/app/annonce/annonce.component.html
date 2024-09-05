@@ -10,6 +10,7 @@
 
         <label for="description">Description:</label>
         <textarea id="description" [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>
+
         <label for="price">Prix:</label>
         <input id="price" type="number" [(ngModel)]="updateAnnonceData.price" name="price" required>
 
@@ -46,6 +47,8 @@
     <ul>
       <li *ngFor="let commentaire of commentaires">
         {{ commentaire.contenu }} - {{ commentaire.utilisateurName }} (Posté le {{ commentaire.dateCreation | date:'short' }})
+        <button (click)="updateCommentaire(commentaire)">Modifier</button>
+        <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
       </li>
     </ul>
 

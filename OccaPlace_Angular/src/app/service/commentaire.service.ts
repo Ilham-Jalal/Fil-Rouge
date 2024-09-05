@@ -24,14 +24,15 @@ export class CommentaireService {
   }
 
   createCommentaire(commentaireDto: CommentaireDto, annonceId: number): Observable<CommentaireDto> {
-    return this.http.post<CommentaireDto>(`${this.apiUrl}?annonceId=${annonceId}`, commentaireDto);
+    return this.http.post<CommentaireDto>(`${this.apiUrl}/${annonceId}`, commentaireDto);
   }
 
-  updateCommentaire(id: number, commentaireDto: CommentaireDto): Observable<CommentaireDto> {
-    return this.http.put<CommentaireDto>(`${this.apiUrl}/${id}`, commentaireDto);
+  updateCommentaire(commentaireId: number | undefined, commentaireDto: CommentaireDto): Observable<CommentaireDto> {
+    return this.http.put<CommentaireDto>(`${this.apiUrl}/${commentaireId}`, commentaireDto);
   }
 
-  deleteCommentaire(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteCommentaire(commentaireId: number | undefined): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${commentaireId}`);
   }
+
 }
