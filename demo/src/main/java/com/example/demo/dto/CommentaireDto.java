@@ -14,7 +14,7 @@ public class CommentaireDto {
     @JsonProperty("date_creation")
     private LocalDateTime dateCreation;
 
-    private Long utilisateurId;
+    private String utilisateurName;
 
     private Long annonceId;
 

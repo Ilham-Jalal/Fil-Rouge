@@ -35,6 +35,13 @@ public class CommentaireService {
                 .map(this::convertToDto);
     }
 
+    public List<CommentaireDto> getCommentairesByAnnonce(Long annonceId) {
+        return commentaireRepository.findByAnnonceId(annonceId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+
     public CommentaireDto createCommentaire(CommentaireDto commentaireDto, Long annonceId, Utilisateur user) {
         Commentaire commentaire = convertToEntity(commentaireDto);
         commentaire.setUtilisateur(user);
@@ -57,6 +64,7 @@ public class CommentaireService {
         commentaireRepository.deleteById(id);
     }
 
+
     private CommentaireDto convertToDto(Commentaire commentaire) {
         CommentaireDto dto = new CommentaireDto();
         dto.setId(commentaire.getId());
@@ -64,7 +72,7 @@ public class CommentaireService {
         dto.setDateCreation(commentaire.getDateCreation());
 
         if (commentaire.getUtilisateur() != null) {
-            dto.setUtilisateurId(commentaire.getUtilisateur().getId());
+            dto.setUtilisateurName(commentaire.getUtilisateur().getUsername());
         }
 
         if (commentaire.getAnnonce() != null) {
@@ -73,6 +81,7 @@ public class CommentaireService {
 
         return dto;
     }
+
 
 
     private Commentaire convertToEntity(CommentaireDto dto) {

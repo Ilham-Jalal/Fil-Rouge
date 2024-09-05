@@ -1,0 +1,127 @@
+/* annonce.component.css */
+.annonce-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.annonce-form, .annonce-list, .commentaire-section {
+  margin-bottom: 20px;
+}
+
+.annonce-form h3, .annonce-list h3, .commentaire-section h3 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+.annonce-form label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #555;
+}
+
+.annonce-form input, .annonce-form textarea, .annonce-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.annonce-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.annonce-form button[type="button"] {
+  background-color: #6c757d;
+}
+
+.annonce-form button:hover {
+  background-color: #0056b3;
+}
+
+.annonce-form button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+.annonce-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.annonce-list li {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.annonce-list button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.annonce-list button:hover {
+  background-color: #0056b3;
+}
+
+.commentaire-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.commentaire-section li {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.commentaire-form input {
+  width: calc(100% - 120px);
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.commentaire-form button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.commentaire-form button:hover {
+  background-color: #218838;
+}

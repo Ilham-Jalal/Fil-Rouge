@@ -1,0 +1,58 @@
+<div class="annonce-container">
+  <h2>Gestion des Annonces</h2>
+
+  <div class="annonce-form">
+    <h3>{{ selectedAnnonce ? 'Modifier Annonce' : 'Créer Nouvelle Annonce' }}</h3>
+    <form (ngSubmit)="selectedAnnonce ? updateAnnonce() : createAnnonce()">
+      <div>
+        <label for="title">Titre:</label>
+        <input id="title" [(ngModel)]="updateAnnonceData.title" name="title" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>
+        <label for="price">Prix:</label>
+        <input id="price" type="number" [(ngModel)]="updateAnnonceData.price" name="price" required>
+
+        <label for="category">Catégorie:</label>
+        <select id="category" [(ngModel)]="updateAnnonceData.category" name="category">
+          <option *ngFor="let category of categorieKeys" [value]="category">{{ category }}</option>
+        </select>
+
+        <label for="disponibilite">Disponibilité:</label>
+        <select id="disponibilite" [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite">
+          <option *ngFor="let disponibilite of disponibiliteKeys" [value]="disponibilite">{{ disponibilite }}</option>
+        </select>
+
+        <button type="submit">{{ selectedAnnonce ? 'Modifier' : 'Créer' }}</button>
+        <button type="button" (click)="resetForm()">Annuler</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="annonce-list">
+    <h3>Liste des Annonces</h3>
+    <ul>
+      <li *ngFor="let annonce of annonces">
+        <strong>{{ annonce.title }}</strong> - {{ annonce.price }} €
+        <button (click)="selectAnnonce(annonce)">Modifier</button>
+        <button (click)="deleteAnnonce(annonce.id)">Supprimer</button>
+        <button (click)="selectAnnonce(annonce)">Commentaires</button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedAnnonce" class="commentaire-section">
+    <h3>Commentaires pour {{ selectedAnnonce.title }}</h3>
+    <ul>
+      <li *ngFor="let commentaire of commentaires">
+        {{ commentaire.contenu }} - {{ commentaire.utilisateurName }} (Posté le {{ commentaire.dateCreation | date:'short' }})
+      </li>
+    </ul>
+
+    <div class="commentaire-form">
+      <h4>Ajouter un commentaire</h4>
+      <input type="text" [(ngModel)]="newCommentaire.contenu" placeholder="Votre commentaire">
+      <button (click)="createCommentaire()">Ajouter</button>
+    </div>
+  </div>
+</div>

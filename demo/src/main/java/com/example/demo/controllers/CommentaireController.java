@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user/api/commentaires")
 public class CommentaireController {
 
@@ -28,6 +29,11 @@ public class CommentaireController {
     public List<CommentaireDto> getAllCommentaires() {
         return commentaireService.getAllCommentaires();
     }
+    @GetMapping("/annonce/{annonceId}")
+    public List<CommentaireDto> getCommentairesByAnnonce(@PathVariable Long annonceId) {
+        return commentaireService.getCommentairesByAnnonce(annonceId);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<CommentaireDto> getCommentaireById(@PathVariable Long id) {

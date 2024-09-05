@@ -4,14 +4,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { AnnonceComponent } from './annonce/annonce.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AnnonceComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     SignUpComponent,
     AddUserComponent,
     AddUserComponent,
-    AddUserComponent
+    AddUserComponent,
+    FormsModule
   ],
 
     providers: [
@@ -33,4 +37,4 @@ import { AddUserComponent } from './add-user/add-user.component';
 
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

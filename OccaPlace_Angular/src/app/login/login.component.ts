@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/add-user']);
             break;
           case Role.USER:
-            this.router.navigate(['/user/user']);
+            this.router.navigate(['/annonce']);
             break;
           case Role.LIVREUR:
             this.router.navigate(['/technician/technician']);
