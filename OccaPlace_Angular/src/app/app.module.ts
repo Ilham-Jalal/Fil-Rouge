@@ -9,11 +9,13 @@ import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AnnonceComponent } from './annonce/annonce.component';
+import { AnnonceListComponent } from './annonce-list/annonce-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AnnonceComponent,
+    AnnonceListComponent,
 
   ],
   imports: [

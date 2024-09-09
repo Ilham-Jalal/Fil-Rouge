@@ -37,6 +37,7 @@ public class AnnonceService {
         annonce.setDescription(annonceDTO.getDescription());
         annonce.setPrice(annonceDTO.getPrice());
         annonce.setCategory(annonceDTO.getCategory());
+        annonce.setCreationDate(annonceDTO.getCreationDate());
         annonce.setDisponibilite(annonceDTO.getDisponibilite());
         annonce.setCreationDate(LocalDateTime.now());
         annonce.setVendeur(user);
@@ -100,8 +101,8 @@ public class AnnonceService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-    public List<AnnonceResponseDTO> findAnnoncesByUser(Long userId) {
-        return annonceRepository.findByVendeurId(userId).stream()
+    public List<AnnonceResponseDTO> findAnnoncesByUser(Long vendeurId) {
+        return annonceRepository.findByVendeurId(vendeurId).stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -121,6 +122,7 @@ public class AnnonceService {
         dto.setId(annonce.getId());
         dto.setTitle(annonce.getTitle());
         dto.setDescription(annonce.getDescription());
+        dto.setCreationDate(annonce.getCreationDate());
         dto.setCategory(annonce.getCategory());
         dto.setDisponibilite(annonce.getDisponibilite());
         dto.setPrice(annonce.getPrice());
@@ -128,9 +130,11 @@ public class AnnonceService {
         if (annonce.getVendeur() != null) {
             dto.setVendeurId(annonce.getVendeur().getId());
             dto.setVendeurName(annonce.getVendeur().getUsername());
+            dto.setVendeurEmail(annonce.getVendeur().getEmail());
         } else {
             dto.setVendeurId(null);
             dto.setVendeurName(null);
+            dto.setVendeurEmail(null);
         }
 
         return dto;

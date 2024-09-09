@@ -31,6 +31,7 @@ public class Annonce {
     private Categorie category;
 
     private LocalDateTime creationDate;
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     private Disponibilite disponibilite;
@@ -58,6 +59,4 @@ public class Annonce {
     @OneToMany(mappedBy = "annonce")
     @JsonIgnore
     private List<Favori> favoris;
-
-
 }

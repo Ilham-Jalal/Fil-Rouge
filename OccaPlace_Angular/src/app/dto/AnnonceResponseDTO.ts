@@ -12,6 +12,7 @@ export interface AnnonceResponseDTO {
   creationDate: string;
   vendeurId: number;
   vendeurName: string;
-  acheteurId?: number; 
+  vendeurEmail: string;
+  acheteurId?: number;
   livraisonId?: number;
 }

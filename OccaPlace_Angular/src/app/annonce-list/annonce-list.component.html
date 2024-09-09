@@ -1,0 +1,42 @@
+<div *ngIf="isLoading">
+  <p>Chargement des annonces...</p>
+</div>
+
+<div *ngIf="!isLoading && errorMessage">
+  <p class="error-message">{{ errorMessage }}</p>
+</div>
+
+<div *ngIf="!isLoading && annonces.length > 0">
+  <table>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Disponibility</th>
+      <th>Creation Date</th>
+      <th>Seller Name</th>
+      <th>Seller Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let annonce of annonces">
+      <td>{{ annonce.id }}</td>
+      <td>{{ annonce.title }}</td>
+      <td>{{ annonce.description }}</td>
+      <td>{{ annonce.price }}</td>
+      <td>{{ annonce.category }}</td>
+      <td>{{ annonce.disponibilite }}</td>
+      <td>{{ annonce.creationDate }}</td>
+      <td>{{ annonce.vendeurName }}</td>
+      <td>{{ annonce.vendeurEmail }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!isLoading && annonces.length === 0">
+  <p>Aucune annonce trouvée.</p>
+</div>

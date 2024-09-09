@@ -6,6 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PaymentRequest {
-
     private Double montant;
 }

@@ -6,12 +6,14 @@ import {AddUserComponent} from "./add-user/add-user.component";
 import {AuthGuard} from "./service/autGuard.service";
 import {Role} from "./enum/Role";
 import {AnnonceComponent} from "./annonce/annonce.component";
+import {AnnonceListComponent} from "./annonce-list/annonce-list.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'add-user', component: AddUserComponent , canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
   { path: 'annonce', component: AnnonceComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
+  { path: 'annonceByUser', component: AnnonceListComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
 
 ];
 

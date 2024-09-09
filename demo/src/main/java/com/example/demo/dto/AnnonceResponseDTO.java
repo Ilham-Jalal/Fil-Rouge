@@ -17,6 +17,7 @@ public class AnnonceResponseDTO {
     private LocalDateTime creationDate;
     private Long vendeurId;
     private String vendeurName;
+    private String vendeurEmail;
     private Long acheteurId;
     private Long livraisonId;
 }
