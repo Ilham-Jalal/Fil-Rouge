@@ -13,7 +13,9 @@ import com.example.demo.repositorys.AnnonceRepository;
 import com.example.demo.repositorys.LivraisonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,22 +26,25 @@ public class AnnonceService {
 
     private final AnnonceRepository annonceRepository;
     private final LivraisonRepository livraisonRepository;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public AnnonceService(AnnonceRepository annonceRepository, LivraisonRepository livraisonRepository) {
+    public AnnonceService(AnnonceRepository annonceRepository, LivraisonRepository livraisonRepository, CloudinaryService cloudinaryService) {
         this.annonceRepository = annonceRepository;
         this.livraisonRepository = livraisonRepository;
+        this.cloudinaryService = cloudinaryService;
     }
+    public AnnonceResponseDTO createAnnonce(AnnonceCreateDTO annonceDTO, Utilisateur user, MultipartFile[] images) throws IOException {
+        List<String> imageUrls = cloudinaryService.uploadImages(images);
 
-    public AnnonceResponseDTO createAnnonce(AnnonceCreateDTO annonceDTO, Utilisateur user) {
         Annonce annonce = new Annonce();
         annonce.setTitle(annonceDTO.getTitle());
         annonce.setDescription(annonceDTO.getDescription());
         annonce.setPrice(annonceDTO.getPrice());
         annonce.setCategory(annonceDTO.getCategory());
-        annonce.setCreationDate(annonceDTO.getCreationDate());
-        annonce.setDisponibilite(annonceDTO.getDisponibilite());
         annonce.setCreationDate(LocalDateTime.now());
+        annonce.setDisponibilite(annonceDTO.getDisponibilite());
+        annonce.setImages(imageUrls);
         annonce.setVendeur(user);
         annonce = annonceRepository.save(annonce);
         return mapToResponseDTO(annonce);
@@ -69,6 +74,7 @@ public class AnnonceService {
         }
         annonceRepository.deleteById(id);
     }
+
     public Optional<Annonce> assignerLivraison(Long annonceId, Long livraisonId) {
         Optional<Annonce> annonceOpt = annonceRepository.findById(annonceId);
         Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
@@ -101,6 +107,7 @@ public class AnnonceService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
+
     public List<AnnonceResponseDTO> findAnnoncesByUser(Long vendeurId) {
         return annonceRepository.findByVendeurId(vendeurId).stream()
                 .map(this::mapToResponseDTO)
@@ -139,5 +146,4 @@ public class AnnonceService {
 
         return dto;
     }
-
 }

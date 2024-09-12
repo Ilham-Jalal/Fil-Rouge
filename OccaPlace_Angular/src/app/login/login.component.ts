@@ -9,6 +9,7 @@ import { Role } from '../enum/Role';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls:['login.component.css'],
   standalone: true,
   imports: [
     ReactiveFormsModule,

@@ -31,7 +31,10 @@ public class Annonce {
     private Categorie category;
 
     private LocalDateTime creationDate;
-    private String picture;
+    @ElementCollection
+    @CollectionTable(name = "annonce_images", joinColumns = @JoinColumn(name = "annonce_id"))
+    @Column(name = "image_url")
+    private List<String> images;
 
     @Enumerated(EnumType.STRING)
     private Disponibilite disponibilite;
