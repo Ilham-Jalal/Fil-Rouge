@@ -1,0 +1,169 @@
+.hero {
+  background-color: #6f3fc9;
+  color: white;
+  text-align: center;
+  padding: 50px 0;
+
+
+
+  .hero-logo {
+    width: 200px;
+    margin-top: 20px;
+  }
+
+  .hero-content {
+    h1 {
+      font-size: 2.5rem;
+    }
+    button {
+      margin-top: 20px;
+    }
+  }
+}
+.hero{
+  background-color: #50489D;
+
+}
+.div-6 {
+  background-color: #50489D;
+  width: 100%;
+  max-width: 1163px;
+  margin: 0 0 0 47px;
+}
+@media (max-width: 991px) {
+  .div-6 {
+    max-width: 100%;
+    margin: 40px 0 10px;
+  }
+}
+.div-7 {
+  gap: 20px;
+  display: flex;
+}
+@media (max-width: 991px) {
+  .div-7 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  padding: 20px;
+  width: 62%;
+}
+@media (max-width: 991px) {
+  .column {
+    width: 100%;
+  }
+}
+.div-8 {
+  display: flex;
+  flex-direction: column;
+  font-family: Poppins, sans-serif;
+  color: var(--White, #fff);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+@media (max-width: 991px) {
+  .div-8 {
+    max-width: 100%;
+    margin-top: 40px;
+  }
+}
+.bienvenue-sur-occa-place {
+  color: #e57418;
+  font-size: 17px;
+  letter-spacing: 1.19px;
+  width: 500px;
+  margin-left: -80px;
+}
+.achetez-et-vendez-en-toute-confiance-sur-occa-place {
+  font-size: 60px;
+  letter-spacing: 4.2px;
+  align-self: stretch;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+}
+@media (max-width: 991px) {
+  .achetez-et-vendez-en-toute-confiance-sur-occa-place {
+    max-width: 100%;
+    font-size: 40px;
+  }
+}
+.se-connecter-2 {
+  border-radius: 10px;
+  background-color: rgba(229, 116, 24, 1);
+  margin-top: 31px;
+  width: 187px;
+  max-width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 1.5px;
+  padding: 25px 43px 13px;
+  margin-left: 7px;
+}
+@media (max-width: 991px) {
+  .se-connecter-2 {
+    padding: 0 20px;
+  }
+}
+.column-2 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 38%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-2 {
+    width: 100%;
+  }
+}
+.img-4 {
+  aspect-ratio: 0.95;
+  object-fit: contain;
+  object-position: center;
+  width: 90%;
+  align-self: stretch;
+  margin: 5px;
+}
+@media (max-width: 991px) {
+  .img-4 {
+    margin-top: 40px;
+  }
+}
+
+.header {
+  padding-bottom: 40px;
+}
+
+.img {
+  width: 60px;
+}
+
+.img-2, .img-3 {
+  width: 25px;
+}
+
+.accueil, .se-connecter {
+  font-size: 10px;
+}
+
+.achetez-et-vendez-en-toute-confiance-sur-occa-place {
+  font-size: 30px;
+}
+
+.se-connecter-2 {
+  padding: 13px 30px;
+  font-size: 10px;
+}
+
+.img-4 {
+  max-width: 80%;
+  margin: 0 auto;
+}

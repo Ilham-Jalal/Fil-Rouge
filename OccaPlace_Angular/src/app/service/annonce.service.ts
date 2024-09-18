@@ -6,22 +6,20 @@ import {AnnonceCreateDTO} from "../dto/AnnonceCreateDTO";
 import {AnnonceUpdateDTO} from "../dto/AnnonceUpdateDTO";
 import {Categorie} from "../enum/Categorie";
 import {Disponibilite} from "../enum/Disponibilite";
-
 @Injectable({
   providedIn: 'root'
 })
 export class AnnonceService {
-
-  private apiUrl = 'http://localhost:8080/user/api/annonces';
+  private apiUrl = 'http://localhost:8180/user/api/annonces';
 
   constructor(private http: HttpClient) { }
 
-  createAnnonce(annonceDTO: AnnonceCreateDTO): Observable<AnnonceResponseDTO> {
-    return this.http.post<AnnonceResponseDTO>(this.apiUrl, annonceDTO);
+  createAnnonceWithImages(formData: FormData): Observable<AnnonceResponseDTO> {
+    return this.http.post<AnnonceResponseDTO>(`${this.apiUrl}/create`, formData);
   }
 
-  getAnnoncesByUser(): Observable<AnnonceResponseDTO[]> {
-    return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/annonces`);
+  getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
+    return this.http.get<AnnonceResponseDTO[]>(this.apiUrl);
   }
 
   updateAnnonce(id: number, updatedAnnonceDTO: AnnonceUpdateDTO): Observable<AnnonceResponseDTO> {
@@ -32,10 +30,6 @@ export class AnnonceService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
-    return this.http.get<AnnonceResponseDTO[]>(this.apiUrl);
-  }
-
   getAnnoncesByCategory(category: Categorie): Observable<AnnonceResponseDTO[]> {
     return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/category/${category}`);
   }
@@ -44,14 +38,15 @@ export class AnnonceService {
     return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/disponibilite/${disponibilite}`);
   }
 
-  searchAnnonces(title?: string, description?: string, category?: Categorie, minPrice?: number, maxPrice?: number): Observable<AnnonceResponseDTO[]> {
-    let params = new HttpParams();
-    if (title) params = params.set('title', title);
-    if (description) params = params.set('description', description);
-    if (category) params = params.set('category', category);
-    if (minPrice != null) params = params.set('minPrice', minPrice);
-    if (maxPrice != null) params = params.set('maxPrice', maxPrice);
-
-    return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/search`, { params });
+  searchAnnonces(title: string, description: string, category: Categorie, priceMin: number, priceMax: number): Observable<AnnonceResponseDTO[]> {
+    return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/search`, {
+      params: {
+        title,
+        description,
+        category,
+        priceMin: priceMin.toString(),
+        priceMax: priceMax.toString()
+      }
+    });
   }
 }

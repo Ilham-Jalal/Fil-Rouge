@@ -1,0 +1,22 @@
+<div>
+  <h2>Annonces par Catégorie</h2>
+
+  <select (change)="onCategoryChange($event)">
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option>
+  </select>
+
+  <div *ngIf="annonces.length === 0">
+    <p>Aucune annonce trouvée pour la catégorie sélectionnée.</p>
+  </div>
+
+  <ul *ngIf="annonces.length > 0">
+    <li *ngFor="let annonce of annonces">
+      <h3>{{ annonce.title }}</h3>
+      <p>{{ annonce.description }}</p>
+      <p>Prix : {{ annonce.price }} €</p>
+      <p>Vendeur : {{ annonce.vendeurName }}</p>
+    </li>
+  </ul>
+</div>

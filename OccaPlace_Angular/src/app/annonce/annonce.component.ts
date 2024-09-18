@@ -18,8 +18,10 @@ export class AnnonceComponent implements OnInit {
   commentaires: CommentaireDto[] = [];
   newCommentaire: { contenu: string } = { contenu: '' };
   selectedAnnonce?: AnnonceResponseDTO;
-  updateAnnonceData: AnnonceUpdateDTO = {};
+  updateAnnonceData: AnnonceUpdateDTO = { title: '', description: '', price: 0, category: Categorie.AUTRE, disponibilite: Disponibilite.DISPONIBLE };
   editCommentaire?: CommentaireDto;
+  selectedFiles: File[] = [];
+  searchQuery: { title: string, description: string, category: Categorie, priceMin: number, priceMax: number } = { title: '', description: '', category: Categorie.AUTRE, priceMin: 0, priceMax: 10000 };
 
   categorieKeys = Object.keys(Categorie);
   disponibiliteKeys = Object.keys(Disponibilite);
@@ -40,32 +42,39 @@ export class AnnonceComponent implements OnInit {
     });
   }
 
-  createAnnonce(): void {
-    const annonceToCreate: AnnonceCreateDTO = {
-      title: this.updateAnnonceData.title || '',
-      description: this.updateAnnonceData.description || '',
-      price: this.updateAnnonceData.price || 0,
-      category: this.updateAnnonceData.category || Categorie.AUTRE,
-      disponibilite: this.updateAnnonceData.disponibilite || Disponibilite.DISPONIBLE
-    };
+  createAnnonceWithImages(): void {
+    if (this.selectedFiles.length === 0) {
+      console.error('Aucun fichier sélectionné');
+      return;
+    }
 
-    this.annonceService.createAnnonce(annonceToCreate).subscribe({
+    const formData = new FormData();
+    formData.append('title', this.updateAnnonceData.title || '');
+    formData.append('description', this.updateAnnonceData.description || '');
+    formData.append('price', this.updateAnnonceData.price?.toString() || '0');
+    formData.append('category', this.updateAnnonceData.category || Categorie.AUTRE);
+    formData.append('disponibilite', this.updateAnnonceData.disponibilite || Disponibilite.DISPONIBLE);
+
+    this.selectedFiles.forEach(file => formData.append('images', file));
+
+    this.annonceService.createAnnonceWithImages(formData as FormData).subscribe({
       next: (data) => {
         this.annonces.push(data);
         this.resetForm();
       },
-      error: (err) => console.error('Erreur lors de la création de l\'annonce', err)
+      error: (err) => console.error('Erreur lors de la création de l\'annonce avec images', err)
     });
   }
+
 
   updateAnnonce(): void {
     if (this.selectedAnnonce) {
       const updatedAnnonce: AnnonceUpdateDTO = {
-        title: this.updateAnnonceData.title || '',
-        description: this.updateAnnonceData.description || '',
-        price: this.updateAnnonceData.price || 0,
-        category: this.updateAnnonceData.category || Categorie.AUTRE,
-        disponibilite: this.updateAnnonceData.disponibilite || Disponibilite.DISPONIBLE
+        title: this.updateAnnonceData.title,
+        description: this.updateAnnonceData.description,
+        price: this.updateAnnonceData.price,
+        category: this.updateAnnonceData.category,
+        disponibilite: this.updateAnnonceData.disponibilite
       };
 
       this.annonceService.updateAnnonce(this.selectedAnnonce.id, updatedAnnonce).subscribe({
@@ -75,6 +84,7 @@ export class AnnonceComponent implements OnInit {
             this.annonces[index] = <AnnonceResponseDTO>{
               creationDate: "",
               id: 0,
+              vendeurEmail: "",
               vendeurId: 0,
               vendeurName: "", ...this.selectedAnnonce, ...updatedAnnonce
             };
@@ -142,7 +152,7 @@ export class AnnonceComponent implements OnInit {
           if (index !== -1) {
             this.commentaires[index] = updatedCommentaire;
           }
-          this.editCommentaire = undefined; // Réinitialiser après la mise à jour
+          this.editCommentaire = undefined;
         },
         error: (err) => console.error('Erreur lors de la mise à jour du commentaire', err)
       });
@@ -160,24 +170,26 @@ export class AnnonceComponent implements OnInit {
     }
   }
 
-  editComment(commentaire: CommentaireDto): void {
-    this.editCommentaire = { ...commentaire };
-  }
-
-  cancelEdit(): void {
-    this.editCommentaire = undefined;
+  onFileChange(event: any): void {
+    this.selectedFiles = Array.from(event.target.files);
   }
 
   resetForm(): void {
-    this.updateAnnonceData = {
-      title: '',
-      description: '',
-      price: 0,
-      category: Categorie.AUTRE,
-      disponibilite: Disponibilite.DISPONIBLE
-    };
     this.selectedAnnonce = undefined;
-    this.commentaires = [];
-    this.editCommentaire = undefined;
+    this.updateAnnonceData = { title: '', description: '', price: 0, category: Categorie.AUTRE, disponibilite: Disponibilite.DISPONIBLE };
+    this.selectedFiles = [];
+  }
+
+  searchAnnonces(): void {
+    this.annonceService.searchAnnonces(
+      this.searchQuery.title,
+      this.searchQuery.description,
+      this.searchQuery.category,
+      this.searchQuery.priceMin,
+      this.searchQuery.priceMax
+    ).subscribe({
+      next: (data) => this.annonces = data,
+      error: (err) => console.error('Erreur lors de la recherche des annonces', err)
+    });
   }
 }

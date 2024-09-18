@@ -1,0 +1,27 @@
+footer {
+  background-color: #6f3fc9;
+  color: white;
+  padding: 40px;
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+
+    .info, .navigation, .contact {
+      width: 30%;
+    }
+
+    h4 {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
+  mat-divider {
+    background-color: white;
+  }
+}

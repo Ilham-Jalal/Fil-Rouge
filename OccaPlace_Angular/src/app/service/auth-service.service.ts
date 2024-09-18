@@ -12,7 +12,7 @@ import {UserDTO} from "../dto/UserDTO";
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'http://localhost:8180';
 
   constructor(
     private http: HttpClient,
