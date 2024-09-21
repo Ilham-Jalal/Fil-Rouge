@@ -1,27 +1,338 @@
-footer {
-  background-color: #6f3fc9;
-  color: white;
-  padding: 40px;
-
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-
-    .info, .navigation, .contact {
-      width: 30%;
-    }
-
-    h4 {
-      margin-bottom: 10px;
-    }
-
-    a {
-      color: white;
-      text-decoration: none;
-    }
+.footer {
+  display: flex;
+  padding-top: 48px;
+  flex-direction: column;
+  width: 100%;
+}
+.div {
+  background-color: rgba(80, 72, 157, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 0 50px 53px;
+}
+@media (max-width: 991px) {
+  .div {
+    max-width: 100%;
+    padding: 0 20px;
   }
-
-  mat-divider {
-    background-color: white;
+}
+.div-2 {
+  background-color: rgba(229, 116, 24, 1);
+  z-index: 10;
+  margin-top: -48px;
+  padding: 16px 14px 16px 80px;
+}
+@media (max-width: 991px) {
+  .div-2 {
+    max-width: 100%;
+    padding-left: 20px;
+  }
+}
+.div-3 {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 991px) {
+  .div-3 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 70%;
+  margin-left: 0px;
+}
+@media (max-width: 991px) {
+  .column {
+    width: 100%;
+  }
+}
+.transformez-vos-transactions-d-occasion-des-maintenant {
+  color: var(--White, #fff);
+  letter-spacing: 4.2px;
+  text-transform: uppercase;
+  font: 700 30px Poppins, sans-serif;
+}
+@media (max-width: 991px) {
+  .transformez-vos-transactions-d-occasion-des-maintenant {
+    max-width: 100%;
+    margin-top: 33px;
+    font-size: 25px;
+  }
+}
+.column-2 {
+  width: 20%;
+  margin-left: 700px;
+  margin-top: -200px;
+}
+@media (max-width: 991px) {
+  .column-2 {
+    width: 100%;
+  }
+}
+.se-connecter {
+  background-color: rgba(80, 72, 157, 1);
+  margin-top: 209px;
+  flex-grow: 1;
+  color: var(--White, #fff);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  width: 100%;
+  padding: 20px 30px;
+  font: 600 15px Poppins, sans-serif;
+}
+@media (max-width: 991px) {
+  .se-connecter {
+    margin-top: 40px;
+    padding: 0 20px;
+  }
+}
+.div-4 {
+  margin-top: 60px;
+}
+@media (max-width: 991px) {
+  .div-4 {
+    max-width: 100%;
+    margin-top: 40px;
+  }
+}
+.div-5 {
+  gap: 20px;
+  display: flex;
+}
+@media (max-width: 991px) {
+  .div-5 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+}
+.column-3 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 46%;
+  margin-left: 0px;
+}
+@media (max-width: 991px) {
+  .column-3 {
+    width: 100%;
+  }
+}
+.div-6 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: start;
+  font-family: Poppins, sans-serif;
+  color: var(--White, #fff);
+  font-weight: 400;
+}
+@media (max-width: 991px) {
+  .div-6 {
+    margin-top: 40px;
+  }
+}
+.information {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.nous-offrons-une-plateforme-facile-a-utiliser-pour-acheter-et-vendre-des-articles-doccasion-profitez-de-notre-service-securise-et-de-notre-interface-conviviale-pour-transformer-vos-objets-inutilises-en-tresors {
+  font-size: 10px;
+  align-self: stretch;
+  margin-top: 15px;
+}
+.div-7 {
+  display: flex;
+  margin-top: 25px;
+  gap: 16px;
+  color: rgba(229, 116, 24, 1);
+  white-space: nowrap;
+  font: 30px Font Awesome 5 Brands, -apple-system, Roboto, Helvetica,
+  sans-serif;
+}
+@media (max-width: 991px) {
+  .div-7 {
+    white-space: initial;
+  }
+}
+.column-4 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 20%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-4 {
+    width: 100%;
+  }
+}
+.div-8 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: start;
+}
+@media (max-width: 991px) {
+  .div-8 {
+    margin-top: 40px;
+  }
+}
+.navigation {
+  color: var(--White, #fff);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  align-self: stretch;
+  font: 700 15px Poppins, sans-serif;
+}
+.div-9 {
+  display: flex;
+  margin-top: 20px;
+  gap: 12px;
+  white-space: nowrap;
+}
+@media (max-width: 991px) {
+  .div-9 {
+    white-space: initial;
+  }
+}
+.A {
+  color: #e57418;
+  font: 500 15px Font Awesome 5 Free, -apple-system, Roboto, Helvetica,
+  sans-serif;
+}
+.accueil {
+  color: var(--White, #fff);
+  font: 400 15px Poppins, sans-serif;
+}
+.div-10 {
+  display: flex;
+  margin-top: 20px;
+  gap: 12px;
+}
+.se-connecter-2 {
+  color: var(--White, #fff);
+  flex-basis: auto;
+  font: 400 17px Poppins, sans-serif;
+}
+.column-5 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 34%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-5 {
+    width: 100%;
+  }
+}
+.div-11 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: start;
+}
+@media (max-width: 991px) {
+  .div-11 {
+    margin-top: 40px;
+  }
+}
+.contact-us {
+  color: var(--White, #fff);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font: 700 15px Poppins, sans-serif;
+}
+.div-12 {
+  display: flex;
+  margin-top: 51px;
+  gap: 15px;
+}
+@media (max-width: 991px) {
+  .div-12 {
+    margin-top: 40px;
+  }
+}
+. {
+  color: #e57418;
+  font: 900 20px Font Awesome 5 Free, -apple-system, Roboto, Helvetica,
+  sans-serif;
+}
+.lumbung-hidup-east-java {
+  color: var(--White, #fff);
+  flex-basis: auto;
+  font: 400 17px Poppins, sans-serif;
+}
+.div-13 {
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
+  white-space: nowrap;
+}
+@media (max-width: 991px) {
+  .div-13 {
+    white-space: initial;
+  }
+}
+. {
+  color: #e57418;
+  font: 900 20px Font Awesome 5 Free, -apple-system, Roboto, Helvetica,
+  sans-serif;
+}
+.hello-homco-com {
+  color: var(--White, #fff);
+  flex-basis: auto;
+  font: 400 17px Poppins, sans-serif;
+}
+.div-14 {
+  background: var(--Border-Color-Overlay, rgba(255, 255, 255, 0.25));
+  background-color: var(--Border-Color-Overlay, rgba(255, 255, 255, 0.25));
+  align-self: stretch;
+  display: flex;
+  margin-top: 33px;
+  padding-top: 23px;
+  flex-direction: column;
+  color: var(--White, #fff);
+  font: 400 17px Poppins, sans-serif;
+}
+.email-address {
+  align-self: start;
+  margin-left: 15px;
+}
+@media (max-width: 991px) {
+  .email-address {
+    margin-left: 10px;
+  }
+}
+.div-15 {
+  background-color: #757575;
+  margin-top: 32px;
+  height: 5px;
+  border: 5px solid rgba(117, 117, 117, 1);
+}
+.subscribe {
+  background-color: rgba(229, 116, 24, 1);
+  margin-top: 15px;
+  color: var(--White, #fff);
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 31px 53px;
+  font: 600 15px Poppins, sans-serif;
+}
+@media (max-width: 991px) {
+  .subscribe {
+    white-space: initial;
+    padding: 0 20px;
   }
 }
