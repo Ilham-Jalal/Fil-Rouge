@@ -1,0 +1,441 @@
+.div {
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+  width: 100%;
+}
+.top-categories {
+  color: var(--Heading-Color, #1b1717);
+  letter-spacing: 3.15px;
+  text-transform: uppercase;
+  align-self: start;
+  z-index: 10;
+  margin: -5px 0 0 52px;
+  font: 900 30px Poppins, sans-serif;
+}
+@media (max-width: 991px) {
+  .top-categories {
+    max-width: 100%;
+    font-size: 40px;
+  }
+}
+.div-2 {
+  align-self: center;
+  margin-top: 40px;
+  width: 90%;
+  max-width: 1340px;
+}
+@media (max-width: 991px) {
+  .div-2 {
+    max-width: 100%;
+    margin-top: 40px;
+  }
+}
+.div-3 {
+  gap: 20px;
+  display: flex;
+}
+@media (max-width: 991px) {
+  .div-3 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 33%;
+  margin-left: 0px;
+}
+@media (max-width: 991px) {
+  .column {
+    width: 100%;
+  }
+}
+.background {
+  border: 1px solid var(--Border, #dadada);
+  display: flex;
+  flex-grow: 1;
+  padding-bottom: 25px;
+  flex-direction: column;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+@media (max-width: 991px) {
+  .background {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+.img {
+  aspect-ratio: 1.37;
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  align-self: stretch;
+}
+@media (max-width: 991px) {
+  .img {
+    max-width: 100%;
+  }
+}
+.voir-maintenant {
+  color: #e57418;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-top: 19px;
+}
+.vetements {
+  color: var(--Heading-Color, #1b1717);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+  margin-top: 13px;
+}
+.column-2 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 33%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-2 {
+    width: 100%;
+  }
+}
+.background-2 {
+  background-color: rgba(64, 123, 147, 1);
+  display: flex;
+  flex-grow: 1;
+  padding-bottom: 31px;
+  flex-direction: column;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+@media (max-width: 991px) {
+  .background-2 {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+.automobile {
+  color: var(--White, #fff);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+  margin-top: 13px;
+}
+.column-3 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 33%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-3 {
+    width: 100%;
+  }
+}
+.background-3 {
+  border: 1px solid var(--Border, #dadada);
+  display: flex;
+  flex-grow: 1;
+  padding-bottom: 31px;
+  flex-direction: column;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+@media (max-width: 991px) {
+  .background-3 {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+.img-2 {
+  aspect-ratio: 1.36;
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  align-self: stretch;
+}
+@media (max-width: 991px) {
+  .img-2 {
+    max-width: 100%;
+  }
+}
+.jeux {
+  color: var(--Heading-Color, #1b1717);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+  margin-top: 12px;
+}
+.div-4 {
+  align-self: center;
+  margin-top: 39px;
+  width: 90%;
+  max-width: 1340px;
+}
+@media (max-width: 991px) {
+  .div-4 {
+    max-width: 100%;
+  }
+}
+.div-5 {
+  gap: 20px;
+  display: flex;
+}
+@media (max-width: 991px) {
+  .div-5 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+}
+.background-4 {
+  background-color: rgba(64, 123, 147, 1);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 1px 0 21px;
+}
+@media (max-width: 991px) {
+  .background-4 {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+.img-3 {
+  aspect-ratio: 1.36;
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  align-self: stretch;
+}
+@media (max-width: 991px) {
+  .img-3 {
+    max-width: 100%;
+  }
+}
+.electronique {
+  color: var(--White, #fff);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+  margin-top: 12px;
+}
+.column-4 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 33%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-4 {
+    width: 100%;
+  }
+}
+.background-5 {
+  border: 1px solid var(--Border, #dadada);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 1px 0 31px;
+}
+@media (max-width: 991px) {
+  .background-5 {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+.meubles {
+  color: var(--Heading-Color, #1b1717);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+  margin-top: 13px;
+}
+.column-5 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 33%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-5 {
+    width: 100%;
+  }
+}
+.background-6 {
+  background-color: rgba(64, 123, 147, 1);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 1px 0 31px;
+}
+@media (max-width: 991px) {
+  .background-6 {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+.autre {
+  color: var(--White, #fff);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+  margin-top: 13px;
+}
+.background-7 {
+  background-color: rgba(64, 123, 147, 1);
+  display: flex;
+  margin-top: 139px;
+  margin-bottom: 100px;
+  width: 91%;
+  flex-direction: column;
+  font-family: Poppins, sans-serif;
+  text-transform: uppercase;
+  padding: 0 50px 55px;
+}
+@media (max-width: 991px) {
+  .background-7 {
+    max-width: 100%;
+    margin-top: 40px;
+    padding: 0 20px;
+  }
+}
+.image-placeholder {
+  background-color: rgba(196, 196, 196, 1);
+  z-index: 10;
+  display: flex;
+  margin-top: -62px;
+  width: 627px;
+  max-width: 100%;
+  flex-direction: column;
+  padding: 25px 80px 51px 28px;
+}
+@media (max-width: 991px) {
+  .image-placeholder {
+    padding: 0 20px;
+  }
+}
+.trouvez-le {
+  color: var(--Heading-Color, #1b1717);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+}
+.decouvrez-lexcitation-de-denicher-des-pieces-uniques-a-des-prix-imbattables {
+  color: rgba(255, 255, 255, 1);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-top: 15px;
+}
+@media (max-width: 991px) {
+  .decouvrez-lexcitation-de-denicher-des-pieces-uniques-a-des-prix-imbattables {
+    max-width: 100%;
+  }
+}
+.div-6 {
+  background: var(--White, #fff);
+  background-color: var(--White, #fff);
+  align-self: center;
+  z-index: 10;
+  display: flex;
+  margin-top: -33px;
+  width: 626px;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px 80px 71px 39px;
+}
+@media (max-width: 991px) {
+  .div-6 {
+    padding: 0 20px;
+  }
+}
+.portez-le-fierement {
+  color: var(--Heading-Color, #1b1717);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+}
+.montrez-vos-vetements-doccasion-avec-fierte-en-sachant-que-vous-avez-economise-de-largent-et-aide-la-planete {
+  color: var(--Paragraph-Color, #6e6e6e);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-top: 15px;
+}
+@media (max-width: 991px) {
+  .montrez-vos-vetements-doccasion-avec-fierte-en-sachant-que-vous-avez-economise-de-largent-et-aide-la-planete {
+    max-width: 100%;
+  }
+}
+.image-placeholder-2 {
+  background-color: rgba(196, 196, 196, 1);
+  align-self: end;
+  z-index: 10;
+  display: flex;
+  margin-top: -38px;
+  width: 627px;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: start;
+  padding: 25px 80px 51px 28px;
+}
+@media (max-width: 991px) {
+  .image-placeholder-2 {
+    padding: 0 20px;
+  }
+}
+.liberez-le {
+  color: var(--Heading-Color, #1b1717);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.75px;
+}
+.faites-vous-plaisir-en-donnant-une-seconde-vie-a-vos-vetements-inutilises-pour-quils-soient-apprecies-par-dautres {
+  color: rgba(255, 255, 255, 1);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-top: 15px;
+}
+@media (max-width: 991px) {
+  .faites-vous-plaisir-en-donnant-une-seconde-vie-a-vos-vetements-inutilises-pour-quils-soient-apprecies-par-dautres {
+    max-width: 100%;
+  }
+}
