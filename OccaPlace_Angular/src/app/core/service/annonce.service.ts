@@ -6,6 +6,7 @@ import {AnnonceCreateDTO} from "../dto/AnnonceCreateDTO";
 import {AnnonceUpdateDTO} from "../dto/AnnonceUpdateDTO";
 import {Categorie} from "../enum/Categorie";
 import {Disponibilite} from "../enum/Disponibilite";
+import {Annonce} from "../model/Annonce";
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +15,12 @@ export class AnnonceService {
 
   constructor(private http: HttpClient) { }
 
-  createAnnonceWithImages(formData: FormData): Observable<AnnonceResponseDTO> {
-    return this.http.post<AnnonceResponseDTO>(`${this.apiUrl}/create`, formData);
+  createAnnonceWithImages(annonceDTO: AnnonceCreateDTO, attachments: File[]): Observable<AnnonceCreateDTO> {
+    const formData = new FormData();
+    formData.append('annonce', new Blob([JSON.stringify(annonceDTO)], { type: 'application/json' }));
+    attachments.forEach((file, index) => formData.append('attachments', file, file.name));
+
+    return this.http.post<Annonce>(`${this.apiUrl}/create`, formData);
   }
 
   getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
