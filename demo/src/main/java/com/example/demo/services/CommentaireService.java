@@ -89,7 +89,6 @@ public class CommentaireService {
         commentaire.setId(dto.getId());
         commentaire.setContenu(dto.getContenu());
         commentaire.setDateCreation(dto.getDateCreation());
-        // utilisateur and annonce will be set in the service
         return commentaire;
     }
 }
