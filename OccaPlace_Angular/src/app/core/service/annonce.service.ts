@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {AnnonceResponseDTO} from "../dto/AnnonceResponseDTO";
 import {AnnonceCreateDTO} from "../dto/AnnonceCreateDTO";
 import {AnnonceUpdateDTO} from "../dto/AnnonceUpdateDTO";
@@ -15,12 +15,17 @@ export class AnnonceService {
 
   constructor(private http: HttpClient) { }
 
-  createAnnonceWithImages(annonceDTO: AnnonceCreateDTO, attachments: File[]): Observable<AnnonceCreateDTO> {
+  createAnnonceWithImages(annonceDTO: AnnonceUpdateDTO, attachments: File[]): Observable<AnnonceCreateDTO> {
     const formData = new FormData();
     formData.append('annonce', new Blob([JSON.stringify(annonceDTO)], { type: 'application/json' }));
-    attachments.forEach((file, index) => formData.append('attachments', file, file.name));
+    attachments.forEach((file) => formData.append('images', file, file.name)); // Modification ici
 
-    return this.http.post<Annonce>(`${this.apiUrl}/create`, formData);
+    return this.http.post<Annonce>(`${this.apiUrl}/create`, formData).pipe(
+      catchError(error => {
+        console.error('Erreur lors de l\'appel API:', error);
+        return throwError(error);
+      })
+    );
   }
 
   getAllAnnonces(): Observable<AnnonceResponseDTO[]> {

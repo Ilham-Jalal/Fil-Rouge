@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnonceResponseDTO } from '../../core/dto/AnnonceResponseDTO';
-import { AnnonceCreateDTO } from '../../core/dto/AnnonceCreateDTO';
 import { Categorie } from '../../core/enum/Categorie';
 import { Disponibilite } from '../../core/enum/Disponibilite';
 import { AnnonceUpdateDTO } from '../../core/dto/AnnonceUpdateDTO';
@@ -18,10 +17,36 @@ export class AnnonceComponent implements OnInit {
   commentaires: CommentaireDto[] = [];
   newCommentaire: { contenu: string } = { contenu: '' };
   selectedAnnonce?: AnnonceResponseDTO;
-  updateAnnonceData: AnnonceUpdateDTO = { title: '', description: '', price: 0, category: Categorie.AUTRE, disponibilite: Disponibilite.DISPONIBLE };
+  updateAnnonceData: {
+    vendeurName: string;
+    vendeurEmail: string;
+    livraisonId?: number;
+    vendeurId: number;
+    price: number;
+    disponibilite: Disponibilite;
+    description: string;
+    acheteurId?: number;
+    id: number;
+    title: string;
+    category: Categorie;
+    creationDate: string
+  } = {
+    creationDate: "", id: 0, vendeurEmail: "", vendeurId: 0, vendeurName: "",
+    title: '',
+    description: '',
+    price: 0,
+    category: Categorie.AUTRE,
+    disponibilite: Disponibilite.DISPONIBLE
+  };
   editCommentaire?: CommentaireDto;
   selectedFiles: File[] = [];
-  searchQuery: { title: string, description: string, category: Categorie, priceMin: number, priceMax: number } = { title: '', description: '', category: Categorie.AUTRE, priceMin: 0, priceMax: 10000 };
+  searchQuery: { title: string, description: string, category: Categorie, priceMin: number, priceMax: number } = {
+    title: '',
+    description: '',
+    category: Categorie.AUTRE,
+    priceMin: 0,
+    priceMax: 10000
+  };
 
   categorieKeys = Object.keys(Categorie);
   disponibiliteKeys = Object.keys(Disponibilite);
@@ -29,7 +54,7 @@ export class AnnonceComponent implements OnInit {
   constructor(
     private annonceService: AnnonceService,
     private commentaireService: CommentaireService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAllAnnonces();
@@ -51,21 +76,24 @@ export class AnnonceComponent implements OnInit {
     const formData = new FormData();
     formData.append('title', this.updateAnnonceData.title || '');
     formData.append('description', this.updateAnnonceData.description || '');
-    formData.append('price', this.updateAnnonceData.price?.toString() || '0');
-    formData.append('category', this.updateAnnonceData.category || Categorie.AUTRE);
-    formData.append('disponibilite', this.updateAnnonceData.disponibilite || Disponibilite.DISPONIBLE);
+    formData.append('price', this.updateAnnonceData.price.toString());
+    formData.append('category', this.updateAnnonceData.category);
+    formData.append('disponibilite', this.updateAnnonceData.disponibilite);
 
-    this.selectedFiles.forEach(file => formData.append('images', file));
+    this.selectedFiles.forEach(file => formData.append('attachments', file));
 
-    this.annonceService.createAnnonceWithImages(formData as FormData).subscribe({
+    this.annonceService.createAnnonceWithImages(this.updateAnnonceData, this.selectedFiles).subscribe({
       next: (data) => {
-        this.annonces.push(data);
+        this.annonces.push(<AnnonceResponseDTO>data);
         this.resetForm();
       },
-      error: (err) => console.error('Erreur lors de la création de l\'annonce avec images', err)
+      error: (err) => {
+        console.error('Erreur lors du téléchargement de l\'image', err);
+        alert('Erreur: ' + (err.error?.message || err.message)); // Affichez un message d'erreur
+      }
     });
-  }
 
+  }
 
   updateAnnonce(): void {
     if (this.selectedAnnonce) {
@@ -78,17 +106,9 @@ export class AnnonceComponent implements OnInit {
       };
 
       this.annonceService.updateAnnonce(this.selectedAnnonce.id, updatedAnnonce).subscribe({
-        next: () => {
-          const index = this.annonces.findIndex(a => a.id === this.selectedAnnonce?.id);
-          if (index !== -1) {
-            this.annonces[index] = <AnnonceResponseDTO>{
-              creationDate: "",
-              id: 0,
-              vendeurEmail: "",
-              vendeurId: 0,
-              vendeurName: "", ...this.selectedAnnonce, ...updatedAnnonce
-            };
-          }
+        next: (data) => {
+          const index = this.annonces.findIndex(a => a.id === this.selectedAnnonce!.id);
+          this.annonces[index] = data;
           this.resetForm();
         },
         error: (err) => console.error('Erreur lors de la mise à jour de l\'annonce', err)
@@ -99,75 +119,18 @@ export class AnnonceComponent implements OnInit {
   deleteAnnonce(id: number): void {
     this.annonceService.deleteAnnonce(id).subscribe({
       next: () => {
-        this.annonces = this.annonces.filter(a => a.id !== id);
+        this.annonces = this.annonces.filter(annonce => annonce.id !== id);
       },
       error: (err) => console.error('Erreur lors de la suppression de l\'annonce', err)
     });
   }
 
-  selectAnnonce(annonce: AnnonceResponseDTO): void {
-    this.selectedAnnonce = { ...annonce };
-    this.updateAnnonceData = {
-      title: this.selectedAnnonce.title,
-      description: this.selectedAnnonce.description,
-      price: this.selectedAnnonce.price,
-      category: this.selectedAnnonce.category,
-      disponibilite: this.selectedAnnonce.disponibilite
-    };
-    this.getCommentairesForAnnonce(this.selectedAnnonce.id);
-  }
-
-  getCommentairesForAnnonce(annonceId: number): void {
-    this.commentaireService.getCommentairesByAnnonce(annonceId).subscribe({
-      next: (data) => this.commentaires = data,
-      error: (err) => console.error('Erreur lors de la récupération des commentaires', err)
+  searchAnnonces(): void {
+    const { title, description, category, priceMin, priceMax } = this.searchQuery;
+    this.annonceService.searchAnnonces(title, description, category, priceMin, priceMax).subscribe({
+      next: (data) => this.annonces = data,
+      error: (err) => console.error('Erreur lors de la recherche des annonces', err)
     });
-  }
-
-  createCommentaire(): void {
-    if (this.selectedAnnonce && this.newCommentaire.contenu) {
-      const commentaireToAdd: CommentaireDto = {
-        contenu: this.newCommentaire.contenu,
-        dateCreation: new Date(),
-        id: 0,
-        annonceId: this.selectedAnnonce.id,
-        utilisateurName: ''
-      };
-
-      this.commentaireService.createCommentaire(commentaireToAdd, this.selectedAnnonce.id).subscribe({
-        next: (commentaire) => {
-          this.commentaires.push(commentaire);
-          this.newCommentaire.contenu = '';
-        },
-        error: (err) => console.error('Erreur lors de l\'ajout du commentaire', err)
-      });
-    }
-  }
-
-  updateCommentaire(commentaire: CommentaireDto): void {
-    if (this.editCommentaire && this.selectedAnnonce) {
-      this.commentaireService.updateCommentaire(this.editCommentaire.id, this.editCommentaire).subscribe({
-        next: (updatedCommentaire) => {
-          const index = this.commentaires.findIndex(c => c.id === updatedCommentaire.id);
-          if (index !== -1) {
-            this.commentaires[index] = updatedCommentaire;
-          }
-          this.editCommentaire = undefined;
-        },
-        error: (err) => console.error('Erreur lors de la mise à jour du commentaire', err)
-      });
-    }
-  }
-
-  deleteCommentaire(id: number | undefined): void {
-    if (id !== undefined) {
-      this.commentaireService.deleteCommentaire(id).subscribe({
-        next: () => {
-          this.commentaires = this.commentaires.filter(c => c.id !== id);
-        },
-        error: (err) => console.error('Erreur lors de la suppression du commentaire', err)
-      });
-    }
   }
 
   onFileChange(event: any): void {
@@ -175,21 +138,63 @@ export class AnnonceComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.selectedAnnonce = undefined;
-    this.updateAnnonceData = { title: '', description: '', price: 0, category: Categorie.AUTRE, disponibilite: Disponibilite.DISPONIBLE };
+    this.updateAnnonceData = {
+      creationDate: "", id: 0, vendeurEmail: "", vendeurId: 0, vendeurName: "",
+      title: '',
+      description: '',
+      price: 0,
+      category: Categorie.AUTRE,
+      disponibilite: Disponibilite.DISPONIBLE
+    };
     this.selectedFiles = [];
+    this.selectedAnnonce = undefined;
   }
 
-  searchAnnonces(): void {
-    this.annonceService.searchAnnonces(
-      this.searchQuery.title,
-      this.searchQuery.description,
-      this.searchQuery.category,
-      this.searchQuery.priceMin,
-      this.searchQuery.priceMax
-    ).subscribe({
-      next: (data) => this.annonces = data,
-      error: (err) => console.error('Erreur lors de la recherche des annonces', err)
+  selectAnnonce(annonce: AnnonceResponseDTO): void {
+    this.selectedAnnonce = annonce;
+    this.updateAnnonceData = { ...annonce };
+  }
+
+  createCommentaire(annonceId: number): void {
+    if (this.newCommentaire.contenu.trim() === '') return;
+
+    const commentaireDto1: CommentaireDto = {
+      contenu: this.newCommentaire.contenu,
+      annonceId: this.selectedAnnonce?.id,
+      utilisateurName: 'User',
+      dateCreation: new Date()
+    };
+
+    this.commentaireService.createCommentaire(commentaireDto1, annonceId).subscribe({
+      next: (data) => {
+        this.commentaires.push(data);
+        this.newCommentaire.contenu = '';
+      },
+      error: (err) => console.error('Erreur lors de l\'ajout d\'un commentaire', err)
     });
+  }
+
+  deleteCommentaire(commentaireId: number | undefined): void {
+    this.commentaireService.deleteCommentaire(commentaireId).subscribe({
+      next: () => {
+        this.commentaires = this.commentaires.filter(c => c.id !== commentaireId);
+      },
+      error: (err) => console.error('Erreur lors de la suppression du commentaire', err)
+    });
+  }
+
+  updateCommentaire(commentaire: CommentaireDto): void {
+    if (this.editCommentaire) {
+      this.commentaireService.updateCommentaire(this.editCommentaire.id, this.editCommentaire).subscribe({
+        next: () => {
+          const index = this.commentaires.findIndex(c => c.id === this.editCommentaire!.id);
+          this.commentaires[index] = this.editCommentaire!;
+          this.editCommentaire = undefined;
+        },
+        error: (err) => console.error('Erreur lors de la mise à jour du commentaire', err)
+      });
+    } else {
+      this.editCommentaire = commentaire;
+    }
   }
 }

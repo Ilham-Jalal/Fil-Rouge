@@ -1,114 +1,81 @@
-<!-- annonce.component.html -->
-<div class="container">
-  <h2>Annonces</h2>
+<div class="annonce-container">
+  <h1>Gestion des Annonces</h1>
 
-  <!-- Recherche d'annonces -->
-  <div class="mb-3">
-    <h4>Recherche d'annonces</h4>
-    <form (ngSubmit)="searchAnnonces()">
-      <div class="row">
-        <div class="col-md-3">
-          <label for="search-title">Titre</label>
-          <input id="search-title" class="form-control" [(ngModel)]="searchQuery.title" name="title">
-        </div>
-        <div class="col-md-3">
-          <label for="search-description">Description</label>
-          <input id="search-description" class="form-control" [(ngModel)]="searchQuery.description" name="description">
-        </div>
-        <div class="col-md-2">
-          <label for="search-category">Catégorie</label>
-          <select id="search-category" class="form-control" [(ngModel)]="searchQuery.category" name="category">
-            <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="search-priceMin">Prix Min</label>
-          <input id="search-priceMin" class="form-control" type="number" [(ngModel)]="searchQuery.priceMin" name="priceMin">
-        </div>
-        <div class="col-md-2">
-          <label for="search-priceMax">Prix Max</label>
-          <input id="search-priceMax" class="form-control" type="number" [(ngModel)]="searchQuery.priceMax" name="priceMax">
-        </div>
-        <div class="col-md-12 mt-2">
-          <button type="submit" class="btn btn-primary">Rechercher</button>
-        </div>
-      </div>
-    </form>
-  </div>
+  <form (ngSubmit)="selectedAnnonce ? updateAnnonce() : createAnnonceWithImages()">
+    <div>
+      <label>Titre:</label>
+      <input type="text" [(ngModel)]="updateAnnonceData.title" name="title" required>
+    </div>
+
+    <div>
+      <label>Description:</label>
+      <textarea [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>
+    </div>
+
+    <div>
+      <label>Prix:</label>
+      <input type="number" [(ngModel)]="updateAnnonceData.price" name="price" required>
+    </div>
+
+    <div>
+      <label>Catégorie:</label>
+      <select [(ngModel)]="updateAnnonceData.category" name="category" required>
+        <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Disponibilité:</label>
+      <select [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite" required>
+        <option *ngFor="let key of disponibiliteKeys" [value]="key">{{ key }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Images:</label>
+      <input type="file" (change)="onFileChange($event)" multiple>
+    </div>
+
+    <button type="submit">{{ selectedAnnonce ? 'Mettre à jour' : 'Créer' }} l'annonce</button>
+    <button type="button" (click)="resetForm()">Annuler</button>
+  </form>
 
   <!-- Liste des annonces -->
-  <div class="mb-3">
-    <h4>Liste des annonces</h4>
-    <ul class="list-group">
-      <li *ngFor="let annonce of annonces" class="list-group-item">
-        <h5>{{ annonce.title }}</h5>
-        <p>{{ annonce.description }}</p>
-        <p><strong>Prix:</strong> {{ annonce.price }}€</p>
-        <p><strong>Catégorie:</strong> {{ annonce.category }}</p>
-        <p><strong>Disponibilité:</strong> {{ annonce.disponibilite }}</p>
-        <button class="btn btn-secondary" (click)="selectAnnonce(annonce)">Modifier</button>
-        <button class="btn btn-danger" (click)="deleteAnnonce(annonce.id)">Supprimer</button>
-      </li>
-    </ul>
-  </div>
+  <div class="annonces-list">
+    <h2>Liste des Annonces</h2>
+    <div *ngFor="let annonce of annonces">
+      <h3>{{ annonce.title }}</h3>
+      <p>{{ annonce.description }}</p>
+      <p>Prix: {{ annonce.price }}€</p>
+      <p>Catégorie: {{ annonce.category }}</p>
+      <p>Disponibilité: {{ annonce.disponibilite }}</p>
 
-  <!-- Formulaire de création / modification d'annonce -->
-  <div *ngIf="selectedAnnonce" class="mb-3">
-    <h4>{{ selectedAnnonce ? 'Modifier l\'annonce' : 'Créer une annonce' }}</h4>
-    <form (ngSubmit)="createAnnonceWithImages()">
-      <div class="row">
-        <div class="col-md-6">
-          <label for="form-title">Titre</label>
-          <input id="form-title" class="form-control" [(ngModel)]="updateAnnonceData.title" name="title">
-        </div>
-        <div class="col-md-6">
-          <label for="form-description">Description</label>
-          <textarea id="form-description" class="form-control" [(ngModel)]="updateAnnonceData.description" name="description"></textarea>
-        </div>
-        <div class="col-md-3">
-          <label for="form-price">Prix</label>
-          <input id="form-price" class="form-control" type="number" [(ngModel)]="updateAnnonceData.price" name="price">
-        </div>
-        <div class="col-md-3">
-          <label for="form-category">Catégorie</label>
-          <select id="form-category" class="form-control" [(ngModel)]="updateAnnonceData.category" name="category">
-            <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <label for="form-disponibilite">Disponibilité</label>
-          <select id="form-disponibilite" class="form-control" [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite">
-            <option *ngFor="let key of disponibiliteKeys" [value]="key">{{ key }}</option>
-          </select>
-        </div>
-        <div class="col-md-12 mt-2">
-          <label for="form-images">Images</label>
-          <input id="form-images" type="file" class="form-control" (change)="onFileChange($event)" multiple>
-        </div>
-        <div class="col-md-12 mt-2">
-          <button type="submit" class="btn btn-primary">Sauvegarder</button>
-          <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+      <!-- Affichage des images -->
+      <div *ngIf="annonce.images && annonce.images.length > 0">
+        <h4>Images:</h4>
+        <div *ngFor="let image of annonce.images">
+          <img [src]="image" alt="Annonce Image" style="max-width: 100px; margin-right: 10px;" />
         </div>
       </div>
-    </form>
+
+      <button (click)="selectAnnonce(annonce)">Modifier</button>
+      <button (click)="deleteAnnonce(annonce.id)">Supprimer</button>
+    </div>
   </div>
 
-  <div *ngIf="selectedAnnonce" class="mb-3">
-    <h4>Commentaires</h4>
-    <ul class="list-group">
-      <li *ngFor="let commentaire of commentaires" class="list-group-item">
-        <p><strong>{{ commentaire.utilisateurName }}</strong> - {{ commentaire.dateCreation | date }}</p>
-        <p>{{ commentaire.contenu }}</p>
-        <button *ngIf="editCommentaire?.id === commentaire.id" class="btn btn-secondary" (click)="updateCommentaire(commentaire)">Modifier</button>
-        <button class="btn btn-danger" (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
-      </li>
-    </ul>
-    <form *ngIf="selectedAnnonce">
-      <div class="form-group mt-2">
-        <label for="new-commentaire">Nouveau commentaire</label>
-        <textarea id="new-commentaire" class="form-control" [(ngModel)]="newCommentaire.contenu" name="newCommentaire"></textarea>
-      </div>
-      <button type="button" class="btn btn-primary mt-2" (click)="createCommentaire()">Ajouter</button>
+
+  <!-- Commentaires -->
+  <div class="commentaires-section" *ngIf="selectedAnnonce">
+    <h3>Commentaires</h3>
+    <form (ngSubmit)="createCommentaire(selectedAnnonce.id)">
+      <textarea [(ngModel)]="newCommentaire.contenu" name="contenu" required></textarea>
+      <button type="submit">Ajouter un commentaire</button>
     </form>
+
+    <div *ngFor="let commentaire of commentaires">
+      <p>{{ commentaire.utilisateurName }}: {{ commentaire.contenu }}</p>
+      <button (click)="updateCommentaire(commentaire)">Modifier</button>
+      <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+    </div>
   </div>
 </div>

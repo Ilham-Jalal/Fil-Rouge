@@ -18,4 +18,5 @@ export interface Annonce {
   livraison?: Livraison;
   commentaires?: Commentaire[];
   favoris?: Favori[];
+  images: string[];
 }

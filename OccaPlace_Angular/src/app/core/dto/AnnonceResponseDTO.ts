@@ -15,4 +15,5 @@ export interface AnnonceResponseDTO {
   vendeurEmail: string;
   acheteurId?: number;
   livraisonId?: number;
+  images: string[];
 }

@@ -50,6 +50,7 @@ public class AnnonceService {
         return mapToResponseDTO(annonce);
     }
 
+
     public AnnonceResponseDTO updateAnnonce(Long id, AnnonceUpdateDTO updatedAnnonceDTO) {
         return annonceRepository.findById(id).map(annonce -> {
             annonce.setTitle(updatedAnnonceDTO.getTitle());

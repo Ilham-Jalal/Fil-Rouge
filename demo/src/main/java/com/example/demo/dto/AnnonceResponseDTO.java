@@ -5,6 +5,7 @@ import com.example.demo.enums.Disponibilite;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class AnnonceResponseDTO {
@@ -20,4 +21,5 @@ public class AnnonceResponseDTO {
     private String vendeurEmail;
     private Long acheteurId;
     private Long livraisonId;
+    private List<String> images;
 }

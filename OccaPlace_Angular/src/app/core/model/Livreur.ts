@@ -5,7 +5,6 @@ import {Livraison} from "./Livraison";
 
 
 export class Livreur extends User {
-  deliveryZone: string;
   livraisons?: Livraison[];
   utilisateur?: Utilisateur;
 }

@@ -1,6 +1,7 @@
 import {Annonce} from "./Annonce";
 import {Livreur} from "./Livreur";
 import {Utilisateur} from "./Utilisateur";
+import {StatutLivraison} from "../enum/StatutLivraison";
 
 export interface Livraison {
   id: number;
