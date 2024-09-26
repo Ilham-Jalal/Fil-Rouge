@@ -1,10 +1,10 @@
 package com.example.demo.enums;
 
 public enum Categorie {
-    VÊTEMENTS,
+    VETEMENTS,
     AUTOMOBILE,
     AUTRE,
     MEUBLES,
-    ÉLECTRONIQUE,
+    ELECTRONIQUE,
     IMMOBILIER
 }

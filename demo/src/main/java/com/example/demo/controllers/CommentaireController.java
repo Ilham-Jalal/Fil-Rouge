@@ -19,11 +19,14 @@ import java.util.Optional;
 @RequestMapping("/user/api/commentaires")
 public class CommentaireController {
 
-    @Autowired
-    private CommentaireService commentaireService;
+    private final CommentaireService commentaireService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public CommentaireController(CommentaireService commentaireService, UserService userService) {
+        this.commentaireService = commentaireService;
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<CommentaireDto> getAllCommentaires() {

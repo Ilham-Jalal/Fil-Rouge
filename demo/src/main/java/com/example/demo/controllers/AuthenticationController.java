@@ -1,13 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.config.JwtAuth;
+import com.example.demo.config.JwtUtil;
 import com.example.demo.dto.LoginRequest;
-import com.example.demo.models.Admin;
-import com.example.demo.models.Livreur;
 import com.example.demo.models.User;
-import com.example.demo.models.Utilisateur;
-import com.example.demo.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,8 +21,11 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthenticationController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest) {
@@ -44,7 +42,7 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
 
-        String token = JwtAuth.generateToken(user.getUsername(), user.getRole());
+        String token = JwtUtil.generateToken(user.getUsername(), user.getRole());
 
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);

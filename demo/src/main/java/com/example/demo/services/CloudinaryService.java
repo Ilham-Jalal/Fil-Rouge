@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.cloudinary.Cloudinary;
+import com.example.demo.exceptions.ImageUploadException; // Import the custom exception
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class CloudinaryService {
@@ -27,17 +27,18 @@ public class CloudinaryService {
         ));
     }
 
-    public List<String> uploadImages(MultipartFile[] images) throws IOException {
+    public List<String> uploadImages(MultipartFile[] images) {
         List<String> imageUrls = new ArrayList<>();
         for (MultipartFile image : images) {
             try {
-                Map uploadResult = cloudinary.uploader().upload(image.getBytes(), new HashMap<>());
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(image.getBytes(), new HashMap<>());
                 imageUrls.add((String) uploadResult.get("url"));
             } catch (IOException e) {
-                throw new RuntimeException("Error uploading image", e);
+                throw new ImageUploadException("Error uploading image: " + image.getOriginalFilename(), e);
+            } catch (Exception e) {
+                throw new ImageUploadException("An unexpected error occurred while uploading image: " + image.getOriginalFilename(), e);
             }
         }
         return imageUrls;
     }
-
 }

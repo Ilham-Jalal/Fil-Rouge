@@ -7,26 +7,27 @@ import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.AnnonceRepository;
 import com.example.demo.repositorys.CommentaireRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CommentaireService {
 
-    @Autowired
-    private CommentaireRepository commentaireRepository;
-    @Autowired
-    private AnnonceRepository annonceRepository;
+    private final CommentaireRepository commentaireRepository;
+    private final AnnonceRepository annonceRepository;
+
+    public CommentaireService(CommentaireRepository commentaireRepository, AnnonceRepository annonceRepository) {
+        this.commentaireRepository = commentaireRepository;
+        this.annonceRepository = annonceRepository;
+    }
 
 
     public List<CommentaireDto> getAllCommentaires() {
         return commentaireRepository.findAll().stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 
@@ -38,7 +39,7 @@ public class CommentaireService {
     public List<CommentaireDto> getCommentairesByAnnonce(Long annonceId) {
         return commentaireRepository.findByAnnonceId(annonceId).stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 

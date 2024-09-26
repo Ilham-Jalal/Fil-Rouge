@@ -2,7 +2,6 @@ package com.example.demo.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,9 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.security.Key;
 
-import static com.example.demo.config.JwtAuth.SECRET_KEY;
+import static com.example.demo.config.JwtUtil.SECRET_KEY;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
@@ -32,11 +30,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String authorizationToken = request.getHeader("Authorization");
         if (authorizationToken != null && authorizationToken.startsWith("Bearer ")) {
             try {
-                System.out.println("//////////////////////::");
                 String jwt = authorizationToken.substring(7);
                 Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).build().parseClaimsJws(jwt).getBody();
                 String username = claims.getSubject();
-                System.out.println("/////////"+username);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());

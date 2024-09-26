@@ -9,25 +9,24 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 
-@Service
-public class JwtAuth {
-    public static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+import static io.jsonwebtoken.security.Keys.secretKeyFor;
 
+@Service
+public final class JwtUtil {
+    public static final Key SECRET_KEY;
+
+    static {
+        SECRET_KEY = secretKeyFor(SignatureAlgorithm.HS256);
+    }
+
+    private JwtUtil() {}
     public static String generateToken(String username, Role role) {
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                 .claim("roles", role)
                 .signWith(SECRET_KEY)
                 .compact();
-
-        System.out.println("Generated Token: " + token);
-
-        return token;
     }
 }
-
-
-

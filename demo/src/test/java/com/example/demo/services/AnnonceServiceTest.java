@@ -1,13 +1,12 @@
 package com.example.demo.services;
 
-import com.example.demo.Exeption.AnnonceNotFoundException;
+import com.example.demo.exceptions.AnnonceNotFoundException;
 import com.example.demo.dto.AnnonceCreateDTO;
 import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
 import com.example.demo.models.Annonce;
-import com.example.demo.models.Livraison;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.AnnonceRepository;
 import com.example.demo.repositorys.LivraisonRepository;
@@ -89,7 +88,7 @@ class AnnonceServiceTest {
         updateDTO.setTitle("Updated Title");
         updateDTO.setDescription("Updated Description");
         updateDTO.setPrice(200.0);
-        updateDTO.setCategory(Categorie.VÊTEMENTS);
+        updateDTO.setCategory(Categorie.VETEMENTS);
 
         Annonce existingAnnonce = new Annonce();
         existingAnnonce.setId(annonceId);

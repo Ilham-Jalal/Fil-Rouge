@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -99,7 +98,7 @@ class LivraisonServiceTest {
         Livraison result = livraisonService.confirmerLivraison(1L, 100.0);
 
         // Then
-        assertEquals(StatutLivraison.LIVRÉ, result.getStatut());
+        assertEquals(StatutLivraison.LIVRE, result.getStatut());
         assertNotNull(result.getDateLivraison());
         assertEquals(100.0, result.getMontant());
     }

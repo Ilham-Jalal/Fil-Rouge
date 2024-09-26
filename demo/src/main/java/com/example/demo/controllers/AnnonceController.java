@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Exeption.AnnonceNotFoundException;
-import com.example.demo.Exeption.UserNotFoundExeption;
-import com.example.demo.Exeption.UtilisateurNonTrouveException;
+import com.example.demo.exceptions.UserNotFoundExeption;
+import com.example.demo.exceptions.UtilisateurNonTrouveException;
 import com.example.demo.dto.AnnonceCreateDTO;
 import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,22 +80,16 @@ public class AnnonceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AnnonceResponseDTO> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceUpdateDTO updatedAnnonceDTO) {
-        try {
             AnnonceResponseDTO updatedAnnonce = annonceService.updateAnnonce(id, updatedAnnonceDTO);
             return new ResponseEntity<>(updatedAnnonce, HttpStatus.OK);
-        } catch (AnnonceNotFoundException e) {
-            throw e;
-        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAnnonce(@PathVariable Long id) {
-        try {
+
             annonceService.deleteAnnonce(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (AnnonceNotFoundException e) {
-            throw e;
-        }
+
     }
 
     @GetMapping

@@ -1,11 +1,11 @@
-package com.example.demo.Exeption;
+package com.example.demo.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class FichierNonTrouveException extends RuntimeException {
-    public FichierNonTrouveException(String message) {
+public class AnnonceNotFoundException extends RuntimeException {
+    public AnnonceNotFoundException(String message) {
         super(message);
     }
 }

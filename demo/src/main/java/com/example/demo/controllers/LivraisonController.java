@@ -17,14 +17,18 @@ import java.util.Optional;
 @RestController
 public class LivraisonController {
 
-    @Autowired
-    private LivraisonService livraisonService;
 
-    @Autowired
-    private UserService userService;
+    private final LivraisonService livraisonService;
 
-    @Autowired
-    private AnnonceService annonceService;
+    private final UserService userService;
+
+    private final AnnonceService annonceService;
+
+    public LivraisonController(LivraisonService livraisonService, UserService userService, AnnonceService annonceService) {
+        this.livraisonService = livraisonService;
+        this.userService = userService;
+        this.annonceService = annonceService;
+    }
 
     @PostMapping("/admin/{id}/assigner-livreur/{livreurId}")
     public ResponseEntity<Livraison> assignerLivreur(@PathVariable Long id, @PathVariable Long livreurId) {
@@ -36,14 +40,9 @@ public class LivraisonController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        Admin user = optionalUser.get();
         Optional<Livraison> livraison = livraisonService.assignerLivreur(id, livreurId);
 
-        if (livraison.isPresent()) {
-            return ResponseEntity.ok(livraison.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return livraison.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/user/api/livraisons/{annonceId}/associer-livraison/{livraisonId}")
@@ -59,7 +58,6 @@ public class LivraisonController {
 
     @PostMapping("/livreur/confirmer/{id}")
     public ResponseEntity<Livraison> confirmerLivraison(@PathVariable Long id, @RequestBody PaymentRequest paymentRequest) {
-        System.out.println("///////////////////"+"////////id"+id);
         return ResponseEntity.ok(livraisonService.confirmerLivraison(id, paymentRequest.getMontant()));
     }
 

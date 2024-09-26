@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.Exeption.UserNotFoundExeption;
+import com.example.demo.exceptions.UserNotFoundExeption;
 import com.example.demo.dto.SignUpRequest;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.enums.Role;

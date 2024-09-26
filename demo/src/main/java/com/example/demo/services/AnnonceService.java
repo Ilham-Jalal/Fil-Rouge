@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.Exeption.AnnonceNotFoundException;
+import com.example.demo.exceptions.AnnonceNotFoundException;
 import com.example.demo.dto.AnnonceCreateDTO;
 import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;

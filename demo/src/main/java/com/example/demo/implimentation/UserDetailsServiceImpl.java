@@ -12,24 +12,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
 
-    @Autowired
-    private LivreurRepository livreurRepository;
+    private final LivreurRepository livreurRepository;
+
+    public UserDetailsServiceImpl(UtilisateurRepository utilisateurRepository, AdminRepository adminRepository, LivreurRepository livreurRepository) {
+        this.utilisateurRepository = utilisateurRepository;
+        this.adminRepository = adminRepository;
+        this.livreurRepository = livreurRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = utilisateurRepository.findByUsername(username)
-                .map(utilisateur -> (User) utilisateur)
+        return utilisateurRepository.findByUsername(username)
+                .map(User.class::cast)
                 .orElseGet(() -> adminRepository.findByUsername(username)
-                        .map(admin -> (User) admin)
+                        .map(User.class::cast)
                         .orElseGet(() -> livreurRepository.findByUsername(username)
-                                .map(livreur -> (User) livreur)
+                                .map(User.class::cast)
                                 .orElseThrow(() -> new UsernameNotFoundException("User not found"))));
-        return user;
     }
 }

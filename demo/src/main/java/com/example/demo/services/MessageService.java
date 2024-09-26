@@ -5,7 +5,6 @@ import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.MessageRepository;
 import com.example.demo.repositorys.UtilisateurRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +12,14 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    @Autowired
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
 
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final UtilisateurRepository utilisateurRepository;
+
+    public MessageService(MessageRepository messageRepository, UtilisateurRepository utilisateurRepository) {
+        this.messageRepository = messageRepository;
+        this.utilisateurRepository = utilisateurRepository;
+    }
 
     public Message sendMessage(Utilisateur fromUser, Long toUserId, String content) {
         Utilisateur toUser = utilisateurRepository.findById(toUserId)

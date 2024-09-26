@@ -17,11 +17,14 @@ import java.util.Optional;
 @RequestMapping("/user/api/messages")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public MessageController(MessageService messageService, UserService userService) {
+        this.messageService = messageService;
+        this.userService = userService;
+    }
 
     @PostMapping("/send/{toUserId}")
     public ResponseEntity<Message> sendMessage(@PathVariable Long toUserId, @RequestBody String content) {
