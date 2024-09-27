@@ -7,7 +7,7 @@ import { CommentaireDto } from '../dto/CommentaireDto';
   providedIn: 'root'
 })
 export class CommentaireService {
-  private apiUrl = 'http://localhost:8080/user/api/commentaires';
+  private apiUrl = 'http://localhost:8081/user/api/commentaires';
 
   constructor(private http: HttpClient) {}
 

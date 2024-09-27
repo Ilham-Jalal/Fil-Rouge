@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,17 +28,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity in stateless applications
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/signup").permitAll() // Public endpoints
-                        .requestMatchers("/user/**").hasRole("USER") // User roles
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Admin roles
-                        .requestMatchers("/livreur/**").hasRole("LIVREUR") // Livreur roles
-                        .anyRequest().authenticated() // Secure all other endpoints
+                        .requestMatchers("/login", "/signup").permitAll()
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/livreur/**").hasRole("LIVREUR")
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable()) // Disable form-based authentication
+                .formLogin(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtAuthorizationFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class); // Add JWT filter
 
         return http.build();
@@ -48,7 +49,7 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder()); // Set password encoder
+                .passwordEncoder(passwordEncoder());
 
         return authenticationManagerBuilder.build();
     }

@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/admin/add/{role}")
+    @PostMapping("/add/{role}")
     public ResponseEntity<User> addUserByAdmin(@PathVariable Role role, @RequestBody UserDTO userDTO) {
         try {
             User user = userService.addUserByAdmin(role, userDTO);

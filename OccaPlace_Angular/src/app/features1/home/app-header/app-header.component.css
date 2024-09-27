@@ -57,7 +57,7 @@
   display: flex;
   margin-top: 7px;
   gap: 21px;
-  color: var(--White, #fff);
+  color: white;
   white-space: nowrap;
   text-align: center;
   text-transform: uppercase;
@@ -78,7 +78,7 @@
 .se-connecter {
   display: flex;
   margin-top: 6px;
-  color: var(--White, #fff);
+  color: white;
   white-space: nowrap;
   text-align: center;
   text-transform: uppercase;

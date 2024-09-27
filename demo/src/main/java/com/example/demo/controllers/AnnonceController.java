@@ -20,7 +20,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,22 +41,13 @@ public class AnnonceController {
     public ResponseEntity<AnnonceResponseDTO> createAnnonce(
             @RequestPart("annonce") AnnonceCreateDTO annonceDTO,
             @RequestPart("images") MultipartFile[] images) {
-
-        try {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             Utilisateur user = userService.findUtilisateurByUsername(username)
                     .orElseThrow(() -> new UserNotFoundExeption("Utilisateur non trouvé avec le nom d'utilisateur : " + username));
 
-            // Appeler le service pour créer l'annonce
             AnnonceResponseDTO response = annonceService.createAnnonce(annonceDTO, user, images);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (UserNotFoundExeption e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+
     }
 
 

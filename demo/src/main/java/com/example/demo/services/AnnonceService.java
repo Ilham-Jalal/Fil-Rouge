@@ -15,11 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AnnonceService {
@@ -34,7 +32,7 @@ public class AnnonceService {
         this.livraisonRepository = livraisonRepository;
         this.cloudinaryService = cloudinaryService;
     }
-    public AnnonceResponseDTO createAnnonce(AnnonceCreateDTO annonceDTO, Utilisateur user, MultipartFile[] images) throws IOException {
+    public AnnonceResponseDTO createAnnonce(AnnonceCreateDTO annonceDTO, Utilisateur user, MultipartFile[] images) {
         List<String> imageUrls = cloudinaryService.uploadImages(images);
 
         Annonce annonce = new Annonce();
@@ -94,32 +92,33 @@ public class AnnonceService {
     public List<AnnonceResponseDTO> findAllAnnonces() {
         return annonceRepository.findAll().stream()
                 .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<AnnonceResponseDTO> findAnnoncesByCategory(Categorie category) {
         return annonceRepository.findByCategory(category).stream()
                 .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<AnnonceResponseDTO> findAnnoncesByDisponibilite(Disponibilite disponibilite) {
         return annonceRepository.findByDisponibilite(disponibilite).stream()
                 .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<AnnonceResponseDTO> findAnnoncesByUser(Long vendeurId) {
         return annonceRepository.findByVendeurId(vendeurId).stream()
                 .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<AnnonceResponseDTO> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice) {
         return annonceRepository.searchAnnonces(title, description, category, minPrice, maxPrice).stream()
                 .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
+
 
     public AnnonceResponseDTO mapToResponseDTO(Annonce annonce) {
         if (annonce == null) {
