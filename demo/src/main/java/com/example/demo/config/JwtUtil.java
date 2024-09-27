@@ -1,7 +1,6 @@
 package com.example.demo.config;
 
 import javax.crypto.SecretKey;
-
 import com.example.demo.enums.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,7 +11,7 @@ import java.util.Date;
 @Service
 public final class JwtUtil {
 
-    public static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Generate a secret key for HMAC
+    public static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private JwtUtil() {}
 
@@ -20,9 +19,9 @@ public final class JwtUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // Token valid for 1 day
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .claim("roles", role)
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // Specify the algorithm
+                .signWith(SECRET_KEY)
                 .compact();
     }
 }

@@ -4,7 +4,6 @@ import com.example.demo.models.Message;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.MessageService;
 import com.example.demo.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

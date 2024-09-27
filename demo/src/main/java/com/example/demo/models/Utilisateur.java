@@ -14,29 +14,29 @@ public class Utilisateur extends User {
 
     @OneToMany(mappedBy = "vendeur")
     @JsonIgnore
-    private List<Annonce> ventes;
+    private transient List<Annonce> ventes;
 
     @OneToMany(mappedBy = "acheteur")
     @JsonIgnore
-    private List<Annonce> achats;
+    private transient List<Annonce> achats;
 
     @OneToMany(mappedBy = "fromUser")
     @JsonIgnore
-    private List<Message> sentMessages;
+    private transient List<Message> sentMessages;
 
     @OneToMany(mappedBy = "toUser")
     @JsonIgnore
-    private List<Message> receivedMessages;
+    private transient List<Message> receivedMessages;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
-    private List<Livraison> livraisons;
+    private transient List<Livraison> livraisons;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
-    private List<Commentaire> commentaires;
+    private transient List<Commentaire> commentaires;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
-    private List<Favori> favoris;
+    private transient List<Favori> favoris;
 }

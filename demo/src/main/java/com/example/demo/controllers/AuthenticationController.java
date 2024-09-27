@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "*")
 public class AuthenticationController {

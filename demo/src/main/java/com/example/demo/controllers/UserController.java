@@ -28,22 +28,14 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> signUpUser(@RequestBody SignUpRequest signUpRequest) {
-        try {
             User user = userService.signUpUser(signUpRequest);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
     }
 
-    @PostMapping("/add/{role}")
+    @PostMapping("/admin/add/{role}")
     public ResponseEntity<User> addUserByAdmin(@PathVariable Role role, @RequestBody UserDTO userDTO) {
-        try {
             User user = userService.addUserByAdmin(role, userDTO);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
     }
 
     @GetMapping("/admin/{id}")

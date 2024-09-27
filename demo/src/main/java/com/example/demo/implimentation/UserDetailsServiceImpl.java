@@ -4,7 +4,6 @@ import com.example.demo.models.User;
 import com.example.demo.repositorys.AdminRepository;
 import com.example.demo.repositorys.LivreurRepository;
 import com.example.demo.repositorys.UtilisateurRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

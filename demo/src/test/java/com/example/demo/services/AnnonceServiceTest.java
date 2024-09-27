@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
@@ -46,7 +45,7 @@ class AnnonceServiceTest {
     }
 
     @Test
-    void testCreateAnnonce() throws IOException {
+    void testCreateAnnonce()  {
         // Arrange
         AnnonceCreateDTO annonceCreateDTO = new AnnonceCreateDTO();
         annonceCreateDTO.setTitle("Test Title");

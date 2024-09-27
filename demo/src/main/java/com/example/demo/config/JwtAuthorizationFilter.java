@@ -1,7 +1,9 @@
 package com.example.demo.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,19 +43,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                         .parseClaimsJws(jwt)
                         .getBody();
 
-
                 String username = claims.getSubject();
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            } catch (ExpiredJwtException e) {
                 logger.warn("JWT token is expired");
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT token is expired");
                 return;
-            } catch (io.jsonwebtoken.SignatureException e) {
-                logger.warn("Invalid JWT signature");
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT signature");
+            } catch (JwtException e) {
+                logger.warn("Invalid JWT signature or token");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT signature or token");
                 return;
             } catch (Exception e) {
                 logger.error("Authentication failed", e);

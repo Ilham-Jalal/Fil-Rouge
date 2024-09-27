@@ -17,7 +17,7 @@ public class Livreur extends User {
 
     @OneToMany(mappedBy = "livreur")
     @JsonIgnore
-    private List<Livraison> livraisons;
+    private transient List<Livraison> livraisons;
 
     @ManyToOne
     @JoinColumn(name = "utilisateur_id")
