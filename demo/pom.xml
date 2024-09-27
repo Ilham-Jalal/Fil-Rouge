@@ -23,8 +23,8 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.release>17</maven.compiler.release>
-		<sonar.projectKey>demo</sonar.projectKey>
-		<sonar.projectName>demo</sonar.projectName>
+		<sonar.projectKey>Occaplace</sonar.projectKey>
+		<sonar.projectName>Occaplace</sonar.projectName>
 		<sonar.projectVersion>0.0.1-SNAPSHOT</sonar.projectVersion>
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 		<sonar.java.source>17</sonar.java.source>
@@ -35,6 +35,7 @@
 		<sonar.cpd.exclusions>**/target/**, **/src/**</sonar.cpd.exclusions>
 		<sonar.java.binaries>target/classes</sonar.java.binaries>
 		<sonar.junit.reportsPath>**/target/surefire-reports/TEST-*.xml</sonar.junit.reportsPath>
+		<sonar.host.url>http://localhost:9000/</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
