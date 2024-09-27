@@ -18,7 +18,7 @@ export class AnnonceService {
   createAnnonceWithImages(annonceDTO: AnnonceUpdateDTO, attachments: File[]): Observable<AnnonceCreateDTO> {
     const formData = new FormData();
     formData.append('annonce', new Blob([JSON.stringify(annonceDTO)], { type: 'application/json' }));
-    attachments.forEach((file) => formData.append('images', file, file.name)); // Modification ici
+    attachments.forEach((file) => formData.append('images', file, file.name));
 
     return this.http.post<Annonce>(`${this.apiUrl}/create`, formData).pipe(
       catchError(error => {

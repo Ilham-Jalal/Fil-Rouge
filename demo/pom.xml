@@ -23,8 +23,8 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.release>17</maven.compiler.release>
-		<sonar.projectKey>Occaplace</sonar.projectKey>
-		<sonar.projectName>Occaplace</sonar.projectName>
+<!--		<sonar.projectKey>Occaplace</sonar.projectKey>-->
+<!--		<sonar.projectName>Occaplace</sonar.projectName>-->
 		<sonar.projectVersion>0.0.1-SNAPSHOT</sonar.projectVersion>
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 		<sonar.java.source>17</sonar.java.source>
