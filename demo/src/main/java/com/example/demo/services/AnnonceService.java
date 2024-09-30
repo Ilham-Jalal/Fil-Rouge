@@ -143,7 +143,7 @@ public class AnnonceService {
             dto.setVendeurName(null);
             dto.setVendeurEmail(null);
         }
-
+        dto.setImages(annonce.getImages());
         return dto;
     }
 }

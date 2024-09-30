@@ -11,7 +11,7 @@ import {Annonce} from "../model/Annonce";
   providedIn: 'root'
 })
 export class AnnonceService {
-  private apiUrl = 'http://localhost:8181/user/api/annonces';
+  private apiUrl = 'http://localhost:8180/user/api/annonces';
 
   constructor(private http: HttpClient) { }
 
