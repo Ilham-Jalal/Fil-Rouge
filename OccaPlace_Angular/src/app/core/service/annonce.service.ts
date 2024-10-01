@@ -15,18 +15,19 @@ export class AnnonceService {
 
   constructor(private http: HttpClient) { }
 
-  createAnnonceWithImages(annonceDTO: AnnonceUpdateDTO, attachments: File[]): Observable<AnnonceCreateDTO> {
+  createAnnonceWithImages(annonceDTO: AnnonceUpdateDTO, attachments: File[]): Observable<AnnonceResponseDTO> {
     const formData = new FormData();
     formData.append('annonce', new Blob([JSON.stringify(annonceDTO)], { type: 'application/json' }));
     attachments.forEach((file) => formData.append('images', file, file.name));
 
-    return this.http.post<Annonce>(`${this.apiUrl}/create`, formData).pipe(
+    return this.http.post<AnnonceResponseDTO>(`${this.apiUrl}/create`, formData).pipe(
       catchError(error => {
         console.error('Erreur lors de l\'appel API:', error);
         return throwError(error);
       })
     );
   }
+
 
   getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
     return this.http.get<AnnonceResponseDTO[]>(this.apiUrl);
@@ -49,6 +50,7 @@ export class AnnonceService {
   }
 
   searchAnnonces(title: string, description: string, category: Categorie, priceMin: number, priceMax: number): Observable<AnnonceResponseDTO[]> {
+    console.log('Recherche avec les paramètres :', { title, description, category, priceMin, priceMax }); // Ajoutez ceci
     return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/search`, {
       params: {
         title,

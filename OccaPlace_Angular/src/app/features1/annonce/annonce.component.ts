@@ -40,15 +40,20 @@ export class AnnonceComponent implements OnInit {
   };
   editCommentaire?: CommentaireDto;
   selectedFiles: File[] = [];
-  searchQuery: { title: string, description: string, category: Categorie, priceMin: number, priceMax: number } = {
+  searchQuery: {
+    title: string;
+    description: string;
+    category: Categorie;
+    priceMin: number;
+    priceMax: number;
+  } = {
     title: '',
     description: '',
     category: Categorie.AUTRE,
     priceMin: 0,
     priceMax: 10000
   };
-
-  categorieKeys = Object.keys(Categorie);
+  categorieKeys = Object.keys(Categorie) as Array<keyof typeof Categorie>;
   disponibiliteKeys = Object.keys(Disponibilite);
 
   constructor(
@@ -67,33 +72,7 @@ export class AnnonceComponent implements OnInit {
     });
   }
 
-  createAnnonceWithImages(): void {
-    if (this.selectedFiles.length === 0) {
-      console.error('Aucun fichier sélectionné');
-      return;
-    }
 
-    const formData = new FormData();
-    formData.append('title', this.updateAnnonceData.title || '');
-    formData.append('description', this.updateAnnonceData.description || '');
-    formData.append('price', this.updateAnnonceData.price.toString());
-    formData.append('category', this.updateAnnonceData.category);
-    formData.append('disponibilite', this.updateAnnonceData.disponibilite);
-
-    this.selectedFiles.forEach(file => formData.append('attachments', file));
-
-    this.annonceService.createAnnonceWithImages(this.updateAnnonceData, this.selectedFiles).subscribe({
-      next: (data) => {
-        this.annonces.push(<AnnonceResponseDTO>data);
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error('Erreur lors du téléchargement de l\'image', err);
-        alert('Erreur: ' + (err.error?.message || err.message)); // Affichez un message d'erreur
-      }
-    });
-
-  }
 
   updateAnnonce(): void {
     if (this.selectedAnnonce) {
@@ -115,6 +94,16 @@ export class AnnonceComponent implements OnInit {
       });
     }
   }
+  resetSearch(): void {
+    this.searchQuery = {
+      title: '',
+      description: '',
+      category: Categorie.AUTRE,
+      priceMin: 0,
+      priceMax: 10000
+    };
+    this.getAllAnnonces(); // Optionally reload all annonces
+  }
 
   deleteAnnonce(id: number): void {
     this.annonceService.deleteAnnonce(id).subscribe({
@@ -125,13 +114,7 @@ export class AnnonceComponent implements OnInit {
     });
   }
 
-  searchAnnonces(): void {
-    const { title, description, category, priceMin, priceMax } = this.searchQuery;
-    this.annonceService.searchAnnonces(title, description, category, priceMin, priceMax).subscribe({
-      next: (data) => this.annonces = data,
-      error: (err) => console.error('Erreur lors de la recherche des annonces', err)
-    });
-  }
+
 
   onFileChange(event: any): void {
     this.selectedFiles = Array.from(event.target.files);
@@ -197,4 +180,24 @@ export class AnnonceComponent implements OnInit {
       this.editCommentaire = commentaire;
     }
   }
+
+  onAnnonceAdded(annonce: AnnonceResponseDTO): void {
+    this.annonces.push(annonce);
+  }
+
+  onAnnonceSearched(annonces: AnnonceResponseDTO[]): void {
+    this.annonces = annonces;
+  }
+// annonce.component.ts
+  searchAnnonces(): void {
+    this.annonceService.searchAnnonces(this.searchQuery.title, this.searchQuery.description, this.searchQuery.category, this.searchQuery.priceMin, this.searchQuery.priceMax)
+      .subscribe({
+        next: (data) => this.annonces = data,
+        error: (err) => console.error('Erreur lors de la recherche des annonces', err)
+      });
+  }
+
+
+  protected readonly Categorie = Categorie;
 }
+/////////////

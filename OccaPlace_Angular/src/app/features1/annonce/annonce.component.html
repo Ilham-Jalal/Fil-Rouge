@@ -1,81 +1,122 @@
-<div class="annonce-container">
-  <h1>Gestion des Annonces</h1>
+<app-header2></app-header2>
+<app-hero2 (annonceAdded)="onAnnonceAdded($event)"></app-hero2>
 
-  <form (ngSubmit)="selectedAnnonce ? updateAnnonce() : createAnnonceWithImages()">
-    <div>
-      <label>Titre:</label>
-      <input type="text" [(ngModel)]="updateAnnonceData.title" name="title" required>
-    </div>
-
-    <div>
-      <label>Description:</label>
-      <textarea [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>
-    </div>
-
-    <div>
-      <label>Prix:</label>
-      <input type="number" [(ngModel)]="updateAnnonceData.price" name="price" required>
-    </div>
-
-    <div>
-      <label>Catégorie:</label>
-      <select [(ngModel)]="updateAnnonceData.category" name="category" required>
-        <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>
-      </select>
-    </div>
-
-    <div>
-      <label>Disponibilité:</label>
-      <select [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite" required>
-        <option *ngFor="let key of disponibiliteKeys" [value]="key">{{ key }}</option>
-      </select>
-    </div>
-
-    <div>
-      <label>Images:</label>
-      <input type="file" (change)="onFileChange($event)" multiple>
-    </div>
-
-    <button type="submit">{{ selectedAnnonce ? 'Mettre à jour' : 'Créer' }} l'annonce</button>
-    <button type="button" (click)="resetForm()">Annuler</button>
-  </form>
-
-  <!-- Liste des annonces -->
-  <div class="annonces-list">
-    <h2>Liste des Annonces</h2>
-    <div *ngFor="let annonce of annonces">
-      <h3>{{ annonce.title }}</h3>
-      <p>{{ annonce.description }}</p>
-      <p>Prix: {{ annonce.price }}€</p>
-      <p>Catégorie: {{ annonce.category }}</p>
-      <p>Disponibilité: {{ annonce.disponibilite }}</p>
-
-      <!-- Affichage des images -->
-      <div *ngIf="annonce.images && annonce.images.length > 0">
-        <h4>Images:</h4>
-        <div *ngFor="let image of annonce.images">
-          <img [src]="image" alt="Annonce Image"  style="max-width: 100px; margin-right: 10px;" />
+  <div class="div">
+      <div class="div-2">
+        <div class="Partenaire-Idéal">Partenaire Idéal</div>
+        <div class="nous-donnons-la-priorite-a-la-mode-durable">
+          NOUS DONNONS LA PRIORITÉ À LA MODE DURABLE
+        </div>
+        <div
+          class="decouvrez-une-selection-unique-de-vetements-de-seconde-main-soigneusement-choisis-pour-vous-chez-occa-place-nous-croyons-en-leconomie-circulaire-et-a-la-qualite-a-petit-prix-pour-que-vous-puissiez-vous-habiller-tout-en-preservant-lenvironnement">
+          Découvrez une sélection unique de vêtements de seconde main,
+          soigneusement choisis pour vous. Chez OccaPlace, nous croyons en
+          l'économie circulaire et à la qualité à petit prix, pour que vous
+          puissiez vous habiller tout en préservant l'environnement.
         </div>
       </div>
 
-      <button (click)="selectAnnonce(annonce)">Modifier</button>
-      <button (click)="deleteAnnonce(annonce.id)">Supprimer</button>
+    <div class="column-2">
+      <img
+        loading="lazy"
+        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f810e752448b74ac46632fa43bac55d9a4bdc50e75ecd53d401f8057113be681?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa"
+        class="img"
+      />
     </div>
   </div>
+<div class="annonce-search-form" >
+  <h2>Recherche d'annonces</h2>
+  <form (ngSubmit)="searchAnnonces()" style="display:flex; ">
+    <div>
+      <label for="title">Titre:</label>
+      <input type="text" id="title" [(ngModel)]="searchQuery.title" name="title" />
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <input type="text" id="description" [(ngModel)]="searchQuery.description" name="description" />
+    </div>
+    <div>
+      <label for="category">Catégorie:</label>
+      <select id="category" [(ngModel)]="searchQuery.category" name="category">
+        <option *ngFor="let key of categorieKeys" [ngValue]="Categorie[key]">{{ key }}</option>
+      </select>
+    </div>
+    <div>
+      <label for="priceMin">Prix Minimum:</label>
+      <input type="number" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0" />
+    </div>
+    <div>
+      <label for="priceMax">Prix Maximum:</label>
+      <input type="number" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000" />
+    </div>
+    <button type="submit">Rechercher</button>
+    <button type="button" (click)="resetSearch()">Réinitialiser</button>
+  </form>
+</div>
 
+<div class="annonce-container">
+<!--   Formulaire pour créer ou mettre à jour une annonce-->
+<!--  <form (ngSubmit)="selectedAnnonce ? updateAnnonce() : createAnnonceWithImages()">-->
+<!--    <div>-->
+<!--      <label>Titre:</label>-->
+<!--      <input type="text" [(ngModel)]="updateAnnonceData.title" name="title" required>-->
+<!--    </div>-->
 
-  <!-- Commentaires -->
-  <div class="commentaires-section" *ngIf="selectedAnnonce">
-    <h3>Commentaires</h3>
-    <form (ngSubmit)="createCommentaire(selectedAnnonce.id)">
-      <textarea [(ngModel)]="newCommentaire.contenu" name="contenu" required></textarea>
-      <button type="submit">Ajouter un commentaire</button>
-    </form>
+<!--    <div>-->
+<!--      <label>Description:</label>-->
+<!--      <textarea [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>-->
+<!--    </div>-->
 
-    <div *ngFor="let commentaire of commentaires">
-      <p>{{ commentaire.utilisateurName }}: {{ commentaire.contenu }}</p>
-      <button (click)="updateCommentaire(commentaire)">Modifier</button>
-      <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+<!--    <div>-->
+<!--      <label>Prix:</label>-->
+<!--      <input type="number" [(ngModel)]="updateAnnonceData.price" name="price" required>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <label>Catégorie:</label>-->
+<!--      <select [(ngModel)]="updateAnnonceData.category" name="category" required>-->
+<!--        <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>-->
+<!--      </select>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <label>Disponibilité:</label>-->
+<!--      <select [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite" required>-->
+<!--        <option *ngFor="let key of disponibiliteKeys" [value]="key">{{ key }}</option>-->
+<!--      </select>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <label>Images:</label>-->
+<!--      <input type="file" (change)="onFileChange($event)" multiple>-->
+<!--    </div>-->
+
+<!--    <button type="submit">{{ selectedAnnonce ? 'Mettre à jour' : 'Créer' }} l'annonce</button>-->
+<!--    <button type="button" (click)="resetForm()">Annuler</button>-->
+<!--  </form>-->
+
+  <!-- Liste des annonces affichées sous forme de cartes -->
+  <div class="annonces-list">
+    <div class="annonce-card" *ngFor="let annonce of annonces">
+      <div class="annonce-image">
+        <img [src]="annonce.images || 'default-image.jpg'" alt="{{ annonce.title }}">
+      </div>
+      <div class="background1">
+      <div class="annonce-details" style="display: flex;  justify-content: space-around" >
+        <h3>{{ annonce.title }}</h3>
+        <div style="display: flex"> <img src="assets/icons8-price-50.png" alt="price" width="25" height="25" style="margin-top:   -6px">
+        <p>Prix : {{ annonce.price }}Dhs</p></div>
+      </div>
+      <div style="display: flex; justify-content: space-around" >
+      <div class="annonce-actions">
+        <button class="btn-details">Voir les détails</button>
+      </div>
+      <p style="font: 700 10px Poppins; margin-top: 35px">{{ annonce.creationDate }}</p></div>
+      <div class="annonce-icons">
+        <i class="icon-heart"><img src="assets/images%20(1).png" alt="favoris" width="32"></i> <!-- Favori -->
+      </div>
     </div>
   </div>
 </div>
+</div>
+<app-footer></app-footer>

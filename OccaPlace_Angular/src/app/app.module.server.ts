@@ -9,7 +9,6 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     AppModule,
     ServerModule,
-    HttpClientModule,
   ],
   bootstrap: [AppComponent],
 })

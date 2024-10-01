@@ -8,7 +8,6 @@ import {AnnonceListComponent} from "./features1/annonce-list/annonce-list.compon
 import {AnnoncesByCategoryComponent} from "./features1/annonces-by-category/annonces-by-category.component";
 import {HomeComponent} from "./features1/home/home.component";
 import {AuthGuard} from "./core/service/autGuard.service";
-import {Header2Component} from "./features1/header2/header2.component";
 import {CategoriesComponent} from "./features1/categories/categories.component";
 
 const routes: Routes = [

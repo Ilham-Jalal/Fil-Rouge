@@ -1,18 +1,20 @@
 <div class="hero">
   <div class="div-6">
     <div class="div-7">
-      <div class="column" >
+      <div class="column">
         <div class="div-8">
           <div class="bienvenue-sur-occa-place">Bienvenue sur OccaPlace</div>
           <div class="achetez-et-vendez-en-toute-confiance-sur-occa-place">
             Achetez et vendez en toute confiance sur OccaPlace
           </div>
-          <div class="se-connecter-2" style="display: flex; width: 30%"><img
-            loading="lazy"
-            srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa"
-            class="img-8"
-          />
-            <div class="deposer-une-annonce">Déposer une annonce</div></div>
+          <div class="se-connecter-2" style="display: flex; width: 30%">
+            <img loading="lazy"
+                 srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/4db98e1354ed8cfcb79539106c49bd4100406f469bfed3b81efe5a19a043d211?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa"
+                 class="img-8" />
+            <div class="deposer-une-annonce">
+              <button (click)="toggleAnnonceForm()">Déposer une annonce</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="column-2">
@@ -26,3 +28,38 @@
   </div>
 </div>
 
+<div *ngIf="showAnnonceForm">
+  <form (ngSubmit)="createAnnonceWithImages()">
+    <div>
+      <label>Titre:</label>
+      <input type="text" [(ngModel)]="updateAnnonceData.title" name="title" required />
+    </div>
+    <div>
+      <label>Description:</label>
+      <textarea [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>
+    </div>
+    <div>
+      <label>Prix:</label>
+      <input type="number" [(ngModel)]="updateAnnonceData.price" name="price" required />
+    </div>
+    <div>
+      <label>Catégorie:</label>
+      <select [(ngModel)]="updateAnnonceData.category" name="category" required>
+        <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Disponibilité:</label>
+      <select [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite" required>
+        <option *ngFor="let key of disponibiliteKeys" [value]="key">{{ key }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Images:</label>
+      <input type="file" (change)="onFileChange($event)" multiple />
+    </div>
+    <button type="submit">Créer l'annonce</button>
+    <button type="button" (click)="resetForm()">Annuler</button>
+  </form>
+
+</div>
