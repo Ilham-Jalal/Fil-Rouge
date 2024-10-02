@@ -32,13 +32,8 @@
     <p>Recherche d'annonces</p>
     <form (ngSubmit)="searchAnnonces()">
       <mat-form-field appearance="fill">
-        <mat-label>Titre</mat-label>
-        <input matInput id="title" [(ngModel)]="searchQuery.title" name="title" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Description</mat-label>
-        <input matInput id="description" [(ngModel)]="searchQuery.description" name="description" />
+        <mat-label>Titre ou Description</mat-label>
+        <input matInput [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description" />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -64,6 +59,7 @@
       </div>
     </form>
   </div>
+
 
 
   <!-- Liste des annonces affichées sous forme de cartes -->

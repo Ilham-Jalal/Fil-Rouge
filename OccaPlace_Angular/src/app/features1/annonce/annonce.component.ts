@@ -41,18 +41,17 @@ export class AnnonceComponent implements OnInit {
   editCommentaire?: CommentaireDto;
   selectedFiles: File[] = [];
   searchQuery: {
-    title: string;
-    description: string;
+    titleOrDescription: string;
     category: Categorie;
     priceMin: number;
     priceMax: number;
   } = {
-    title: '',
-    description: '',
+    titleOrDescription: '',
     category: Categorie.AUTRE,
     priceMin: 0,
     priceMax: 10000
   };
+
   categorieKeys = Object.keys(Categorie) as Array<keyof typeof Categorie>;
   disponibiliteKeys = Object.keys(Disponibilite);
 
@@ -96,8 +95,7 @@ export class AnnonceComponent implements OnInit {
   }
   resetSearch(): void {
     this.searchQuery = {
-      title: '',
-      description: '',
+      titleOrDescription: '',
       category: Categorie.AUTRE,
       priceMin: 0,
       priceMax: 10000
@@ -190,12 +188,13 @@ export class AnnonceComponent implements OnInit {
   }
 // annonce.component.ts
   searchAnnonces(): void {
-    this.annonceService.searchAnnonces(this.searchQuery.title, this.searchQuery.description, this.searchQuery.category, this.searchQuery.priceMin, this.searchQuery.priceMax)
+    this.annonceService.searchAnnonces(this.searchQuery.titleOrDescription, this.searchQuery.category, this.searchQuery.priceMin, this.searchQuery.priceMax)
       .subscribe({
         next: (data) => this.annonces = data,
         error: (err) => console.error('Erreur lors de la recherche des annonces', err)
       });
   }
+
 
 
   protected readonly Categorie = Categorie;
