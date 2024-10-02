@@ -24,76 +24,47 @@
       />
     </div>
   </div>
-<div class="annonce-search-form" >
-  <h2>Recherche d'annonces</h2>
-  <form (ngSubmit)="searchAnnonces()" style="display:flex; ">
-    <div>
-      <label for="title">Titre:</label>
-      <input type="text" id="title" [(ngModel)]="searchQuery.title" name="title" />
-    </div>
-    <div>
-      <label for="description">Description:</label>
-      <input type="text" id="description" [(ngModel)]="searchQuery.description" name="description" />
-    </div>
-    <div>
-      <label for="category">Catégorie:</label>
-      <select id="category" [(ngModel)]="searchQuery.category" name="category">
-        <option *ngFor="let key of categorieKeys" [ngValue]="Categorie[key]">{{ key }}</option>
-      </select>
-    </div>
-    <div>
-      <label for="priceMin">Prix Minimum:</label>
-      <input type="number" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0" />
-    </div>
-    <div>
-      <label for="priceMax">Prix Maximum:</label>
-      <input type="number" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000" />
-    </div>
-    <button type="submit">Rechercher</button>
-    <button type="button" (click)="resetSearch()">Réinitialiser</button>
-  </form>
-</div>
+
 
 <div class="annonce-container">
-<!--   Formulaire pour créer ou mettre à jour une annonce-->
-<!--  <form (ngSubmit)="selectedAnnonce ? updateAnnonce() : createAnnonceWithImages()">-->
-<!--    <div>-->
-<!--      <label>Titre:</label>-->
-<!--      <input type="text" [(ngModel)]="updateAnnonceData.title" name="title" required>-->
-<!--    </div>-->
 
-<!--    <div>-->
-<!--      <label>Description:</label>-->
-<!--      <textarea [(ngModel)]="updateAnnonceData.description" name="description" required></textarea>-->
-<!--    </div>-->
+  <div class="annonce-search-form">
+    <p>Recherche d'annonces</p>
+    <form (ngSubmit)="searchAnnonces()">
+      <mat-form-field appearance="fill">
+        <mat-label>Titre</mat-label>
+        <input matInput id="title" [(ngModel)]="searchQuery.title" name="title" />
+      </mat-form-field>
 
-<!--    <div>-->
-<!--      <label>Prix:</label>-->
-<!--      <input type="number" [(ngModel)]="updateAnnonceData.price" name="price" required>-->
-<!--    </div>-->
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput id="description" [(ngModel)]="searchQuery.description" name="description" />
+      </mat-form-field>
 
-<!--    <div>-->
-<!--      <label>Catégorie:</label>-->
-<!--      <select [(ngModel)]="updateAnnonceData.category" name="category" required>-->
-<!--        <option *ngFor="let key of categorieKeys" [value]="key">{{ key }}</option>-->
-<!--      </select>-->
-<!--    </div>-->
+      <mat-form-field appearance="fill">
+        <mat-label>Catégorie</mat-label>
+        <mat-select id="category" [(ngModel)]="searchQuery.category" name="category">
+          <mat-option *ngFor="let key of categorieKeys" [value]="Categorie[key]">{{ key }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-<!--    <div>-->
-<!--      <label>Disponibilité:</label>-->
-<!--      <select [(ngModel)]="updateAnnonceData.disponibilite" name="disponibilite" required>-->
-<!--        <option *ngFor="let key of disponibiliteKeys" [value]="key">{{ key }}</option>-->
-<!--      </select>-->
-<!--    </div>-->
+      <mat-form-field appearance="fill">
+        <mat-label>Prix Minimum</mat-label>
+        <input matInput type="number" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0" />
+      </mat-form-field>
 
-<!--    <div>-->
-<!--      <label>Images:</label>-->
-<!--      <input type="file" (change)="onFileChange($event)" multiple>-->
-<!--    </div>-->
+      <mat-form-field appearance="fill">
+        <mat-label>Prix Maximum</mat-label>
+        <input matInput type="number" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000" />
+      </mat-form-field>
 
-<!--    <button type="submit">{{ selectedAnnonce ? 'Mettre à jour' : 'Créer' }} l'annonce</button>-->
-<!--    <button type="button" (click)="resetForm()">Annuler</button>-->
-<!--  </form>-->
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">Rechercher</button>
+        <button mat-raised-button color="warn" type="button" (click)="resetSearch()">Réinitialiser</button>
+      </div>
+    </form>
+  </div>
+
 
   <!-- Liste des annonces affichées sous forme de cartes -->
   <div class="annonces-list">

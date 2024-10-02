@@ -32,6 +32,7 @@ import { CategoriesComponent } from './features1/categories/categories.component
 import { Features2Component } from './features1/categories/features2/features2.component';
 import {Header2Component} from "./features1/header2/header2.component";
 import { Hero2Component } from './features1/categories/hero2/hero2.component';
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,9 @@ import { Hero2Component } from './features1/categories/hero2/hero2.component';
     AddUserComponent,
     LoginComponent,
     NgOptimizedImage,
-    Header2Component
+    Header2Component,
+    MatSelect,
+    MatOption
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

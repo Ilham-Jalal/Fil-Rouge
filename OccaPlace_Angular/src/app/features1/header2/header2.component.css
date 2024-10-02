@@ -112,7 +112,6 @@
   width: 100%;
   align-items: start;
   gap: 20px;
-  justify-content: space-between;
 }
 @media (max-width: 991px) {
   .div-6 {
