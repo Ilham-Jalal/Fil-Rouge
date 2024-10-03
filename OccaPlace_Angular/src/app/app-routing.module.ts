@@ -9,6 +9,7 @@ import {AnnoncesByCategoryComponent} from "./features1/annonces-by-category/anno
 import {HomeComponent} from "./features1/home/home.component";
 import {AuthGuard} from "./core/service/autGuard.service";
 import {CategoriesComponent} from "./features1/categories/categories.component";
+import {AnnonceDetailsComponent} from "./features1/annonce-details/annonce-details.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'annonceByCategorie', component: AnnoncesByCategoryComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: '', component: HomeComponent},
   { path: 'categories', component: CategoriesComponent},
+  { path: 'annonce-details/:id', component: AnnonceDetailsComponent},
+
 
 
 

@@ -7,6 +7,7 @@ import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
+import com.example.demo.models.Annonce;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.AnnonceService;
 import com.example.demo.services.CloudinaryService;
@@ -36,7 +37,11 @@ public class AnnonceController {
         this.userService = userService;
         this.annonceService = annonceService;
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Annonce> getAnnonceById(@PathVariable Long id) {
+        Annonce annonce = annonceService.findById(id);
+        return ResponseEntity.ok(annonce);
+    }
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnnonceResponseDTO> createAnnonce(
             @RequestPart("annonce") AnnonceCreateDTO annonceDTO,

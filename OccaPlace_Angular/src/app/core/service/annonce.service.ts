@@ -28,7 +28,9 @@ export class AnnonceService {
     );
   }
 
-
+  findById(id: number): Observable<AnnonceResponseDTO> {
+    return this.http.get<AnnonceResponseDTO>(`${this.apiUrl}/${id}`);
+  }
   getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
     return this.http.get<AnnonceResponseDTO[]>(this.apiUrl);
   }

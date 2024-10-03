@@ -33,6 +33,7 @@ import { Features2Component } from './features1/categories/features2/features2.c
 import {Header2Component} from "./features1/header2/header2.component";
 import { Hero2Component } from './features1/categories/hero2/hero2.component';
 import {MatOption, MatSelect} from "@angular/material/select";
+import { AnnonceDetailsComponent } from './features1/annonce-details/annonce-details.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
     CategoriesComponent,
     Features2Component,
     Hero2Component,
+    AnnonceDetailsComponent,
 
   ],
   imports: [

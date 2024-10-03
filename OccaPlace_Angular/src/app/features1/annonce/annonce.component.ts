@@ -6,6 +6,7 @@ import { AnnonceUpdateDTO } from '../../core/dto/AnnonceUpdateDTO';
 import { AnnonceService } from '../../core/service/annonce.service';
 import { CommentaireDto } from '../../core/dto/CommentaireDto';
 import { CommentaireService } from '../../core/service/commentaire.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-annonce',
@@ -57,7 +58,8 @@ export class AnnonceComponent implements OnInit {
 
   constructor(
     private annonceService: AnnonceService,
-    private commentaireService: CommentaireService
+    private commentaireService: CommentaireService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,11 @@ export class AnnonceComponent implements OnInit {
       });
     }
   }
+
+  viewDetails(annonceId: number): void {
+    this.router.navigate(['/annonce-details', annonceId]);
+  }
+
   resetSearch(): void {
     this.searchQuery = {
       titleOrDescription: '',

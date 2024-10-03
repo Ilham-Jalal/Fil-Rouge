@@ -76,7 +76,8 @@
       </div>
       <div style="display: flex; justify-content: space-around" >
       <div class="annonce-actions">
-        <button class="btn-details">Voir les détails</button>
+        <button class="btn-details" (click)="viewDetails(annonce.id)">Voir les détails</button>
+
       </div>
       <p style="font: 700 10px Poppins; margin-top: 35px">{{ annonce.creationDate }}</p></div>
       <div class="annonce-icons">
