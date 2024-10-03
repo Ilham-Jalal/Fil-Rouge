@@ -48,9 +48,10 @@ public class AnnonceService {
         return mapToResponseDTO(annonce);
     }
 
-    public Annonce findById(Long id) {
-        Optional<Annonce> annonceOpt = annonceRepository.findById(id);
-        return annonceOpt.orElseThrow(() -> new AnnonceNotFoundException("Annonce not found with id " + id));
+    public AnnonceResponseDTO findById(Long id) {
+        Annonce annonce = annonceRepository.findById(id)
+                .orElseThrow(() -> new AnnonceNotFoundException("Annonce not found with id " + id));
+        return mapToResponseDTO(annonce);
     }
 
     public AnnonceResponseDTO updateAnnonce(Long id, AnnonceUpdateDTO updatedAnnonceDTO) {

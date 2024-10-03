@@ -140,7 +140,7 @@ export class AnnonceComponent implements OnInit {
 
   selectAnnonce(annonce: AnnonceResponseDTO): void {
     this.selectedAnnonce = annonce;
-    this.updateAnnonceData = { ...annonce };
+   // this.updateAnnonceData = { ...annonce };
   }
 
   createCommentaire(annonceId: number): void {

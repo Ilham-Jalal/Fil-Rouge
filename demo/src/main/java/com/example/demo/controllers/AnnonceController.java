@@ -38,10 +38,11 @@ public class AnnonceController {
         this.annonceService = annonceService;
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Annonce> getAnnonceById(@PathVariable Long id) {
-        Annonce annonce = annonceService.findById(id);
+    public ResponseEntity<AnnonceResponseDTO> getAnnonceById(@PathVariable Long id) {
+        AnnonceResponseDTO annonce = annonceService.findById(id);
         return ResponseEntity.ok(annonce);
     }
+
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnnonceResponseDTO> createAnnonce(
             @RequestPart("annonce") AnnonceCreateDTO annonceDTO,

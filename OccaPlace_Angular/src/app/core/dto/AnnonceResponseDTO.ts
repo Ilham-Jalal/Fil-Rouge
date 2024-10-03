@@ -11,7 +11,7 @@ export interface AnnonceResponseDTO {
   disponibilite: Disponibilite;
   creationDate: string;
   vendeurId: number;
-  vendeurName: string;
+  vendeurName?: string;
   vendeurEmail: string;
   acheteurId?: number;
   livraisonId?: number;

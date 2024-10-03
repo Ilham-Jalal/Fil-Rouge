@@ -13,7 +13,7 @@ export class Hero2Component {
 
   @Output() annonceAdded: EventEmitter<AnnonceResponseDTO> = new EventEmitter<AnnonceResponseDTO>();
   annonces: AnnonceResponseDTO[] = [];
-  showAnnonceForm = false;  // Variable pour afficher/masquer le formulaire
+  showAnnonceForm = false;
   updateAnnonceData = {
     title: '',
     description: '',
@@ -39,7 +39,7 @@ export class Hero2Component {
     this.annonceService.createAnnonceWithImages(this.updateAnnonceData, this.selectedFiles).subscribe({
       next: (data: AnnonceResponseDTO) => {
         this.annonces.push(data);
-        this.annonceAdded.emit(data);  // Emit the event when the annonce is successfully created
+        this.annonceAdded.emit(data);
         this.resetForm();
         this.showAnnonceForm = false;
       },

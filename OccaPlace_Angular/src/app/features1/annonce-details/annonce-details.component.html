@@ -1,19 +1,35 @@
-<div class="annonce-details-container" *ngIf="annonce">
-  <h2>Détails de l'annonce</h2>
-
-  <div class="annonce-detail">
-    <h3>{{ annonce.title }}</h3>
-    <p><strong>Vendeur :</strong> {{ annonce.vendeurName }} ({{ annonce.vendeurEmail }})</p>
-    <p><strong>Prix :</strong> {{ annonce.price }} Dhs</p>
-    <p><strong>Description :</strong> {{ annonce.description }}</p>
-    <p><strong>Catégorie :</strong> {{ annonce.category }}</p>
-    <p><strong>Disponibilité :</strong> {{ annonce.disponibilite }}</p>
-    <p><strong>Date de création :</strong> {{ annonce.creationDate | date: 'short' }}</p>
-    <div class="annonce-images">
-      <div *ngFor="let img of annonce.images">
-        <img [src]="img" alt="{{ annonce.title }}" />
-      </div>
+<div class="card">
+  <div class="card-content">
+    <div class="image-container">
+      <img [src]="annonce?.images" [alt]="annonce?.title">
     </div>
-    <button mat-raised-button color="primary" (click)="backToList()">Retour aux annonces</button>
+    <div class="details-container">
+      <div class="user-info">
+        <div class="user">
+          <span class="username">{{ annonce?.vendeurName ?? 'Nom inconnu' }}</span>
+        </div>
+        <div class="annonce-icons">
+          <i class="icon-heart"><img src="assets/images%20(1).png" alt="favoris" width="32"></i>
+        </div>
+      </div>
+      <h2 class="product-title">{{ annonce?.title }}</h2>
+      <p class="product-price">{{ annonce?.price }} Dhs</p>
+      <p class="product-description" [class.expanded]="isDescriptionExpanded" (click)="toggleDescription()">
+        {{ annonce?.description ?? 'Description indisponible' }}
+      </p>
+
+      <a *ngIf="(annonce?.description?.length ?? 0) > 100" (click)="toggleDescription()">
+        {{ isDescriptionExpanded ? 'Voir moins' : 'Voir plus' }}
+      </a>
+      <div class="badges">
+        <span class="badge available">{{ annonce?.disponibilite }}</span>
+        <span class="badge category">{{ annonce?.category }}</span>
+      </div>
+      <div class="date-time">
+        <span class="date"><i class="calendar-icon"><img style="margin-top: 5px" src="assets/icons8-date-24.png" alt="date"></i> {{ annonce?.creationDate }}</span>
+      </div>
+      <button class="buy-button">ACHETER MAINTENANT</button>
+      <button class="comments-button">commentaires</button>
+    </div>
   </div>
 </div>
