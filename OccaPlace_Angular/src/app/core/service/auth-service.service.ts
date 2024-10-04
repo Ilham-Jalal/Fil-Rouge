@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { DecodejwtService } from './decodejwt-service.service';
 import { LoginRequest } from '../dto/LoginRequest';
 import { SignUpRequest } from '../dto/SignUpRequest';
-import {Role} from "../enum/Role";
-import {User} from "../model/User";
-import {UserDTO} from "../dto/UserDTO";
+import { Role } from "../enum/Role";
+import { User } from "../model/User";
+import { UserDTO } from "../dto/UserDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -23,17 +23,13 @@ export class AuthService {
     return this.http.post<{ token: string; role: string }>(`${this.apiUrl}/login`, loginRequest);
   }
 
-
-
-  logout(){
-    const token = localStorage.getItem('jwt');
+  logout() {
     localStorage.removeItem('jwt');
   }
 
-  getCurrentUserRole(): string | null {
+  getCurrentUserRole(): any | null {
     const token = localStorage.getItem('jwt');
     if (token) {
-      console.log("tttttttttttttttttttt "+token)
       const decodedToken = this.decodejwtService.decodeToken(token);
       return decodedToken?.roles || null;
     }
@@ -43,6 +39,18 @@ export class AuthService {
   findIdByUsername(username: string | null): Observable<any> {
     return this.http.get(`${this.apiUrl}/findi?username=${username}`);
   }
+
   findAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/admin/users`);
-  }}
+  }
+
+  // Add the getCurrentUserId function here
+  getCurrentUserId(): string | null {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      const decodedToken = this.decodejwtService.decodeToken(token);
+      return decodedToken?.sub || null;  // Assuming 'sub' contains the user ID
+    }
+    return null;
+  }
+}

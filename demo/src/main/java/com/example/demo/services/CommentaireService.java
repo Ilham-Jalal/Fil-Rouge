@@ -74,6 +74,7 @@ public class CommentaireService {
 
         if (commentaire.getUtilisateur() != null) {
             dto.setUtilisateurName(commentaire.getUtilisateur().getUsername());
+            dto.setUtilisateurId(commentaire.getUtilisateur().getId());
         }
 
         if (commentaire.getAnnonce() != null) {

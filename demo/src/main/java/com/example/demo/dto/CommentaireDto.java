@@ -18,4 +18,6 @@ public class CommentaireDto {
 
     private Long annonceId;
 
+    private Long utilisateurId;
+
 }

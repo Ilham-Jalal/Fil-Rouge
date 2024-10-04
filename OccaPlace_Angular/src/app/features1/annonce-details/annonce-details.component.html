@@ -26,10 +26,33 @@
         <span class="badge category">{{ annonce?.category }}</span>
       </div>
       <div class="date-time">
-        <span class="date"><i class="calendar-icon"><img style="margin-top: 5px" src="assets/icons8-date-24.png" alt="date"></i> {{ annonce?.creationDate }}</span>
+        <span class="date"><i class="calendar-icon"><img style="margin-top: 5px" src="assets/icons8-date-24.png" alt="date"></i> {{ annonce?.creationDate | date: 'short' }}</span>
       </div>
       <button class="buy-button">ACHETER MAINTENANT</button>
-      <button class="comments-button">commentaires</button>
+      <button class="comments-button" (click)="toggleComments()">Commentaires</button>
     </div>
+  </div>
+
+  <!-- Section des commentaires -->
+  <div class="comments-section" *ngIf="commentsVisible">
+    <h3>Commentaires</h3>
+
+    <!-- Afficher la liste des commentaires -->
+    <div *ngFor="let commentaire of commentaires">
+      <div class="comment">
+        <span class="username">{{ commentaire.utilisateurName }}</span> <!-- Le nom de l'utilisateur -->
+        <span class="comment-date">{{ commentaire.dateCreation | date: 'short' }}</span>
+        <p class="comment-content">{{ commentaire.contenu }}</p>
+        <button *ngIf="commentaire.utilisateurId === currentUserId" (click)="updateCommentaire(commentaire)">Modifier</button>
+        <button *ngIf="commentaire.utilisateurId === currentUserId" (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+      </div>
+    </div>
+
+    <!-- Formulaire pour ajouter un nouveau commentaire -->
+<!--    <div class="new-comment">-->
+<!--      <textarea [(ngModel)]="newComment" placeholder="Écrivez votre commentaire ici..."></textarea>-->
+<!--      <button (click)="createNewComment()">Publier</button> &lt;!&ndash; Renommez la méthode ici &ndash;&gt;-->
+<!--    </div>-->
+
   </div>
 </div>
