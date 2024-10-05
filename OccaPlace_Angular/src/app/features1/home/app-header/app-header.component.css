@@ -1,14 +1,13 @@
 
 .div {
-  background-color: #50489D;
+  background-color: rgba(80, 72, 157, 1);
   align-self: end;
   display: flex;
-  width: 1216px;
-  max-width: 1216px;
-  color: var(--White, #fff);
+  width: 100%;
+  max-width: 100%;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   flex-wrap: wrap;
   justify-content: space-between;
   font: 400 15px Poppins, sans-serif;
@@ -19,23 +18,22 @@
   }
 }
 .ligne {
-  background-color: rgba(79, 75, 75, 0.25);
+  background-color: rgb(19, 10, 10);
   height: 1px;
-  border: 1px solid rgba(87, 84, 84, 0.25);
+  border: 1px solid rgb(19, 10, 10);
 }
 .img {
   aspect-ratio: 1.33;
   object-fit: contain;
   object-position: center;
-  width: 97px;
-  margin: auto 0;
+  width: 100px;
+  margin-left: 50px;
 }
 .div-2 {
   display: flex;
 
 }
 .div-3 {
-  background-color: rgba(229, 116, 24, 1);
   display: flex;
   flex-direction: column;
   white-space: nowrap;

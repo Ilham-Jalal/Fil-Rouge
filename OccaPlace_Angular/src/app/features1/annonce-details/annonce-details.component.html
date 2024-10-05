@@ -1,3 +1,5 @@
+<app-header2></app-header2>
+
 <div class="card">
   <div class="card-content">
     <div class="image-container">
@@ -32,7 +34,6 @@
       <button class="comments-button" (click)="toggleComments()">Commentaires</button>
     </div>
   </div>
-
   <!-- Section des commentaires -->
   <div class="comments-section" *ngIf="commentsVisible">
     <h3>Commentaires</h3>
@@ -40,19 +41,24 @@
     <!-- Afficher la liste des commentaires -->
     <div *ngFor="let commentaire of commentaires">
       <div class="comment">
-        <span class="username">{{ commentaire.utilisateurName }}</span> <!-- Le nom de l'utilisateur -->
-        <span class="comment-date">{{ commentaire.dateCreation | date: 'short' }}</span>
+        <div class="comment-header">
+          <span class="username">{{ commentaire.utilisateurName }}</span>
+          <span class="comment-date">{{ commentaire.dateCreation | date: 'short' }}</span>
+        </div>
         <p class="comment-content">{{ commentaire.contenu }}</p>
-        <button *ngIf="commentaire.utilisateurId === currentUserId" (click)="updateCommentaire(commentaire)">Modifier</button>
-        <button *ngIf="commentaire.utilisateurId === currentUserId" (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+        <div class="comment-actions">
+          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)" (click)="updateCommentaire(commentaire)">Modifier</button>
+          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)" (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+        </div>
       </div>
     </div>
 
     <!-- Formulaire pour ajouter un nouveau commentaire -->
-<!--    <div class="new-comment">-->
-<!--      <textarea [(ngModel)]="newComment" placeholder="Écrivez votre commentaire ici..."></textarea>-->
-<!--      <button (click)="createNewComment()">Publier</button> &lt;!&ndash; Renommez la méthode ici &ndash;&gt;-->
-<!--    </div>-->
-
+    <div class="new-comment">
+      <textarea [(ngModel)]="newComment" placeholder="Écrivez votre commentaire ici..."></textarea>
+      <button (click)="createCommentaire(annonce?.id)">Publier</button> <!-- Passez l'ID de l'annonce ici -->
+    </div>
   </div>
+
 </div>
+<app-footer></app-footer>

@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.CommentaireDto;
+import com.example.demo.exceptions.AccesNonAutoriseException;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.CommentaireService;
 import com.example.demo.services.UserService;
@@ -66,16 +67,41 @@ public class CommentaireController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentaireDto> updateCommentaire(@PathVariable Long id, @RequestBody CommentaireDto commentaireDto) {
-        Optional<CommentaireDto> updatedCommentaireDto = commentaireService.updateCommentaire(id, commentaireDto);
-        return updatedCommentaireDto.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CommentaireDto> updateCommentaire(
+            @PathVariable Long id,
+            @RequestBody CommentaireDto commentaireDto) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Utilisateur user = optionalUser.get();
+        try {
+            Optional<CommentaireDto> updatedCommentaireDto = commentaireService.updateCommentaire(id, commentaireDto, user.getId());
+            return updatedCommentaireDto.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        } catch (AccesNonAutoriseException ex) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCommentaire(@PathVariable Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Utilisateur user = optionalUser.get();
         if (commentaireService.getCommentaireById(id).isPresent()) {
-            commentaireService.deleteCommentaire(id);
+            commentaireService.deleteCommentaire(id, user.getId());
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

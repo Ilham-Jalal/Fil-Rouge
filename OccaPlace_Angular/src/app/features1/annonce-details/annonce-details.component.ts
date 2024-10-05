@@ -15,7 +15,7 @@ export class AnnonceDetailsComponent implements OnInit {
   annonce: AnnonceResponseDTO | undefined;
   commentaires: CommentaireDto[] = [];
   newComment: string = '';
-  currentUserId: string | null = null;
+  currentUserId: string | null = null; // Get the current user's ID
   commentsVisible: boolean = false;
   isDescriptionExpanded: boolean = false;
 
@@ -23,7 +23,7 @@ export class AnnonceDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private annonceService: AnnonceService,
     private commentaireService: CommentaireService,
-    private authService: AuthService,
+    private authService: AuthService, // Inject AuthService to get user info
     private router: Router
   ) {}
 
@@ -38,6 +38,7 @@ export class AnnonceDetailsComponent implements OnInit {
       );
     }
 
+    // Get the current user's ID
     this.currentUserId = this.authService.getCurrentUserId();
   }
 
@@ -52,25 +53,30 @@ export class AnnonceDetailsComponent implements OnInit {
     );
   }
 
-  createNewComment(): void {
-    if (this.newComment.trim() && this.annonce?.id && this.currentUserId) {
-      const commentaireDto: CommentaireDto = {
-        utilisateurName: "",
-        contenu: this.newComment,
-        utilisateurId: Number(this.currentUserId),
-        annonceId: this.annonce.id,
-        dateCreation: new Date().toISOString() // assurez-vous que le format est compatible avec votre backend
-      };
+  createCommentaire(annonceId: number | undefined): void {
+    if (this.newComment.trim() === '') return;
 
-      this.commentaireService.createCommentaire(commentaireDto, this.annonce.id).subscribe(
-        (newComment) => {
-          this.commentaires.push(newComment);
-          this.newComment = '';
-        }
-      );
-    }
+    const commentaireDto: {
+      utilisateurName: string;
+      dateCreation: string;
+      utilisateurId: number;
+      contenu: string;
+      annonceId: number | undefined
+    } = {
+      utilisateurId: Number(this.currentUserId),
+      contenu: this.newComment,
+      annonceId: annonceId,
+      utilisateurName: "User",
+      dateCreation: new Date().toISOString(),
+    };
+
+    this.commentaireService.createCommentaire(commentaireDto, this.annonce?.id).subscribe(
+      (newComment) => {
+        this.commentaires.push(newComment);
+        this.newComment = ''; // Réinitialiser le champ de texte
+      }
+    );
   }
-
 
 
   updateCommentaire(commentaire: CommentaireDto): void {
@@ -113,4 +119,6 @@ export class AnnonceDetailsComponent implements OnInit {
   backToList(): void {
     this.router.navigate(['/annonce']);
   }
+
+  protected readonly Number = Number;
 }

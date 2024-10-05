@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Ajouter une annonce</h2>
+<form [formGroup]="form" (ngSubmit)="onSave()">
+  <mat-form-field>
+    <mat-label>Titre</mat-label>
+    <input matInput formControlName="title" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description" required></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Prix</mat-label>
+    <input matInput formControlName="price" required type="number">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Catégorie</mat-label>
+    <mat-select formControlName="category" required>
+      <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Disponibilité</mat-label>
+    <mat-select formControlName="disponibilite" required>
+      <mat-option *ngFor="let disp of disponibilites" [value]="disp">{{ disp }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div>
+    <mat-label>Images</mat-label>
+    <input type="file" (change)="onFileChange($event)" multiple>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Annuler</button>
+    <button mat-button type="submit" [disabled]="form.invalid">Enregistrer</button>
+  </div>
+</form>

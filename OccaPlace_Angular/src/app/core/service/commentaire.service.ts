@@ -23,7 +23,7 @@ export class CommentaireService {
     return this.http.get<CommentaireDto[]>(`${this.apiUrl}/annonce/${annonceId}`);
   }
 
-  createCommentaire(commentaireDto: CommentaireDto, annonceId: number): Observable<CommentaireDto> {
+  createCommentaire(commentaireDto: { contenu: string }, annonceId: number | undefined): Observable<CommentaireDto> {
     return this.http.post<CommentaireDto>(`${this.apiUrl}/${annonceId}`, commentaireDto);
   }
 

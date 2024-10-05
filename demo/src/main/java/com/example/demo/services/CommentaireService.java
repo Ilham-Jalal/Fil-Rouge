@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CommentaireDto;
+import com.example.demo.exceptions.AccesNonAutoriseException;
 import com.example.demo.models.Annonce;
 import com.example.demo.models.Commentaire;
 import com.example.demo.models.Utilisateur;
@@ -54,17 +55,32 @@ public class CommentaireService {
         return convertToDto(commentaireRepository.save(commentaire));
     }
 
-    public Optional<CommentaireDto> updateCommentaire(Long id, CommentaireDto updatedCommentaireDto) {
-        return commentaireRepository.findById(id).map(existingCommentaire -> {
-            existingCommentaire.setContenu(updatedCommentaireDto.getContenu());
-            return convertToDto(commentaireRepository.save(existingCommentaire));
-        });
+
+    public Optional<CommentaireDto> updateCommentaire(Long id, CommentaireDto commentaireDto, Long currentUserId) {
+        Commentaire commentaire = commentaireRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Commentaire not found"));
+
+        if (!commentaire.getUtilisateur().getId().equals(currentUserId)) {
+            throw new AccesNonAutoriseException("You are not authorized to update this comment");
+        }
+
+        commentaire.setContenu(commentaireDto.getContenu());
+
+        Commentaire updatedCommentaire = commentaireRepository.save(commentaire);
+        return Optional.of(new CommentaireDto(updatedCommentaire));
     }
 
-    public void deleteCommentaire(Long id) {
+
+    public void deleteCommentaire(Long id, Long currentUserId) {
+        Commentaire commentaire = commentaireRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Commentaire not found"));
+
+        if (!commentaire.getUtilisateur().getId().equals(currentUserId)) {
+            throw new AccesNonAutoriseException("You are not authorized to delete this comment");
+        }
+
         commentaireRepository.deleteById(id);
     }
-
 
     private CommentaireDto convertToDto(Commentaire commentaire) {
         CommentaireDto dto = new CommentaireDto();

@@ -1,7 +1,7 @@
 <div class="auth-container">
   <mat-card class="form-container" [ngClass]="{'slide-left': !isLoginMode}">
     <div class="header">
-      <img src="../../../assets/OccaPlace%20Logo.jpg" class="logo" alt="logo"/>
+      <img src="/assets/OccaPlace-Logo-removebg-preview.png" class="logo" alt="logo"/>
       <mat-card-title>{{ isLoginMode ? 'Login' : 'Sign Up' }}</mat-card-title>
     </div>
     <form [formGroup]="isLoginMode ? loginForm : signUpForm" (ngSubmit)="onSubmit()">

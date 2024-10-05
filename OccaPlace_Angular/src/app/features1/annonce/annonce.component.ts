@@ -143,24 +143,31 @@ export class AnnonceComponent implements OnInit {
    // this.updateAnnonceData = { ...annonce };
   }
 
-  createCommentaire(annonceId: number): void {
-    if (this.newCommentaire.contenu.trim() === '') return;
-
-    const commentaireDto1: CommentaireDto = {
-      contenu: this.newCommentaire.contenu,
-      annonceId: this.selectedAnnonce?.id,
-      utilisateurName: 'User',
-      dateCreation: new Date()
-    };
-
-    this.commentaireService.createCommentaire(commentaireDto1, annonceId).subscribe({
-      next: (data) => {
-        this.commentaires.push(data);
-        this.newCommentaire.contenu = '';
-      },
-      error: (err) => console.error('Erreur lors de l\'ajout d\'un commentaire', err)
-    });
-  }
+  // createCommentaire(annonceId: number): void {
+  //   if (this.newCommentaire.contenu.trim() === '') return;
+  //
+  //   const commentaireDto1: {
+  //     utilisateurName: string;
+  //     dateCreation: Date;
+  //     utilisateurId: number;
+  //     contenu: string;
+  //     annonceId: number | undefined
+  //   } = {
+  //     utilisateurId: 0,
+  //     contenu: this.newCommentaire.contenu,
+  //     annonceId: this.selectedAnnonce?.id,
+  //     utilisateurName: 'User',
+  //     dateCreation: new Date()
+  //   };
+  //
+  //   this.commentaireService.createCommentaire(commentaireDto1, annonceId).subscribe({
+  //     next: (data) => {
+  //       this.commentaires.push(data);
+  //       this.newCommentaire.contenu = '';
+  //     },
+  //     error: (err) => console.error('Erreur lors de l\'ajout d\'un commentaire', err)
+  //   });
+  // }
 
   deleteCommentaire(commentaireId: number | undefined): void {
     this.commentaireService.deleteCommentaire(commentaireId).subscribe({

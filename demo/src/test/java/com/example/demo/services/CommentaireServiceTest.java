@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CommentaireDto;
+import com.example.demo.exceptions.AccesNonAutoriseException;
 import com.example.demo.models.Annonce;
 import com.example.demo.models.Commentaire;
 import com.example.demo.models.Utilisateur;
@@ -121,29 +122,76 @@ class CommentaireServiceTest {
         Commentaire commentaire = new Commentaire();
         commentaire.setId(1L);
         commentaire.setContenu("Old content");
+
+        // Create a mock Utilisateur and set it to the commentaire
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(1L); // The owner of the comment
+        commentaire.setUtilisateur(utilisateur);
+
         CommentaireDto updatedDto = new CommentaireDto();
         updatedDto.setContenu("Updated content");
 
+        // Stubbing the repository methods
         when(commentaireRepository.findById(1L)).thenReturn(Optional.of(commentaire));
         when(commentaireRepository.save(any(Commentaire.class))).thenReturn(commentaire);
 
         // When
-        Optional<CommentaireDto> result = commentaireService.updateCommentaire(1L, updatedDto);
+        Optional<CommentaireDto> result = commentaireService.updateCommentaire(1L, updatedDto, 1L); // Passing the owner ID
 
         // Then
         assertTrue(result.isPresent());
         assertEquals("Updated content", result.get().getContenu());
+        assertEquals(1L, result.get().getId()); // Check that the ID is still the same
+        verify(commentaireRepository).save(commentaire); // Ensure save was called
     }
+
 
     @Test
     void testDeleteCommentaire() {
         // Given
         Long id = 1L;
+        Long currentUserId = 1L; // Assuming the user with ID 1 is the owner
+
+        // Create a Commentaire and set the owner
+        Commentaire commentaire = new Commentaire();
+        commentaire.setId(id);
+        Utilisateur owner = new Utilisateur();
+        owner.setId(currentUserId);
+        commentaire.setUtilisateur(owner); // Set the owner
+
+        // Stubbing the repository method to return the comment
+        when(commentaireRepository.findById(id)).thenReturn(Optional.of(commentaire));
 
         // When
-        commentaireService.deleteCommentaire(id);
+        commentaireService.deleteCommentaire(id, currentUserId); // Pass the current user's ID
 
         // Then
         verify(commentaireRepository, times(1)).deleteById(id);
     }
+
+    @Test
+    void testDeleteCommentaire_Unauthorized() {
+        // Given
+        Long id = 1L;
+        Long unauthorizedUserId = 2L; // User trying to delete the comment is not the owner
+
+        // Create a Commentaire and set a different owner
+        Commentaire commentaire = new Commentaire();
+        commentaire.setId(id);
+        Utilisateur owner = new Utilisateur();
+        owner.setId(1L); // The owner has ID 1
+        commentaire.setUtilisateur(owner); // Set the owner
+
+        // Stubbing the repository method to return the comment
+        when(commentaireRepository.findById(id)).thenReturn(Optional.of(commentaire));
+
+        // When / Then
+        assertThrows(AccesNonAutoriseException.class, () -> {
+            commentaireService.deleteCommentaire(id, unauthorizedUserId); // Attempt to delete with unauthorized user ID
+        });
+
+        // Verify deleteById is never called
+        verify(commentaireRepository, never()).deleteById(id);
+    }
+
 }
