@@ -1,85 +1,75 @@
+.logo {
+  height: 40px;
+  margin-right: 16px;
+}
 
-.div {
-  background-color: rgba(80, 72, 157, 1);
-  align-self: end;
+.spacer {
+  flex: 1 1 auto;
+}
+
+button {
   display: flex;
-  width: 100%;
-  max-width: 100%;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  font: 400 15px Poppins, sans-serif;
+  padding: 12px;
+  flex-direction: column;
+  align-items: center;
 }
-@media (max-width: 991px) {
-  .div {
-    max-width: 100%;
-  }
+
+mat-icon {
+  margin-bottom: -8px;
 }
+
 .ligne {
+  margin-top: -8px;
   background-color: rgb(19, 10, 10);
-  height: 1px;
-  border: 1px solid rgb(19, 10, 10);
+  border: 1px solid rgba(19, 10, 10, 0.76);
 }
-.img {
-  aspect-ratio: 1.33;
-  object-fit: contain;
-  object-position: center;
-  width: 100px;
-  margin-left: 50px;
-}
-.div-2 {
-  display: flex;
 
-}
-.div-3 {
-  display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-  padding: 15px 20px 20px;
-}
-@media (max-width: 991px) {
-  .div-3 {
-    white-space: initial;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  mat-toolbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo {
+    height: 30px;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  button {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  mat-icon {
+    margin-bottom: 0;
+    margin-right: 4px;
+  }
+
+  span {
+    font-size: 10px;
   }
 }
-.img-2 {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 40px;
-  align-self: center;
-}
-.accueil {
-  display: flex;
-  margin-top: 7px;
-  gap: 21px;
-  color: white;
-  white-space: nowrap;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
-  font: 600 14px Poppins, sans-serif;
-}
-.div-4 {
-  align-self: start;
-  display: flex;
-  margin-top: 12px;
-  flex-direction: column;
-  padding: 1px 15px 8px;
-}
-.img-3 {
-  align-self: center;
 
-}
-.se-connecter {
-  display: flex;
-  margin-top: 6px;
-  color: white;
-  white-space: nowrap;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
-  font: 600 14px Poppins, sans-serif;
+@media (max-width: 480px) {
+  mat-toolbar {
+    padding: 8px;
+  }
+
+  button {
+    padding: 8px;
+  }
+
+  mat-icon {
+    font-size: 20px;
+  }
+
+  span {
+    font-size: 8px;
+  }
+
+  .logo {
+    height: 25px;
+  }
 }

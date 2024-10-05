@@ -1,5 +1,4 @@
 .hero {
-  background-color: #6f3fc9;
   color: white;
   text-align: center;
   padding: 50px 0;
@@ -21,14 +20,12 @@
   }
 }
 .hero{
-  background-color: #50489D;
 
 }
 .div-6 {
-  background-color: #50489D;
   width: 100%;
   max-width: 1163px;
-  margin: 0 0 0 47px;
+  margin:-40px 0 -40px 47px;
 }
 @media (max-width: 991px) {
   .div-6 {
@@ -164,6 +161,7 @@
 
 .achetez-et-vendez-en-toute-confiance-sur-occa-place {
   font-size: 30px;
+  color: black;
 }
 
 .se-connecter-2 {
@@ -239,4 +237,9 @@
 .form-actions button[type="button"] {
   background-color: #ccc;
   color: #333;
+}
+.ligne {
+  margin-top: -8px;
+  background-color: rgb(19, 10, 10);
+  border: 1px solid rgba(19, 10, 10, 0.76);
 }

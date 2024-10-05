@@ -26,7 +26,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('jwt');
   }
-
   getCurrentUserRole(): any | null {
     const token = localStorage.getItem('jwt');
     if (token) {

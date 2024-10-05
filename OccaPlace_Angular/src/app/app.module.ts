@@ -36,6 +36,7 @@ import { AnnonceDialogComponent } from './features1/annonce-dialog/annonce-dialo
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MessageComponent } from './features1/message/message.component';
 
 @NgModule({
   declarations: [
@@ -44,15 +45,14 @@ import { MatOptionModule } from '@angular/material/core';
     AnnonceListComponent,
     AnnoncesByCategoryComponent,
     HomeComponent,
-    AppHeaderComponent,
     HeroComponent,
     FeaturesComponent,
-    FooterComponent,
     CategoriesComponent,
     Features2Component,
     AnnonceDetailsComponent,
     Hero2Component,
     AnnonceDialogComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +76,8 @@ import { MatOptionModule } from '@angular/material/core';
     Header2Component,
     LoginComponent,
     AddUserComponent,
+    FooterComponent,
+    AppHeaderComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

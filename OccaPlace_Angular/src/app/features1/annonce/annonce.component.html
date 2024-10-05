@@ -29,12 +29,12 @@
 <div class="annonce-container">
 <div style="display: flex">
   <button mat-raised-button color="primary" (click)="toggleSearchForm()">
-    <mat-icon>search</mat-icon>
+    <mat-icon style="padding-right: 10px">search</mat-icon>
     {{ showSearchForm ?   '  Annuler' : 'Recherche' }}
   </button>
 
   <div *ngIf="showSearchForm" class="annonce-search-form">
-    <form (ngSubmit)="searchAnnonces()">
+    <form style="display: flex" (ngSubmit)="searchAnnonces()">
       <mat-form-field appearance="fill">
         <mat-label>Titre ou Description</mat-label>
         <input matInput [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description" />
@@ -73,17 +73,16 @@
         <img [src]="annonce.images || 'default-image.jpg'" alt="{{ annonce.title }}">
       </div>
       <div class="background1">
-      <div class="annonce-details" style="display: flex;  justify-content: space-around" >
+      <div class="annonce-details" style="display: flex; flex-direction: column; justify-content: space-between;align-items: center">
         <h3>{{ annonce.title }}</h3>
         <div style="display: flex"> <img src="assets/icons8-price-50.png" alt="price" width="25" height="25" style="margin-top:   -6px">
         <p>Prix : {{ annonce.price }}Dhs</p></div>
       </div>
       <div style="display: flex; justify-content: space-around" >
       <div class="annonce-actions">
-        <button class="btn-details" (click)="viewDetails(annonce.id)">Voir les détails</button>
-
+        <button class="btn-details" (click)="viewDetails(annonce.id)">Détails</button>
       </div>
-      <p style="font: 700 10px Poppins; margin-top: 35px">{{ annonce.creationDate }}</p></div>
+      <p style="font: 600 10px Poppins; margin-top: 30px">{{ annonce.creationDate }}</p></div>
       <div class="annonce-icons">
         <i class="icon-heart"><img src="assets/images%20(1).png" alt="favoris" width="32"></i> <!-- Favori -->
       </div>

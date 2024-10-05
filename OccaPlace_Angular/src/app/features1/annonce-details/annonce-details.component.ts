@@ -4,7 +4,7 @@ import { AnnonceResponseDTO } from "../../core/dto/AnnonceResponseDTO";
 import { AnnonceService } from "../../core/service/annonce.service";
 import { CommentaireDto } from "../../core/dto/CommentaireDto";
 import { CommentaireService } from "../../core/service/commentaire.service";
-import {AuthService} from "../../core/service/auth-service.service";
+import { AuthService } from "../../core/service/auth-service.service";
 
 @Component({
   selector: 'app-annonce-details',
@@ -15,17 +15,22 @@ export class AnnonceDetailsComponent implements OnInit {
   annonce: AnnonceResponseDTO | undefined;
   commentaires: CommentaireDto[] = [];
   newComment: string = '';
-  currentUserId: string | null = null; // Get the current user's ID
+  currentUserId: string | null = null;
   commentsVisible: boolean = false;
   isDescriptionExpanded: boolean = false;
+  messageFormVisible = false;
 
   constructor(
     private route: ActivatedRoute,
     private annonceService: AnnonceService,
     private commentaireService: CommentaireService,
-    private authService: AuthService, // Inject AuthService to get user info
+    private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
+
+  toggleMessageForm() {
+    this.messageFormVisible = !this.messageFormVisible;
+  }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -38,23 +43,22 @@ export class AnnonceDetailsComponent implements OnInit {
       );
     }
 
-    // Get the current user's ID
     this.currentUserId = this.authService.getCurrentUserId();
   }
 
   getCommentairesByAnnonce(annonceId: number): void {
     this.commentaireService.getCommentairesByAnnonce(annonceId).subscribe(
-      (commentaires) => {
+      (commentaires: CommentaireDto[]) => {
         this.commentaires = commentaires;
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération des commentaires', error);
       }
     );
   }
 
   createCommentaire(annonceId: number | undefined): void {
-    if (this.newComment.trim() === '') return;
+    if (this.newComment.trim() === '') {
+      alert('Comment cannot be empty');
+      return;
+    }
 
     const commentaireDto: {
       utilisateurName: string;
@@ -66,18 +70,17 @@ export class AnnonceDetailsComponent implements OnInit {
       utilisateurId: Number(this.currentUserId),
       contenu: this.newComment,
       annonceId: annonceId,
-      utilisateurName: "User",
+      utilisateurName: "User", // Replace with actual username
       dateCreation: new Date().toISOString(),
     };
 
     this.commentaireService.createCommentaire(commentaireDto, this.annonce?.id).subscribe(
       (newComment) => {
         this.commentaires.push(newComment);
-        this.newComment = ''; // Réinitialiser le champ de texte
+        this.newComment = '';
       }
     );
   }
-
 
   updateCommentaire(commentaire: CommentaireDto): void {
     if (commentaire.id) {
@@ -89,7 +92,7 @@ export class AnnonceDetailsComponent implements OnInit {
           }
         },
         (error) => {
-          console.error('Erreur lors de la mise à jour du commentaire', error);
+          console.error('Error updating comment', error);
         }
       );
     }
@@ -102,7 +105,7 @@ export class AnnonceDetailsComponent implements OnInit {
           this.commentaires = this.commentaires.filter(c => c.id !== commentaireId);
         },
         (error) => {
-          console.error('Erreur lors de la suppression du commentaire', error);
+          console.error('Error deleting comment', error);
         }
       );
     }

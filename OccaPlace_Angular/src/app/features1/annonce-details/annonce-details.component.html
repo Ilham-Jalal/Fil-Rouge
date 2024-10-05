@@ -3,7 +3,7 @@
 <div class="card">
   <div class="card-content">
     <div class="image-container">
-      <img [src]="annonce?.images" [alt]="annonce?.title">
+      <img [src]="annonce?.images ?? 'assets/default-image.png'" [alt]="annonce?.title">
     </div>
     <div class="details-container">
       <div class="user-info">
@@ -28,37 +28,49 @@
         <span class="badge category">{{ annonce?.category }}</span>
       </div>
       <div class="date-time">
-        <span class="date"><i class="calendar-icon"><img style="margin-top: 5px" src="assets/icons8-date-24.png" alt="date"></i> {{ annonce?.creationDate | date: 'short' }}</span>
+        <span class="date">
+          <i class="calendar-icon">
+            <img style="margin-top: 5px" src="assets/icons8-date-24.png" alt="date">
+          </i>
+          {{ annonce?.creationDate | date: 'short' }}
+        </span>
       </div>
-      <button class="buy-button">ACHETER MAINTENANT</button>
+      <button class="buy-button" (click)="toggleMessageForm()">CONTACTER LE VENDEUR</button>
+
+      <app-message *ngIf="messageFormVisible" [annonce]="annonce"></app-message>
       <button class="comments-button" (click)="toggleComments()">Commentaires</button>
     </div>
   </div>
-  <!-- Section des commentaires -->
+
   <div class="comments-section" *ngIf="commentsVisible">
     <h3>Commentaires</h3>
+    <div *ngIf="commentaires.length === 0">No comments available yet.</div>
 
-    <!-- Afficher la liste des commentaires -->
     <div *ngFor="let commentaire of commentaires">
       <div class="comment">
         <div class="comment-header">
           <span class="username">{{ commentaire.utilisateurName }}</span>
-          <span class="comment-date">{{ commentaire.dateCreation | date: 'short' }}</span>
+          <p class="comment-date">{{ commentaire?.dateCreation | date: 'short' }}</p>
         </div>
         <p class="comment-content">{{ commentaire.contenu }}</p>
         <div class="comment-actions">
-          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)" (click)="updateCommentaire(commentaire)">Modifier</button>
-          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)" (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)"
+                  (click)="updateCommentaire(commentaire)">
+            Modifier
+          </button>
+          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)"
+                  (click)="deleteCommentaire(commentaire.id)">
+            Supprimer
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Formulaire pour ajouter un nouveau commentaire -->
     <div class="new-comment">
       <textarea [(ngModel)]="newComment" placeholder="Écrivez votre commentaire ici..."></textarea>
-      <button (click)="createCommentaire(annonce?.id)">Publier</button> <!-- Passez l'ID de l'annonce ici -->
+      <button (click)="createCommentaire(annonce?.id)">Publier</button>
     </div>
   </div>
-
 </div>
+
 <app-footer></app-footer>

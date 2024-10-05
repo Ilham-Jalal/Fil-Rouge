@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.Message;
+import com.example.demo.dto.MessageCreateDTO;
+import com.example.demo.dto.MessageResponseDTO;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.MessageService;
 import com.example.demo.services.UserService;
@@ -12,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/user/api/messages")
 public class MessageController {
 
     private final MessageService messageService;
-
     private final UserService userService;
 
     public MessageController(MessageService messageService, UserService userService) {
@@ -26,7 +27,9 @@ public class MessageController {
     }
 
     @PostMapping("/send/{toUserId}")
-    public ResponseEntity<Message> sendMessage(@PathVariable Long toUserId, @RequestBody String content) {
+    public ResponseEntity<MessageResponseDTO> sendMessage(
+            @PathVariable Long toUserId,
+            @RequestBody MessageCreateDTO messageCreateDTO) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -37,11 +40,14 @@ public class MessageController {
         }
 
         Utilisateur fromUser = optionalUser.get();
-        Message message = messageService.sendMessage(fromUser, toUserId, content);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        MessageResponseDTO messageResponse = messageService.sendMessage(messageCreateDTO, fromUser);
+        return new ResponseEntity<>(messageResponse, HttpStatus.CREATED);
     }
+
     @PostMapping("/reply/{parentMessageId}")
-    public ResponseEntity<Message> replyToMessage(@PathVariable Long parentMessageId, @RequestBody String content) {
+    public ResponseEntity<MessageResponseDTO> replyToMessage(
+            @PathVariable Long parentMessageId,
+            @RequestBody MessageCreateDTO messageCreateDTO) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -52,12 +58,12 @@ public class MessageController {
         }
 
         Utilisateur fromUser = optionalUser.get();
-        Message replyMessage = messageService.replyToMessage(fromUser, parentMessageId, content);
+        MessageResponseDTO replyMessage = messageService.replyToMessage(messageCreateDTO, parentMessageId, fromUser);
         return new ResponseEntity<>(replyMessage, HttpStatus.CREATED);
     }
 
     @GetMapping("/sent")
-    public ResponseEntity<List<Message>> getSentMessages() {
+    public ResponseEntity<List<MessageResponseDTO>> getSentMessages() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
@@ -67,12 +73,12 @@ public class MessageController {
         }
 
         Utilisateur fromUser = optionalUser.get();
-        List<Message> messages = messageService.getSentMessages(fromUser.getId());
+        List<MessageResponseDTO> messages = messageService.getSentMessages(fromUser.getId());
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
     @GetMapping("/received")
-    public ResponseEntity<List<Message>> getReceivedMessages() {
+    public ResponseEntity<List<MessageResponseDTO>> getReceivedMessages() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
@@ -82,7 +88,7 @@ public class MessageController {
         }
 
         Utilisateur toUser = optionalUser.get();
-        List<Message> messages = messageService.getReceivedMessages(toUser.getId());
+        List<MessageResponseDTO> messages = messageService.getReceivedMessages(toUser.getId());
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 }

@@ -1,320 +1,41 @@
-.footer {
+.footer-container {
+  background-color: rgba(19, 10, 10, 0.8);
+  color: white;
+  margin-top: 30px;
+}
+.top-banner {
+  background-color:#e57418;
+  width: 80%;
+  margin-left: 100px;
+  margin-bottom: 20px;
+  padding: 10px;
   display: flex;
-  padding-top: 5px;
-  margin-bottom: 5px;
-
-  flex-direction: column;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
-.div {
-  background-color: rgba(80, 72, 157, 1);
+.top-banner h2 {
+  margin: 0;
+}
+.footer-content {
   display: flex;
-  flex-direction: column;
-  padding: 0 50px 40px;
+  justify-content: space-between;
+  padding: 40px;
 }
-@media (max-width: 991px) {
-  .div {
-    max-width: 100%;
-    padding: 0 20px;
-  }
+.information, .navigation, .contact-us {
+  flex: 1;
+  margin-right: 20px;
 }
-.div-2 {
-  background-color: rgba(229, 116, 24, 1);
-  z-index: 10;
-  display: flex;
-  margin-top: -39px;
-  flex-direction: column;
-  font-family: Poppins, sans-serif;
-  color: var(--White, #fff);
-  text-transform: uppercase;
-  padding: 9px 14px 9px 80px;
-}
-@media (max-width: 991px) {
-  .div-2 {
-    max-width: 100%;
-    padding-left: 20px;
-  }
-}
-.transformez-vos-transactions-d-occasion-des-maintenant {
-  font-size: 20px;
-
-}
-@media (max-width: 991px) {
-  .transformez-vos-transactions-d-occasion-des-maintenant {
-    max-width: 100%;
-    font-size: 40px;
-  }
-}
-.se-connecter {
-  background-color: rgba(80, 72, 157, 1);
-  align-self: end;
-  margin-top: 8px;
-  font-size: 10px;
-  font-weight: 600;
-  text-align: center;
-  letter-spacing: 1px;
-  padding: 9px 25px 10px;
-}
-@media (max-width: 991px) {
-  .se-connecter {
-    padding: 0 20px;
-  }
-}
-.div-3 {
+.social-icons {
   margin-top: 20px;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+mat-form-field {
   width: 100%;
-  max-width: 1295px;
-}
-@media (max-width: 991px) {
-  .div-3 {
-    max-width: 100%;
-    margin-top: 40px;
-  }
-}
-.div-4 {
-  display: flex;
-}
-@media (max-width: 991px) {
-  .div-4 {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0px;
-  }
-}
-.column {
-  display: flex;
-  flex-direction: column;
-  line-height: normal;
-  width: 48%;
-  margin-left: 0px;
-}
-@media (max-width: 991px) {
-  .column {
-    width: 100%;
-  }
-}
-.div-5 {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: start;
-}
-@media (max-width: 991px) {
-  .div-5 {
-    margin-top: 40px;
-  }
-}
-.information {
-  color: var(--White, #fff);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font: 800 20px Poppins, sans-serif;
-}
-.nous-offrons-une-plateforme-facile-a-utiliser-pour-acheter-et-vendre-des-articles-doccasion-profitez-de-notre-service-securise-et-de-notre-interface-conviviale-pour-transformer-vos-objets-inutilises-en-tresors {
-  color: var(--White, #fff);
-  align-self: stretch;
-  margin-top: 20px;
-  font: 300 15px Poppins, sans-serif;
-}
-.div-6 {
-  display: flex;
-  margin-top: 15px;
-  align-items: start;
-}
-.img {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 28px;
-}
-.img-2 {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 30px;
-  align-self: stretch;
-}
-.column-2 {
-  display: flex;
-  flex-direction: column;
-  line-height: normal;
-  width: 21%;
-  margin-left: 20px;
-}
-@media (max-width: 991px) {
-  .column-2 {
-    width: 100%;
-  }
-}
-.div-7 {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: start;
-}
-@media (max-width: 991px) {
-  .div-7 {
-    margin-top: 40px;
-  }
-}
-.navigation {
-  color: var(--White, #fff);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  align-self: stretch;
-  font: 800 20px Poppins, sans-serif;
-}
-.div-8 {
-  display: flex;
-  margin-top: 20px;
-  gap: 10px;
-  white-space: nowrap;
-}
-@media (max-width: 991px) {
-  .div-8 {
-    white-space: initial;
-  }
-}
-.A {
-  color: #e57418;
-  font: 900 20px Font Awesome 5 Free, -apple-system, Roboto, Helvetica,
-  sans-serif;
-}
-.accueil {
-  color: var(--White, #fff);
-  font: 300 15px Poppins, sans-serif;
-}
-.div-9 {
-  display: flex;
-  margin-top: 15px;
-  gap: 10px;
-}
-.se-connecter-2 {
-  color: var(--White, #fff);
-  flex-basis: auto;
-  font: 300 15px Poppins, sans-serif;
-}
-.column-3 {
-  display: flex;
-  flex-direction: column;
-  line-height: normal;
-  width: 32%;
-  margin-left: 20px;
-}
-@media (max-width: 991px) {
-  .column-3 {
-    width: 100%;
-  }
-}
-.div-10 {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: start;
-  font-family: Poppins, sans-serif;
-  color: var(--White, #fff);
-}
-@media (max-width: 991px) {
-  .div-10 {
-    margin-top: 40px;
-  }
-}
-.contact-us {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-@media (max-width: 991px) {
-  .contact-us {
-    margin-left: 8px;
-  }
-}
-.div-11 {
-  display: flex;
-  margin-top: 20px;
-  gap: 13px;
-  font-size: 15px;
-  font-weight: 300;
-}
-.img-3 {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 20px;
-}
-.lumbung-hidup-east-java {
-  flex-basis: auto;
-  margin: auto 0;
-}
-.div-12 {
-  display: flex;
-  margin-top: 10px;
-  gap: 13px;
-  font-size: 15px;
-  font-weight: 300;
-  white-space: nowrap;
-}
-@media (max-width: 991px) {
-  .div-12 {
-    white-space: initial;
-  }
-}
-.img-4 {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 20px;
-}
-.hello-homco-com {
-  flex-basis: auto;
-}
-.div-13 {
-  align-self: stretch;
-  display: flex;
-  margin-top: 15px;
-  padding-left: 8px;
-  flex-direction: column;
-}
-.div-14 {
-  background: var(--Border-Color-Overlay, rgba(255, 255, 255, 0.25));
-  background-color: var(--Border-Color-Overlay, rgba(255, 255, 255, 0.25));
-  display: flex;
-  padding-top: 10px;
-  flex-direction: column;
-  font-size: 15px;
-  font-weight: 300;
-}
-.email-address {
-  align-self: start;
-  margin-left: 20px;
-}
-@media (max-width: 991px) {
-  .email-address {
-    margin-left: 10px;
-  }
-}
-.div-15 {
-  background-color: #757575;
-  margin-top: 10px;
-  height: 1px;
-  border: 5px solid rgba(117, 117, 117, 1);
-}
-.subscribe {
-  background-color: rgba(229, 116, 24, 1);
-  align-self: start;
-  margin-top: 5px;
-  font-size: 10px;
-  font-weight: 600;
-  white-space: nowrap;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  padding: 10px 30px;
-}
-@media (max-width: 991px) {
-  .subscribe {
-    white-space: initial;
-    padding: 0 20px;
-  }
 }

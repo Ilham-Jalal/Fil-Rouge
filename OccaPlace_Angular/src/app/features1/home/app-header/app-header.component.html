@@ -1,28 +1,13 @@
-<div class="div">
-  <img
-    loading="lazy"
-    srcset="assets/OccaPlace_Logo__2_-removebg-preview.png"
-    class="img" alt="logo"
-  />
-  <div class="div-2">
-    <div class="div-3">
-      <img
-        loading="lazy"
-        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/789cd67129d553f02dd8d3593228421fed554189356c1d2a7ad0ae2255770238?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa"
-        class="img-2" alt="accueil" style="width: 20px"
-      />
-      <div class="accueil" ><a href="http://localhost:4200">ACCUEIL</a></div>
-    </div>
-    <div class="div-4">
-      <img
-        loading="lazy"
-        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/53e4a03371837f7df6b3ce2470684f22db2a2d23e2969d71ae2a8d0bd32f0abe?placeholderIfAbsent=true&apiKey=7f8181b23c8a4bcfb826b495ba2e5afa"
-        class="img-3" alt="se connecter" style="width: 20px"
-      />
-      <div class="se-connecter" ><a href="http://localhost:4200/login">SE CONNECTER</a></div>
-    </div>
-  </div>
-</div>
+<mat-toolbar color="primary">
+  <img src="assets/OccaPlace_Logo__2_-removebg-preview.png" alt="OccaPlace Logo" class="logo">
+  <span class="spacer"></span>
+  <button mat-button routerLink="/">
+    <mat-icon>home</mat-icon>
+    <span style="font-size: 12px">ACCUEIL</span>
+  </button>
+  <button mat-button routerLink="/login">
+    <mat-icon>login</mat-icon>
+    <span style="font-size:12px">CONNEXION</span>
+  </button>
+</mat-toolbar>
 <div class="ligne"></div>
-
-

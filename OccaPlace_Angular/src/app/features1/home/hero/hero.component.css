@@ -1,6 +1,6 @@
 .hero {
-  background-color: #6f3fc9;
-  color: white;
+  background-color: #ffffff;
+  color: #130a0a;
   text-align: center;
   padding: 50px 0;
 
@@ -20,15 +20,12 @@
     }
   }
 }
-.hero{
-  background-color: #50489D;
 
-}
+
 .div-6 {
-  background-color: #50489D;
   width: 100%;
   max-width: 1163px;
-  margin: 0 0 0 47px;
+  margin:-40px 0 -40px 47px;
 }
 @media (max-width: 991px) {
   .div-6 {
@@ -63,7 +60,7 @@
   display: flex;
   flex-direction: column;
   font-family: Poppins, sans-serif;
-  color: var(--White, #fff);
+  color: var(--White, #130a0a);
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -97,8 +94,9 @@
 .se-connecter-2 {
   border-radius: 10px;
   background-color: rgba(229, 116, 24, 1);
-  margin-top: 31px;
+  margin-top: 10px;
   width: 187px;
+  color: white;
   max-width: 100%;
   font-size: 15px;
   font-weight: 600;
@@ -166,4 +164,9 @@
 .img-4 {
   max-width: 80%;
   margin: 0 auto;
+}
+.ligne {
+  margin-top: -8px;
+  background-color: rgb(19, 10, 10);
+  border: 1px solid rgba(19, 10, 10, 0.76);
 }

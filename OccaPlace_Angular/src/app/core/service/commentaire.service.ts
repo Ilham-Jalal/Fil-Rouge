@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CommentaireDto } from '../dto/CommentaireDto';
+import {Commentaire} from "../model/Commentaire";
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +28,14 @@ export class CommentaireService {
     return this.http.post<CommentaireDto>(`${this.apiUrl}/${annonceId}`, commentaireDto);
   }
 
-  updateCommentaire(commentaireId: number | undefined, commentaireDto: CommentaireDto): Observable<CommentaireDto> {
-    return this.http.put<CommentaireDto>(`${this.apiUrl}/${commentaireId}`, commentaireDto);
+  updateCommentaire(id: number, commentaire: CommentaireDto): Observable<CommentaireDto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<CommentaireDto>(url, commentaire);
   }
 
-  deleteCommentaire(commentaireId: number | undefined): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${commentaireId}`);
+  deleteCommentaire(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url);
   }
 
 }

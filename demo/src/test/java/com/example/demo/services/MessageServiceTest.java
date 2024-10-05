@@ -1,16 +1,18 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.MessageCreateDTO;
+import com.example.demo.dto.MessageResponseDTO;
+import com.example.demo.exceptions.MessageNotFoundException;
+import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.Message;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.MessageRepository;
 import com.example.demo.repositorys.UtilisateurRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.ArgumentCaptor;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,141 +21,171 @@ import static org.mockito.Mockito.*;
 
 class MessageServiceTest {
 
-    @Mock
-    private MessageRepository messageRepository;
-
-    @Mock
-    private UtilisateurRepository utilisateurRepository;
-
-    @InjectMocks
     private MessageService messageService;
+    private MessageRepository messageRepository;
+    private UtilisateurRepository utilisateurRepository;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        messageRepository = mock(MessageRepository.class);
+        utilisateurRepository = mock(UtilisateurRepository.class);
+        messageService = new MessageService(messageRepository, utilisateurRepository);
     }
 
     @Test
-    void testSendMessage() {
-        // Given
+    void sendMessage_ShouldReturnMessageResponseDTO_WhenUserExists() {
+        // Arrange
+        MessageCreateDTO messageCreateDTO = new MessageCreateDTO();
+        messageCreateDTO.setToUserId(1L);
+        messageCreateDTO.setContent("Hello!");
+
         Utilisateur fromUser = new Utilisateur();
-        fromUser.setId(1L);
+        fromUser.setId(2L);
+
+        Utilisateur toUser = new Utilisateur();
+        toUser.setId(1L);
+
+        Message savedMessage = new Message();
+        savedMessage.setId(3L);
+        savedMessage.setContent("Hello!");
+        savedMessage.setFromUser(fromUser);
+        savedMessage.setToUser(toUser);
+
+        when(utilisateurRepository.findById(1L)).thenReturn(Optional.of(toUser));
+        when(messageRepository.save(any(Message.class))).thenReturn(savedMessage);
+
+        // Act
+        MessageResponseDTO response = messageService.sendMessage(messageCreateDTO, fromUser);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(3L, response.getId());
+        assertEquals("Hello!", response.getContent());
+        verify(messageRepository, times(1)).save(any(Message.class));
+    }
+
+    @Test
+    void sendMessage_ShouldThrowUserNotFoundException_WhenUserDoesNotExist() {
+        // Arrange
+        MessageCreateDTO messageCreateDTO = new MessageCreateDTO();
+        messageCreateDTO.setToUserId(1L);
+        messageCreateDTO.setContent("Hello!");
+
+        Utilisateur fromUser = new Utilisateur();
+        fromUser.setId(2L);
+
+        when(utilisateurRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(UserNotFoundException.class, () -> {
+            messageService.sendMessage(messageCreateDTO, fromUser);
+        });
+    }
+
+    @Test
+    void replyToMessage_ShouldReturnMessageResponseDTO_WhenParentMessageExists() {
+        // Arrange
+        MessageCreateDTO messageCreateDTO = new MessageCreateDTO();
+        messageCreateDTO.setContent("Reply!");
+
+        Utilisateur fromUser = new Utilisateur();
+        fromUser.setId(2L);
+        Message parentMessage = new Message();
+        parentMessage.setId(3L);
+        parentMessage.setFromUser(new Utilisateur());
+        parentMessage.getFromUser().setId(1L);
+
+        Message savedReplyMessage = new Message();
+        savedReplyMessage.setId(4L);
+        savedReplyMessage.setContent("Reply!");
+        savedReplyMessage.setFromUser(fromUser);
+        savedReplyMessage.setToUser(parentMessage.getFromUser());
+        savedReplyMessage.setParentMessage(parentMessage);
+
+        when(messageRepository.findById(3L)).thenReturn(Optional.of(parentMessage));
+        when(messageRepository.save(any(Message.class))).thenReturn(savedReplyMessage);
+
+        // Act
+        MessageResponseDTO response = messageService.replyToMessage(messageCreateDTO, 3L, fromUser);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(4L, response.getId());
+        assertEquals("Reply!", response.getContent());
+    }
+
+    @Test
+    void replyToMessage_ShouldThrowMessageNotFoundException_WhenParentMessageDoesNotExist() {
+        // Arrange
+        MessageCreateDTO messageCreateDTO = new MessageCreateDTO();
+        messageCreateDTO.setContent("Reply!");
+
+        Utilisateur fromUser = new Utilisateur();
+        fromUser.setId(2L);
+
+        when(messageRepository.findById(3L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(MessageNotFoundException.class, () -> {
+            messageService.replyToMessage(messageCreateDTO, 3L, fromUser);
+        });
+    }
+
+    @Test
+    void getSentMessages_ShouldReturnListOfMessageResponseDTO() {
+        // Arrange
+        Utilisateur fromUser = new Utilisateur();
+        fromUser.setId(2L);
+
+        Message message1 = new Message();
+        message1.setId(3L);
+        message1.setContent("Hello!");
+        message1.setFromUser(fromUser);
+        message1.setToUser(new Utilisateur());
+
+        Message message2 = new Message();
+        message2.setId(4L);
+        message2.setContent("Hi!");
+        message2.setFromUser(fromUser);
+        message2.setToUser(new Utilisateur());
+
+        when(messageRepository.findByFromUserId(2L)).thenReturn(Arrays.asList(message1, message2));
+
+        // Act
+        List<MessageResponseDTO> responses = messageService.getSentMessages(2L);
+
+        // Assert
+        assertEquals(2, responses.size());
+        assertEquals(3L, responses.get(0).getId());
+        assertEquals(4L, responses.get(1).getId());
+    }
+
+    @Test
+    void getReceivedMessages_ShouldReturnListOfMessageResponseDTO() {
+        // Arrange
         Utilisateur toUser = new Utilisateur();
         toUser.setId(2L);
 
-        when(utilisateurRepository.findById(2L)).thenReturn(Optional.of(toUser));
+        Message message1 = new Message();
+        message1.setId(3L);
+        message1.setContent("Hello!");
+        message1.setFromUser(new Utilisateur());
+        message1.setToUser(toUser);
 
-        Message message = new Message();
-        message.setFromUser(fromUser);
-        message.setToUser(toUser);
-        message.setContent("Hello!");
+        Message message2 = new Message();
+        message2.setId(4L);
+        message2.setContent("Hi!");
+        message2.setFromUser(new Utilisateur());
+        message2.setToUser(toUser);
 
-        when(messageRepository.save(any(Message.class))).thenReturn(message);
+        when(messageRepository.findByToUserId(2L)).thenReturn(Arrays.asList(message1, message2));
 
-        // When
-        Message result = messageService.sendMessage(fromUser, 2L, "Hello!");
+        // Act
+        List<MessageResponseDTO> responses = messageService.getReceivedMessages(2L);
 
-        // Then
-        assertNotNull(result);
-        assertEquals(fromUser, result.getFromUser());
-        assertEquals(toUser, result.getToUser());
-        assertEquals("Hello!", result.getContent());
-        verify(messageRepository, times(1)).save(any(Message.class));
-    }
-
-    @Test
-    void testSendMessageUserNotFound() {
-        // Given
-        Utilisateur fromUser = new Utilisateur();
-        fromUser.setId(1L);
-
-        when(utilisateurRepository.findById(2L)).thenReturn(Optional.empty());
-
-        // When / Then
-        assertThrows(EntityNotFoundException.class, () -> {
-            messageService.sendMessage(fromUser, 2L, "Hello!");
-        });
-    }
-
-    @Test
-    void testReplyToMessage() {
-        // Given
-        Utilisateur fromUser = new Utilisateur();
-        fromUser.setId(1L);
-        Message parentMessage = new Message();
-        parentMessage.setId(1L);
-        parentMessage.setFromUser(new Utilisateur());
-        parentMessage.getFromUser().setId(2L);
-
-        when(messageRepository.findById(1L)).thenReturn(Optional.of(parentMessage));
-
-        Message replyMessage = new Message();
-        replyMessage.setFromUser(fromUser);
-        replyMessage.setToUser(parentMessage.getFromUser());
-        replyMessage.setContent("Reply to your message");
-        replyMessage.setParentMessage(parentMessage);
-
-        when(messageRepository.save(any(Message.class))).thenReturn(replyMessage);
-
-        // When
-        Message result = messageService.replyToMessage(fromUser, 1L, "Reply to your message");
-
-        // Then
-        assertNotNull(result);
-        assertEquals(fromUser, result.getFromUser());
-        assertEquals(parentMessage.getFromUser(), result.getToUser());
-        assertEquals("Reply to your message", result.getContent());
-        assertEquals(parentMessage, result.getParentMessage());
-        verify(messageRepository, times(1)).save(any(Message.class));
-    }
-
-    @Test
-    void testReplyToMessageNotFound() {
-        // Given
-        Utilisateur fromUser = new Utilisateur();
-        fromUser.setId(1L);
-
-        when(messageRepository.findById(1L)).thenReturn(Optional.empty());
-
-        // When / Then
-        assertThrows(EntityNotFoundException.class, () -> {
-            messageService.replyToMessage(fromUser, 1L, "Reply");
-        });
-    }
-
-    @Test
-    void testGetSentMessages() {
-        // Given
-        Utilisateur fromUser = new Utilisateur();
-        fromUser.setId(1L);
-        List<Message> messages = List.of(new Message(), new Message());
-
-        when(messageRepository.findByFromUserId(1L)).thenReturn(messages);
-
-        // When
-        List<Message> result = messageService.getSentMessages(1L);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(messageRepository, times(1)).findByFromUserId(1L);
-    }
-
-    @Test
-    void testGetReceivedMessages() {
-        // Given
-        Utilisateur toUser = new Utilisateur();
-        toUser.setId(1L);
-        List<Message> messages = List.of(new Message(), new Message());
-
-        when(messageRepository.findByToUserId(1L)).thenReturn(messages);
-
-        // When
-        List<Message> result = messageService.getReceivedMessages(1L);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(messageRepository, times(1)).findByToUserId(1L);
+        // Assert
+        assertEquals(2, responses.size());
+        assertEquals(3L, responses.get(0).getId());
+        assertEquals(4L, responses.get(1).getId());
     }
 }

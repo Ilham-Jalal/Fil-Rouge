@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 93vh;
   background-image: url("https://images.pexels.com/photos/3965548/pexels-photo-3965548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
   background-size: cover;
   background-position: center;
@@ -29,19 +29,19 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   margin-bottom: 15px;
 }
 
 .logo {
-  width: 50px;
+  width: 100px;
   height: auto;
   margin-right: 10px;
 }
 
 mat-card-title {
   color: #e57418;;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
