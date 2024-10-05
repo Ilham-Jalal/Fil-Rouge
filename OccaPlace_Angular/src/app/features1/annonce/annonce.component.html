@@ -27,9 +27,13 @@
 
 
 <div class="annonce-container">
+<div style="display: flex">
+  <button mat-raised-button color="primary" (click)="toggleSearchForm()">
+    <mat-icon>search</mat-icon>
+    {{ showSearchForm ?   '  Annuler' : 'Recherche' }}
+  </button>
 
-  <div class="annonce-search-form">
-    <p>Recherche d'annonces</p>
+  <div *ngIf="showSearchForm" class="annonce-search-form">
     <form (ngSubmit)="searchAnnonces()">
       <mat-form-field appearance="fill">
         <mat-label>Titre ou Description</mat-label>
@@ -55,11 +59,11 @@
 
       <div class="button-group">
         <button mat-raised-button color="primary" type="submit">Rechercher</button>
-        <button mat-raised-button color="warn" type="button" (click)="resetSearch()">Réinitialiser</button>
+        <button mat-raised-button color="warn" type="button" (click)="resetSearch()">Annuler</button>
       </div>
     </form>
   </div>
-
+</div>
 
 
   <!-- Liste des annonces affichées sous forme de cartes -->

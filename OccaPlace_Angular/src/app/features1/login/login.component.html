@@ -1,12 +1,12 @@
 <div class="auth-container">
   <mat-card class="form-container" [ngClass]="{'slide-left': !isLoginMode}">
     <div class="header">
-      <img src="/assets/OccaPlace-Logo-removebg-preview.png" class="logo" alt="logo"/>
-      <mat-card-title>{{ isLoginMode ? 'Login' : 'Sign Up' }}</mat-card-title>
+      <mat-card-title>{{ isLoginMode ? 'Connexion' : 'Inscription' }}</mat-card-title>
+      <img src="/assets/OccaPlace_Logo__2_-removebg-preview.png" class="logo" alt="logo" />
     </div>
     <form [formGroup]="isLoginMode ? loginForm : signUpForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
+        <mat-label>Nom d'utilisateur</mat-label>
         <input matInput formControlName="username" required />
       </mat-form-field>
 
@@ -16,24 +16,24 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
+        <mat-label>Mot de passe</mat-label>
         <input matInput formControlName="password" type="password" required />
       </mat-form-field>
 
       <mat-form-field *ngIf="!isLoginMode" appearance="outline">
-        <mat-label>Confirm Password</mat-label>
+        <mat-label>Confirmez le mot de passe</mat-label>
         <input matInput formControlName="confirmPassword" type="password" required />
       </mat-form-field>
 
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-      <button mat-raised-button color="primary" type="submit">{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ isLoginMode ? 'Se connecter' : 'S\'inscrire' }}
+      </button>
     </form>
 
     <button mat-button (click)="switchMode()">
-      {{ isLoginMode ? 'Don\'t have an account? Sign Up' : 'Already have an account? Login' }}
+      {{ isLoginMode ? 'Pas de compte ? Inscrivez-vous' : 'Déjà un compte ? Connectez-vous' }}
     </button>
   </mat-card>
 </div>
-
-

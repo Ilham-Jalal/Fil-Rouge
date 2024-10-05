@@ -51,14 +51,16 @@ export class AnnonceService {
     return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/disponibilite/${disponibilite}`);
   }
 
+
   searchAnnonces(titleOrDescription: string, category: Categorie, priceMin: number, priceMax: number): Observable<AnnonceResponseDTO[]> {
     console.log('Recherche avec les paramètres :', { titleOrDescription, category, priceMin, priceMax });
     return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/search`, {
       params: {
-        titleOrDescription,
-        category,
-        priceMin: priceMin.toString(),
-        priceMax: priceMax.toString()
+        title: titleOrDescription,
+        description: titleOrDescription,
+        category: category,
+        minPrice: priceMin.toString(),
+        maxPrice: priceMax.toString()
       }
     });
   }

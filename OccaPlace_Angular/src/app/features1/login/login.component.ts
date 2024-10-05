@@ -5,12 +5,12 @@ import { AuthService } from '../../core/service/auth-service.service';
 import { UserService } from '../../core/service/user-service.service';
 import { LoginRequest } from '../../core/dto/LoginRequest';
 import { SignUpRequest } from '../../core/dto/SignUpRequest';
-import {NgClass, NgIf} from "@angular/common";
+import { NgClass, NgIf } from "@angular/common";
 import { Role } from '../../core/enum/Role';
-import {MatButton} from "@angular/material/button";
-import {MatCard, MatCardTitle} from "@angular/material/card";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
+import { MatButton } from "@angular/material/button";
+import { MatCard, MatCardTitle } from "@angular/material/card";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,8 @@ import {MatInput} from "@angular/material/input";
     MatLabel,
     MatCardTitle,
     NgClass
-  ],})
+  ],
+})
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   signUpForm!: FormGroup;
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
   initSignUpForm(): void {
     this.signUpForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]], // Champ email
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     });
@@ -76,6 +77,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.invalid) {
+      this.errorMessage = 'Veuillez remplir correctement tous les champs obligatoires.';
       return;
     }
 
@@ -87,30 +89,31 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('jwt', token);
         this.redirectUserBasedOnRole(role);
       },
-      error: (err) => {
-        this.errorMessage = 'Invalid username or password';
+      error: () => {
+        this.errorMessage = 'Échec de la connexion. Vérifiez vos identifiants.';
       }
     });
   }
 
   signUp(): void {
     if (this.signUpForm.invalid) {
+      this.errorMessage = 'Veuillez remplir correctement tous les champs obligatoires.';
       return;
     }
 
     const signUpRequest: SignUpRequest = this.signUpForm.value;
     if (signUpRequest.password !== this.signUpForm.value.confirmPassword) {
-      this.errorMessage = "Passwords do not match!";
+      this.errorMessage = 'Les mots de passe ne correspondent pas.';
       return;
     }
 
     this.userService.signUpUser(signUpRequest).subscribe({
       next: () => {
-        this.isLoginMode = true; // Switch to login after successful signup
+        this.isLoginMode = true;
         this.errorMessage = null;
       },
-      error: (err) => {
-        this.errorMessage = 'Signup failed';
+      error: () => {
+        this.errorMessage = 'Échec de l\'inscription. Veuillez réessayer.';
       }
     });
   }
