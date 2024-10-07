@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -36,9 +35,13 @@ public class Message {
     @JoinColumn(name = "parent_message_id")
     private Message parentMessage;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "conversation_id")
+    private Conversation conversation;
+
     @PrePersist
     protected void onCreate() {
         this.timestamp = LocalDateTime.now();
     }
-
 }

@@ -14,5 +14,7 @@ public class MessageResponseDTO {
     private LocalDateTime timestamp;
     private Long fromUserId;
     private Long toUserId;
+    private String fromUserName;
+    private String toUserName;
     private Long parentMessageId;
 }

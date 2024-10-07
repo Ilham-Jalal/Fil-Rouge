@@ -1,10 +1,12 @@
-import {Utilisateur} from "./Utilisateur";
+// message.model.ts
+import { Utilisateur } from './Utilisateur';
 
 export interface Message {
   id: number;
   content: string;
-  timestamp: Date;
+  timestamp: Date; // Keep as Date for processing
   fromUser?: Utilisateur;
   toUser?: Utilisateur;
-  parentMessage?: Message; 
+  parentMessage?: Message;
+  status?: 'SENDING' | 'SENT' | 'FAILED';
 }

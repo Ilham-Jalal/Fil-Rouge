@@ -31,18 +31,29 @@ public class MessageController {
             @PathVariable Long toUserId,
             @RequestBody MessageCreateDTO messageCreateDTO) {
 
+        // Récupération des informations d'authentification
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
+        // Vérification de l'utilisateur authentifié
         Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
+        // Ajouter l'ID de l'utilisateur destinataire au DTO
+        messageCreateDTO.setToUserId(toUserId);
+
+        // Récupération de l'utilisateur authentifié
         Utilisateur fromUser = optionalUser.get();
+
+        // Appel au service pour envoyer le message
         MessageResponseDTO messageResponse = messageService.sendMessage(messageCreateDTO, fromUser);
+
+        // Retourne une réponse avec le message créé et un statut 201
         return new ResponseEntity<>(messageResponse, HttpStatus.CREATED);
     }
+
 
     @PostMapping("/reply/{parentMessageId}")
     public ResponseEntity<MessageResponseDTO> replyToMessage(

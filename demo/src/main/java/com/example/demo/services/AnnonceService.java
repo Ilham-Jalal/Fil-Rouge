@@ -151,4 +151,12 @@ public class AnnonceService {
         dto.setImages(annonce.getImages());
         return dto;
     }
+
+    public long countTotalAnnonces() {
+        return annonceRepository.count();
+    }
+
+    public long countAnnoncesByCategory(Categorie category) {
+        return annonceRepository.countByCategory(category);
+    }
 }

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user/api/annonces")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AnnonceController {
 
@@ -37,13 +36,13 @@ public class AnnonceController {
         this.userService = userService;
         this.annonceService = annonceService;
     }
-    @GetMapping("/{id}")
+    @GetMapping("/user/api/annonces/{id}")
     public ResponseEntity<AnnonceResponseDTO> getAnnonceById(@PathVariable Long id) {
         AnnonceResponseDTO annonce = annonceService.findById(id);
         return ResponseEntity.ok(annonce);
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/user/api/annonces/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnnonceResponseDTO> createAnnonce(
             @RequestPart("annonce") AnnonceCreateDTO annonceDTO,
             @RequestPart("images") MultipartFile[] images) {
@@ -58,7 +57,7 @@ public class AnnonceController {
 
 
 
-    @GetMapping("/annonces")
+    @GetMapping("/user/api/annonces/annonces")
     public ResponseEntity<List<AnnonceResponseDTO>> getAnnoncesByUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -74,13 +73,13 @@ public class AnnonceController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/api/annonces/{id}")
     public ResponseEntity<AnnonceResponseDTO> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceUpdateDTO updatedAnnonceDTO) {
             AnnonceResponseDTO updatedAnnonce = annonceService.updateAnnonce(id, updatedAnnonceDTO);
             return new ResponseEntity<>(updatedAnnonce, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/api/annonces/{id}")
     public ResponseEntity<Void> deleteAnnonce(@PathVariable Long id) {
 
             annonceService.deleteAnnonce(id);
@@ -88,25 +87,25 @@ public class AnnonceController {
 
     }
 
-    @GetMapping
+    @GetMapping("/user/api/annonces")
     public ResponseEntity<List<AnnonceResponseDTO>> getAllAnnonces() {
         List<AnnonceResponseDTO> annonces = annonceService.findAllAnnonces();
         return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/user/api/annonces/category/{category}")
     public ResponseEntity<List<AnnonceResponseDTO>> getAnnoncesByCategory(@PathVariable Categorie category) {
         List<AnnonceResponseDTO> annonces = annonceService.findAnnoncesByCategory(category);
         return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
 
-    @GetMapping("/disponibilite/{disponibilite}")
+    @GetMapping("/user/api/annonces/disponibilite/{disponibilite}")
     public ResponseEntity<List<AnnonceResponseDTO>> getAnnoncesByDisponibilite(@PathVariable Disponibilite disponibilite) {
         List<AnnonceResponseDTO> annonces = annonceService.findAnnoncesByDisponibilite(disponibilite);
         return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/user/api/annonces/search")
     public ResponseEntity<List<AnnonceResponseDTO>> searchAnnonces(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String description,
@@ -119,5 +118,17 @@ public class AnnonceController {
 
         List<AnnonceResponseDTO> annonces = annonceService.searchAnnonces(title, description, category, minPriceValue, maxPriceValue);
         return new ResponseEntity<>(annonces, HttpStatus.OK);
+    }
+
+    @GetMapping("admin/count")
+    public ResponseEntity<Long> getTotalAnnonces() {
+        long totalAnnonces = annonceService.countTotalAnnonces();
+        return new ResponseEntity<>(totalAnnonces, HttpStatus.OK);
+    }
+
+    @GetMapping("admin/count/category/{category}")
+    public ResponseEntity<Long> getTotalAnnoncesByCategory(@PathVariable Categorie category) {
+        long totalAnnoncesByCategory = annonceService.countAnnoncesByCategory(category);
+        return new ResponseEntity<>(totalAnnoncesByCategory, HttpStatus.OK);
     }
 }

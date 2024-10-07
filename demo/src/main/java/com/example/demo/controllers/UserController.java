@@ -80,4 +80,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/user/{username}")
+    public ResponseEntity<Utilisateur> findUtilisateurByUsername(@PathVariable String username) {
+        Optional<Utilisateur> utilisateur = userService.findUtilisateurByUsername(username);
+        return utilisateur.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("findi")
+    public Integer findId(@RequestParam String username){
+        return userService.findIdUserByUsername(username);
+    }
 }

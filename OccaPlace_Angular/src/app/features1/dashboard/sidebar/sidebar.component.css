@@ -1,0 +1,66 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  height: 90vh;
+  margin-top: 30px;
+  margin-left: 15px;
+  width: 250px;
+  background-color: #fff;
+  border-radius: 13px;
+}
+
+.sidenav-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.navbar-brand-img {
+  width: 50px;
+  height: auto;
+}
+
+.brand-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: #FF4500; /* Color matching your logo */
+}
+
+.mat-nav-list {
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: #f2f2f2;
+}
+
+.nav-link.active {
+  background-color: #e0f7fa;
+  font-weight: bold;
+}
+
+.mat-icon {
+  font-size: 20px;
+}
+
+.logout-section {
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #e3e3e3;
+}
+
+.logout {
+  color: #e74c3c;
+}

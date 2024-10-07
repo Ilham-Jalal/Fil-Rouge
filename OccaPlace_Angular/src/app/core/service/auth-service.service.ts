@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { DecodejwtService } from './decodejwt-service.service';
 import { LoginRequest } from '../dto/LoginRequest';
 import { SignUpRequest } from '../dto/SignUpRequest';
@@ -26,6 +26,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('jwt');
   }
+
   getCurrentUserRole(): any | null {
     const token = localStorage.getItem('jwt');
     if (token) {
@@ -33,6 +34,10 @@ export class AuthService {
       return decodedToken?.roles || null;
     }
     return null;
+  }
+
+  findUtilisateurByUsername(username: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user/${username}`)
   }
 
   findIdByUsername(username: string | null): Observable<any> {
@@ -43,7 +48,6 @@ export class AuthService {
     return this.http.get<User[]>(`${this.apiUrl}/admin/users`);
   }
 
-  // Add the getCurrentUserId function here
   getCurrentUserId(): string | null {
     const token = localStorage.getItem('jwt');
     if (token) {

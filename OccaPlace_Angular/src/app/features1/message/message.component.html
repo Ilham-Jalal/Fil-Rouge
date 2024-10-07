@@ -1,8 +1,39 @@
 <div class="message-container">
-  <h2>Contact Vendeur</h2>
-  <div *ngIf="annonce && annonce.vendeurName">
-    <p>Contacting: {{ annonce.vendeurName }}</p>
-    <textarea [(ngModel)]="messageContent" placeholder="Write your message..."></textarea>
-    <button (click)="sendMessage()">Send Message</button>
+  <h1>Messagerie</h1>
+
+  <!-- Formulaire d'envoi de message -->
+  <form (ngSubmit)="sendMessage()">
+    <div>
+      <label for="toUserId">ID de l'utilisateur destinataire:</label>
+      <input type="number" id="toUserId" [(ngModel)]="message.toUserId" name="toUserId" required />
+    </div>
+    <div>
+      <label for="content">Contenu du message:</label>
+      <textarea id="content" [(ngModel)]="message.content" name="content" required></textarea>
+    </div>
+    <button type="submit">Envoyer le message</button>
+  </form>
+
+  <!-- Section pour afficher les messages envoyés -->
+  <div class="sent-messages">
+    <h2>Messages envoyés</h2>
+    <ul>
+      <li *ngFor="let msg of sentMessages">
+        <strong>{{ msg.timestamp | date:'short' }}:</strong> {{ msg.content }}
+      </li>
+    </ul>
   </div>
+
+  <!-- Section pour afficher les messages reçus -->
+  <div class="received-messages">
+    <h2>Messages reçus</h2>
+    <ul>
+      <li *ngFor="let msg of receivedMessages">
+        <strong>{{ msg.timestamp | date:'short' }}:</strong> {{ msg.content }}
+      </li>
+    </ul>
+  </div>
+
+  <button (click)="getSentMessages()">Récupérer les messages envoyés</button>
+  <button (click)="getReceivedMessages()">Récupérer les messages reçus</button>
 </div>

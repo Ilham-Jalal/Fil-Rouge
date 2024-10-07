@@ -1,0 +1,86 @@
+<app-header2></app-header2>
+<div class="conversation-container">
+  <h2>Conversation entre {{ conversation?.vendeur?.username }} et {{ conversation?.acheteur?.username }}</h2>
+
+  <div class="conversation-layout">
+    <div class="messages-section">
+      <div class="messages-list">
+        <div *ngFor="let message of messages" class="message-item">
+          <div class="message-header">
+            <span class="message-timestamp">{{ message.timestamp | date: 'short' }}</span>
+            <span class="message-author">{{ message.fromUserName }}</span>
+          </div>
+          <div class="message-content">
+            {{ message.content }}
+          </div>
+          <div class="message-actions" *ngIf="canEditOrDeleteMessage(message)">
+            <button (click)="startEditing(message)">Éditer</button>
+            <button (click)="deleteMessage(message)">Supprimer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="new-message">
+        <mat-form-field appearance="outline">
+          <mat-label>Écrivez votre message ici...</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="newMessage"
+            rows="4"
+            maxlength="500"
+            (input)="updateCharCount()"
+            placeholder="Votre message..."
+          ></textarea>
+          <mat-hint align="start"><strong>Soyez respectueux et concis</strong></mat-hint>
+          <mat-hint align="end">{{charCount}}/500</mat-hint>
+        </mat-form-field>
+        <div class="char-count">Caractères restants : {{500 - charCount}}</div>
+        <button mat-raised-button color="primary" (click)="sendMessage()" [disabled]="!newMessage.trim() || isLoading">
+          <mat-icon>send</mat-icon> Envoyer
+        </button>
+      </div>
+
+      <div *ngIf="editingMessage" class="editing-message">
+        <mat-form-field appearance="outline">
+          <mat-label>Éditez votre message...</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="editingMessage.content"
+            rows="4"
+            maxlength="500"
+            (input)="updateEditCharCount()"
+            placeholder="Votre message modifié..."
+          ></textarea>
+          <mat-hint align="start"><strong>Soyez respectueux et concis</strong></mat-hint>
+          <mat-hint align="end">{{editCharCount}}/500</mat-hint>
+        </mat-form-field>
+        <div class="char-count">Caractères restants : {{500 - editCharCount}}</div>
+        <button mat-raised-button color="primary" (click)="updateMessage()" [disabled]="!editingMessage.content.trim()">
+          <mat-icon>check</mat-icon> Mettre à jour
+        </button>
+        <button mat-button (click)="cancelEditing()">
+          <mat-icon>close</mat-icon> Annuler
+        </button>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-message">
+        <h3>Communiquez, négociez, concluez !</h3>
+        <p>Cet espace est dédié à votre conversation. Discutez des détails, négociez le prix et finalisez votre transaction en toute confiance.</p>
+      </div>
+
+      <div class="annonce-details" *ngIf="annonceDetails">
+        <h3>Détails de l'annonce</h3>
+        <div class="image-container">
+          <img [src]="annonceDetails?.images || 'assets/default-image.png'" [alt]="annonceDetails?.title">
+        </div>
+        <h4>{{ annonceDetails?.title }}</h4>
+        <p>Prix : {{ annonceDetails?.price }} Dhs</p>
+        <p>{{ annonceDetails?.description }}</p>
+        <button mat-button (click)="backToAnnonce()">Retour à l'annonce</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

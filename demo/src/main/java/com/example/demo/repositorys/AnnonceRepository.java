@@ -21,7 +21,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Long> {
     List<Annonce> searchAnnonces(String title, String description, Categorie category, double minPrice, double maxPrice);
     List<Annonce> findByVendeurId(Long vendeurId);
     List<Annonce> findByAcheteur_Id(Long acheteurId);
-
+    long countByCategory(Categorie category);
 }
 
 

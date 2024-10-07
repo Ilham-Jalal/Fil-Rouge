@@ -41,6 +41,9 @@ public class UserService {
     public Optional<Utilisateur> findUtilisateurByUsername(String username) {
         return utilisateurRepository.findByUsername(username);
     }
+    public Integer findIdUserByUsername(String username){
+        return  utilisateurRepository.findIdByUsername(username);
+    }
 
 
     public Optional<Livreur> findLivreurByUsername(String username) {

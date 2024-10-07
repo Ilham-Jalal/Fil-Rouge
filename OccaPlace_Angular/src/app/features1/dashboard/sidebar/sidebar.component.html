@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="sidenav-header d-flex align-items-center mb-4">
+      <img src="assets/OccaPlace_Logo__2_-removebg-preview.png" alt="Logo" class="navbar-brand-img">
+      <span class="brand-title ms-2">Dashboard</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Sidebar Menu Items -->
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" class="nav-link active">
+        <mat-icon class="me-3">dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+
+      <a mat-list-item routerLink="/annonces" class="nav-link">
+        <mat-icon class="me-3">event</mat-icon>
+        <span>Annonces</span>
+      </a>
+
+      <a mat-list-item routerLink="/vent" class="nav-link">
+        <mat-icon class="me-3">credit_card</mat-icon>
+        <span>Vent</span>
+      </a>
+
+      <a mat-list-item routerLink="/livraison" class="nav-link">
+        <mat-icon class="me-3">local_shipping</mat-icon>
+        <span>Livraison</span>
+      </a>
+
+
+    </mat-nav-list>
+
+    <!-- Logout Button -->
+    <div class="mt-auto logout-section">
+      <a mat-list-item routerLink="/logout" class="nav-link logout">
+        <mat-icon class="me-3">logout</mat-icon>
+        <span>Logout</span>
+      </a>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

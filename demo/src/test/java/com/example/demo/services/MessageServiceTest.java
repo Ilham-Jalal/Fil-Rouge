@@ -4,13 +4,14 @@ import com.example.demo.dto.MessageCreateDTO;
 import com.example.demo.dto.MessageResponseDTO;
 import com.example.demo.exceptions.MessageNotFoundException;
 import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.models.Conversation;
 import com.example.demo.models.Message;
 import com.example.demo.models.Utilisateur;
+import com.example.demo.repositorys.ConversationRepository;
 import com.example.demo.repositorys.MessageRepository;
 import com.example.demo.repositorys.UtilisateurRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,18 +19,19 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 class MessageServiceTest {
 
     private MessageService messageService;
     private MessageRepository messageRepository;
     private UtilisateurRepository utilisateurRepository;
+    private ConversationRepository conversationRepository; // Added ConversationRepository
 
     @BeforeEach
     void setUp() {
         messageRepository = mock(MessageRepository.class);
         utilisateurRepository = mock(UtilisateurRepository.class);
-        messageService = new MessageService(messageRepository, utilisateurRepository);
+        conversationRepository = mock(ConversationRepository.class); // Mock ConversationRepository
+        messageService = new MessageService(messageRepository, utilisateurRepository, conversationRepository);
     }
 
     @Test
@@ -45,13 +47,20 @@ class MessageServiceTest {
         Utilisateur toUser = new Utilisateur();
         toUser.setId(1L);
 
+        Conversation conversation = new Conversation();
+        conversation.setId(1L);
+        conversation.setAcheteur(fromUser);
+        conversation.setVendeur(toUser);
+
         Message savedMessage = new Message();
         savedMessage.setId(3L);
         savedMessage.setContent("Hello!");
         savedMessage.setFromUser(fromUser);
         savedMessage.setToUser(toUser);
+        savedMessage.setConversation(conversation);
 
         when(utilisateurRepository.findById(1L)).thenReturn(Optional.of(toUser));
+        when(conversationRepository.findByVendeurAndAcheteur(fromUser, toUser)).thenReturn(Optional.of(conversation));
         when(messageRepository.save(any(Message.class))).thenReturn(savedMessage);
 
         // Act
@@ -90,6 +99,7 @@ class MessageServiceTest {
 
         Utilisateur fromUser = new Utilisateur();
         fromUser.setId(2L);
+
         Message parentMessage = new Message();
         parentMessage.setId(3L);
         parentMessage.setFromUser(new Utilisateur());

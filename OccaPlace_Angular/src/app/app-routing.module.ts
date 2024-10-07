@@ -10,6 +10,10 @@ import {HomeComponent} from "./features1/home/home.component";
 import {AuthGuard} from "./core/service/autGuard.service";
 import {CategoriesComponent} from "./features1/categories/categories.component";
 import {AnnonceDetailsComponent} from "./features1/annonce-details/annonce-details.component";
+import {MessageComponent} from "./features1/message/message.component";
+import {ConversationComponent} from "./features1/conversation/conversation.component";
+import {SidebarComponent} from "./features1/dashboard/sidebar/sidebar.component";
+import {DashboardComponent} from "./features1/dashboard/dashboard.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +24,10 @@ const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'categories', component: CategoriesComponent},
   { path: 'annonce-details/:id', component: AnnonceDetailsComponent},
+  { path: 'message', component: MessageComponent},
+  { path: 'conversation/:id', component: ConversationComponent},
+  { path: 'dashboard', component: DashboardComponent},
+
 
 
 

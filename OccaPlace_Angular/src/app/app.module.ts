@@ -37,6 +37,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MessageComponent } from './features1/message/message.component';
+import { ConversationComponent } from './features1/conversation/conversation.component';
+import { DashboardComponent } from './features1/dashboard/dashboard.component';
+import { SidebarComponent } from './features1/dashboard/sidebar/sidebar.component';
+import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
+import {MatListItem, MatNavList} from "@angular/material/list";
+import { MainComponent } from './features1/dashboard/main/main.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +59,10 @@ import { MessageComponent } from './features1/message/message.component';
     Hero2Component,
     AnnonceDialogComponent,
     MessageComponent,
+    ConversationComponent,
+    DashboardComponent,
+    SidebarComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +88,11 @@ import { MessageComponent } from './features1/message/message.component';
     AddUserComponent,
     FooterComponent,
     AppHeaderComponent,
+    MatSidenavContent,
+    MatSidenavContainer,
+    MatSidenav,
+    MatNavList,
+    MatListItem,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

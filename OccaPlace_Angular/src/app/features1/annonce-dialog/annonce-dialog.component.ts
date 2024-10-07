@@ -13,9 +13,8 @@ import {AnnonceService} from "../../core/service/annonce.service";
 })
 export class AnnonceDialogComponent {
   form: FormGroup;
-  selectedFiles: File[] = []; // Pour stocker les fichiers sélectionnés
+  selectedFiles: File[] = [];
 
-  // Disponibilités et catégories pour les sélecteurs
   disponibilites = Object.values(Disponibilite);
   categories = Object.values(Categorie);
 
@@ -25,17 +24,16 @@ export class AnnonceDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder // Injection du FormBuilder
   ) {
-    // Initialisation du formulaire
+
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
       category: ['', Validators.required],
-      disponibilite: ['', Validators.required], // Ajout du champ de disponibilité
-      images: [null] // Champ pour les images
+      disponibilite: ['', Validators.required],
+      images: [null]
     });
 
-    // Si des données sont passées au dialogue, préremplissez le formulaire
     if (this.data) {
       this.form.patchValue(this.data);
     }
