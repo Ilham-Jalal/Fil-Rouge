@@ -13,6 +13,7 @@ import {Annonce} from "../model/Annonce";
 export class AnnonceService {
   private apiUrl = 'http://localhost:8180/user/api/annonces';
   private adminApiUrl ='http://localhost:8180/admin'
+  private url ='http://localhost:8180/annonces';
   constructor(private http: HttpClient) { }
 
   createAnnonceWithImages(annonceDTO: AnnonceUpdateDTO, attachments: File[]): Observable<AnnonceResponseDTO> {
@@ -32,7 +33,7 @@ export class AnnonceService {
     return this.http.get<AnnonceResponseDTO>(`${this.apiUrl}/${id}`);
   }
   getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
-    return this.http.get<AnnonceResponseDTO[]>(this.apiUrl);
+    return this.http.get<AnnonceResponseDTO[]>(this.url);
   }
 
   updateAnnonce(id: number, updatedAnnonceDTO: AnnonceUpdateDTO): Observable<AnnonceResponseDTO> {

@@ -121,5 +121,8 @@ public class UserService {
     public  long countTotalUsers() {
         return utilisateurRepository.count();
     }
+    public  long countTotalLivreurs() {
+        return livreurRepository.count();
+    }
 }
 

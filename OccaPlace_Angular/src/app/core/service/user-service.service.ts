@@ -34,4 +34,13 @@ export class UserService {
       })
     );
   }
+
+  countTotalLivreurs(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/admin/countLivreurs`).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la récupération du nombre total d\'annonces:', error);
+        return throwError(error);
+      })
+    );
+  }
 }

@@ -1,17 +1,20 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Categorie } from "../../../core/enum/Categorie";
 import { AnnonceService } from "../../../core/service/annonce.service";
 import { UserService } from "../../../core/service/user-service.service";
 import { Chart, registerables } from 'chart.js';
+import { AnnonceResponseDTO } from "../../../core/dto/AnnonceResponseDTO";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit, AfterViewInit {
+export class MainComponent implements OnInit {
   totalUsers: number = 0;
+  totalLivreurs: number = 0;
   totalAnnonces: number = 0;
+  annonces: AnnonceResponseDTO[] = [];
   totalByCategory: { [key: string]: number } = {
     [Categorie.VETEMENTS]: 0,
     [Categorie.AUTOMOBILE]: 0,
@@ -23,22 +26,42 @@ export class MainComponent implements OnInit, AfterViewInit {
   statistics: { title: string; value: number; unit: string; color: string; icon: string; }[] = [];
   chart: any;
 
+  // Ajout des variables pour le carousel d'images
+  currentImageIndex: number = 0;
+
   constructor(private annonceService: AnnonceService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.loadTotals();
     this.loadTotalUsers();
+    this.loadTotalLivreurs();
+    this.loadAnnonces();
+
+    // Démarrer le carousel des images
+    setInterval(() => {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.annonces.length;
+    }, 3000); // Change l'image toutes les 3 secondes
   }
 
-  ngAfterViewInit(): void {
-    // Pas besoin d'appeler createChart ici car il sera appelé après avoir chargé les données
+  loadAnnonces(): void {
+    this.annonceService.getAllAnnonces().subscribe((data: AnnonceResponseDTO[]) => {
+      this.annonces = data;
+    });
   }
 
   loadTotalUsers(): void {
     this.userService.countTotalUsers().subscribe(total => {
       this.totalUsers = total;
       this.updateStatistics();
-      this.checkAndCreateChart(); // Vérifiez si le graphique doit être créé
+      this.checkAndCreateChart();
+    });
+  }
+
+  loadTotalLivreurs(): void {
+    this.userService.countTotalLivreurs().subscribe(total => {
+      this.totalLivreurs = total;
+      this.updateStatistics();
+      this.checkAndCreateChart();
     });
   }
 
@@ -46,20 +69,19 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.annonceService.countTotalAnnonces().subscribe(total => {
       this.totalAnnonces = total;
       this.updateStatistics();
-      this.checkAndCreateChart(); // Vérifiez si le graphique doit être créé
+      this.checkAndCreateChart();
     });
 
     for (const category of Object.values(Categorie)) {
       this.annonceService.countAnnoncesByCategory(category).subscribe(count => {
         this.totalByCategory[category] = count;
         this.updateStatistics();
-        this.checkAndCreateChart(); // Vérifiez si le graphique doit être créé
+        this.checkAndCreateChart();
       });
     }
   }
 
   createChart(): void {
-    // Détruire le graphique précédent si nécessaire
     if (this.chart) {
       this.chart.destroy();
     }
@@ -118,7 +140,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   private checkAndCreateChart(): void {
-    // Créez le graphique une fois que toutes les données sont chargées
     if (this.totalAnnonces > 0 && Object.values(this.totalByCategory).every(count => count >= 0)) {
       this.createChart();
     }

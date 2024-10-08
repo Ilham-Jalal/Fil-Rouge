@@ -97,5 +97,10 @@ public class UserController {
         long totalAnnonces = userService.countTotalUsers();
         return new ResponseEntity<>(totalAnnonces, HttpStatus.OK);
     }
+    @GetMapping("admin/countLivreurs")
+    public ResponseEntity<Long> countTotalLivreurs() {
+        long totalAnnonces = userService.countTotalLivreurs();
+        return new ResponseEntity<>(totalAnnonces, HttpStatus.OK);
+    }
 
 }

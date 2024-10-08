@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -86,8 +87,8 @@ public class AnnonceController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-
-    @GetMapping("/user/api/annonces")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @GetMapping("/annonces")
     public ResponseEntity<List<AnnonceResponseDTO>> getAllAnnonces() {
         List<AnnonceResponseDTO> annonces = annonceService.findAllAnnonces();
         return new ResponseEntity<>(annonces, HttpStatus.OK);
