@@ -38,11 +38,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MessageComponent } from './features1/message/message.component';
 import { ConversationComponent } from './features1/conversation/conversation.component';
-import { DashboardComponent } from './features1/dashboard/dashboard.component';
 import { SidebarComponent } from './features1/dashboard/sidebar/sidebar.component';
-import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
+import {MatSidenav, MatSidenavContainer, MatSidenavContent, MatSidenavModule} from "@angular/material/sidenav";
 import {MatListItem, MatNavList} from "@angular/material/list";
 import { MainComponent } from './features1/dashboard/main/main.component';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import { AddLivreurDialogComponent } from './features1/add-livreur-dialog/add-livreur-dialog.component';
+import {DashboardComponent} from "./features1/dashboard/dashboard.component";
 
 @NgModule({
   declarations: [
@@ -63,6 +73,8 @@ import { MainComponent } from './features1/dashboard/main/main.component';
     DashboardComponent,
     SidebarComponent,
     MainComponent,
+    AddLivreurDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -93,6 +105,17 @@ import { MainComponent } from './features1/dashboard/main/main.component';
     MatSidenav,
     MatNavList,
     MatListItem,
+    MatTable,
+    MatHeaderCell,
+    MatColumnDef,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatRow,
+    MatSidenavModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

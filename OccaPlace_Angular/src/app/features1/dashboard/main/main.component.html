@@ -70,6 +70,7 @@
         </mat-card>
       </div>
     </div>
+
     <div class="dashboard-container">
       <div class="chart-container">
         <h5 class="font-weight-bolder">Répartition des Annonces par Catégorie</h5>
@@ -84,7 +85,59 @@
           <p class="vendor-name">{{ annonces[currentImageIndex]?.vendeurName }}</p>
         </div>
       </div>
+    </div>
 
+    <div class="tables-container">
+      <div class="col-6">
+        <mat-card>
+          <mat-card-header style="display: flex; justify-content: space-between">
+            <mat-card-title style="color: #ff7b00;">Liste des livreurs</mat-card-title>
+            <button mat-raised-button color="primary"  style="margin-top: -10px;margin-bottom: 10px" (click)="openAddLivreurDialog()">Add Livreur</button>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="livreurs" class="mat-elevation-z8">
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef>Nom de livreurs</th>
+                <td mat-cell *matCellDef="let livreur">{{ livreur.username }}</td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let livreur">{{ livreur.email }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Liste des utilisateurs -->
+      <div class="col-6">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title style="color: #ff7b00;">Liste des utilisateurs</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="users" class="mat-elevation-z8">
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef>Nom d'utilisateur</th>
+                <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
 
   </div>

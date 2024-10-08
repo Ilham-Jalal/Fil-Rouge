@@ -118,6 +118,10 @@ public class UserService {
         return utilisateurRepository.findAll();
     }
 
+    public List<Livreur> getAllLivreurs() {
+        return livreurRepository.findAll();
+    }
+
     public  long countTotalUsers() {
         return utilisateurRepository.count();
     }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Categorie } from "../../../core/enum/Categorie";
 import { AnnonceService } from "../../../core/service/annonce.service";
 import { UserService } from "../../../core/service/user-service.service";
-import { Chart, registerables } from 'chart.js';
 import { AnnonceResponseDTO } from "../../../core/dto/AnnonceResponseDTO";
+import { UserDTO } from "../../../core/dto/UserDTO";
+import { Chart, registerables } from 'chart.js';
+import {MatDialog} from "@angular/material/dialog";
+import {AddLivreurDialogComponent} from "../../add-livreur-dialog/add-livreur-dialog.component";
+import {Role} from "../../../core/enum/Role";
 
 @Component({
   selector: 'app-main',
@@ -15,44 +18,39 @@ export class MainComponent implements OnInit {
   totalLivreurs: number = 0;
   totalAnnonces: number = 0;
   annonces: AnnonceResponseDTO[] = [];
-  totalByCategory: { [key: string]: number } = {
-    [Categorie.VETEMENTS]: 0,
-    [Categorie.AUTOMOBILE]: 0,
-    [Categorie.ELECTRONIQUE]: 0,
-    [Categorie.IMMOBILIER]: 0,
-    [Categorie.MEUBLES]: 0,
-    [Categorie.AUTRE]: 0,
-  };
-  statistics: { title: string; value: number; unit: string; color: string; icon: string; }[] = [];
+  users: UserDTO[] = [];
+  livreurs: UserDTO[] = [];
+  displayedColumns: string[] = ['username', 'email'];
+  totalByCategory: { [key: string]: number } = {};
+  currentImageIndex: number = 0;
   chart: any;
 
-  // Ajout des variables pour le carousel d'images
-  currentImageIndex: number = 0;
-
-  constructor(private annonceService: AnnonceService, private userService: UserService) {}
+  constructor(private annonceService: AnnonceService, private userService: UserService,private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadTotals();
     this.loadTotalUsers();
     this.loadTotalLivreurs();
     this.loadAnnonces();
+    this.loadUserList();
+    this.loadlivreurList();
 
-    // Démarrer le carousel des images
     setInterval(() => {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.annonces.length;
-    }, 3000); // Change l'image toutes les 3 secondes
+    }, 3000);
   }
 
   loadAnnonces(): void {
     this.annonceService.getAllAnnonces().subscribe((data: AnnonceResponseDTO[]) => {
       this.annonces = data;
+      this.calculateTotalByCategory();
+      this.checkAndCreateChart();
     });
   }
 
   loadTotalUsers(): void {
     this.userService.countTotalUsers().subscribe(total => {
       this.totalUsers = total;
-      this.updateStatistics();
       this.checkAndCreateChart();
     });
   }
@@ -60,7 +58,6 @@ export class MainComponent implements OnInit {
   loadTotalLivreurs(): void {
     this.userService.countTotalLivreurs().subscribe(total => {
       this.totalLivreurs = total;
-      this.updateStatistics();
       this.checkAndCreateChart();
     });
   }
@@ -68,17 +65,30 @@ export class MainComponent implements OnInit {
   loadTotals(): void {
     this.annonceService.countTotalAnnonces().subscribe(total => {
       this.totalAnnonces = total;
-      this.updateStatistics();
       this.checkAndCreateChart();
     });
+  }
 
-    for (const category of Object.values(Categorie)) {
-      this.annonceService.countAnnoncesByCategory(category).subscribe(count => {
-        this.totalByCategory[category] = count;
-        this.updateStatistics();
-        this.checkAndCreateChart();
-      });
-    }
+  loadUserList(): void {
+    this.userService.getAllUsers().subscribe((users: UserDTO[]) => {
+      this.users = users;
+    });
+  }
+  loadlivreurList(): void {
+    this.userService.getAllLivreurs().subscribe((livreurs: UserDTO[]) => {
+      this.livreurs = livreurs;
+    });
+  }
+
+  calculateTotalByCategory(): void {
+    this.totalByCategory = {};
+    this.annonces.forEach(annonce => {
+      const category = annonce.category;
+      if (!this.totalByCategory[category]) {
+        this.totalByCategory[category] = 0;
+      }
+      this.totalByCategory[category]++;
+    });
   }
 
   createChart(): void {
@@ -125,22 +135,34 @@ export class MainComponent implements OnInit {
     });
   }
 
-  private updateStatistics(): void {
-    this.statistics = [
-      { title: 'Total Annonces', value: this.totalAnnonces, unit: 'annonces', color: 'primary', icon: 'ni ni-money-coins' },
-      { title: 'Total Users', value: this.totalUsers, unit: 'utilisateurs', color: 'warning', icon: 'ni ni-circle-08' },
-      ...Object.keys(this.totalByCategory).map(category => ({
-        title: `Total ${category}`,
-        value: this.totalByCategory[category],
-        unit: 'annonces',
-        color: 'success',
-        icon: 'ni ni-paper-diploma',
-      }))
-    ];
+  openAddLivreurDialog(): void {
+    const dialogRef = this.dialog.open(AddLivreurDialogComponent, {
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addNewLivreur(result);
+      }
+    });
+  }
+
+  addNewLivreur(newLivreur: UserDTO): void {
+    this.userService.addUserByAdmin(Role.LIVREUR, newLivreur).subscribe(
+      (response) => {
+        console.log('New livreur added:', response);
+        this.loadlivreurList(); // Refresh the livreur list
+        this.loadTotalLivreurs(); // Update the total livreurs count
+      },
+      (error) => {
+        console.error('Error adding new livreur:', error);
+        // Handle error (e.g., show error message to user)
+      }
+    );
   }
 
   private checkAndCreateChart(): void {
-    if (this.totalAnnonces > 0 && Object.values(this.totalByCategory).every(count => count >= 0)) {
+    if (this.totalAnnonces > 0 && this.totalUsers > 0 && this.totalLivreurs > 0) {
       this.createChart();
     }
   }

@@ -4,6 +4,7 @@ import com.example.demo.dto.SignUpRequest;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.enums.Role;
 import com.example.demo.models.Annonce;
+import com.example.demo.models.Livreur;
 import com.example.demo.models.User;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.UserService;
@@ -49,6 +50,12 @@ public class UserController {
     public ResponseEntity<List<Utilisateur>> getAllUsers() {
         List<Utilisateur> users = userService.getAllUtilisateurs();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/livreurs")
+    public ResponseEntity<List<Livreur>> getAllLivreurs() {
+        List<Livreur> livreurs = userService.getAllLivreurs();
+        return new ResponseEntity<>(livreurs, HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/users/{id}")

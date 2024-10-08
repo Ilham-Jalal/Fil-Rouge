@@ -1,42 +1,57 @@
-<!--<div *ngIf="isLoading">-->
-<!--  <p>Chargement des annonces...</p>-->
-<!--</div>-->
+<div class="container mt-4">
+  <!-- Search Form -->
+  <div class="annonce-search-form">
+    <form (ngSubmit)="searchAnnonces()">
+      <!-- Title or Description -->
+      <div class="form-group">
+        <label for="titleOrDescription">Titre ou Description</label>
+        <input type="text" class="form-control" id="titleOrDescription" [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description">
+      </div>
 
-<!--<div *ngIf="!isLoading && errorMessage">-->
-<!--  <p class="error-message">{{ errorMessage }}</p>-->
-<!--</div>-->
+      <!-- Category -->
+      <div class="form-group">
+        <label for="category">Catégorie</label>
+        <select class="form-control" id="category" [(ngModel)]="searchQuery.category" name="category">
+          <option *ngFor="let key of categorieKeys" [value]="Categorie[key]">{{ key }}</option>
+        </select>
+      </div>
 
-<!--<div *ngIf="!isLoading && annonces.length > 0">-->
-<!--  <table>-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--      <th>Id</th>-->
-<!--      <th>Title</th>-->
-<!--      <th>Description</th>-->
-<!--      <th>Price</th>-->
-<!--      <th>Category</th>-->
-<!--      <th>Disponibility</th>-->
-<!--      <th>Creation Date</th>-->
-<!--      <th>Seller Name</th>-->
-<!--      <th>Seller Email</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr *ngFor="let annonce of annonces">-->
-<!--      <td>{{ annonce.id }}</td>-->
-<!--      <td>{{ annonce.title }}</td>-->
-<!--      <td>{{ annonce.description }}</td>-->
-<!--      <td>{{ annonce.price }}</td>-->
-<!--      <td>{{ annonce.category }}</td>-->
-<!--      <td>{{ annonce.disponibilite }}</td>-->
-<!--      <td>{{ annonce.creationDate }}</td>-->
-<!--      <td>{{ annonce.vendeurName }}</td>-->
-<!--      <td>{{ annonce.vendeurEmail }}</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--</div>-->
+      <!-- Price Minimum -->
+      <div class="form-group">
+        <label for="priceMin">Prix Minimum</label>
+        <input type="number" class="form-control" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0">
+      </div>
 
-<!--<div *ngIf="!isLoading && annonces.length === 0">-->
-<!--  <p>Aucune annonce trouvée.</p>-->
-<!--</div>-->
+      <!-- Price Maximum -->
+      <div class="form-group">
+        <label for="priceMax">Prix Maximum</label>
+        <input type="number" class="form-control" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000">
+      </div>
+
+      <!-- Button Group -->
+      <div class="d-flex justify-content-between mt-3">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <button type="button" class="btn btn-danger" (click)="resetSearch()">Annuler</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Annonce List -->
+  <h2 class="text-center my-4">All Annonces</h2>
+  <div class="row">
+    <div *ngFor="let annonce of annonces" class="col-md-4 mb-4">
+      <div class="card">
+        <img [src]="annonce.images[0]" class="card-img-top" alt="Annonce Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ annonce.title }}</h5>
+          <p class="card-text">{{ annonce.description }}</p>
+          <p class="card-text">
+            <strong>Price:</strong> {{ annonce.price }} USD<br>
+            <strong>Category:</strong> {{ annonce.category }}<br>
+            <strong>Disponibility:</strong> {{ annonce.disponibilite }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,7 +28,8 @@ const routes: Routes = [
   { path: 'message', component: MessageComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'conversation/:id', component: ConversationComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
-  { path: 'main', component: MainComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
+  { path: 'main', component: SidebarComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
+  { path: 'annoncesList', component: AnnonceListComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
 
 
 

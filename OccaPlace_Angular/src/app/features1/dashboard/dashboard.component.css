@@ -1,15 +1,39 @@
+/* styles.css or your component's CSS file */
 
-.dashboard-container {
-  height: 100%;
-  width: 100%;
-  background-color: #130a0a;
-  justify-content: space-between;
+.sidenav-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
+.sidenav-content {
+  display: flex;
+  flex: 1;
+}
 
+.sidebar {
+  width: 300px;
+  transition: width 0.3s ease-in-out;
+}
 
+.sidebar.collapsed {
+  width: 60px;
+}
 
+.main-content {
+  margin-top: -20px;
+  flex: 1;
+  overflow-y: auto;
+}
 
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    height: 100%;
+    z-index: 1000;
+  }
 
-
-
+  .sidebar:not(.collapsed) {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+}

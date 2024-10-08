@@ -1,0 +1,41 @@
+<div class="ajout-annonce">
+  <h1>Ajouter un livreur</h1>
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <mat-form-field appearance="outline" class="input">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="form.get('username')?.hasError('required')">
+          Le nom d'utilisateur est <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline" class="input">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required type="email">
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          L'email est <strong>obligatoire</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Veuillez entrer une adresse email valide
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline" class="input">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput formControlName="password" required type="password">
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Le mot de passe est <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="button">
+      <button type="submit" class="btn" [disabled]="form.invalid">Enregistrer</button>
+    </div>
+  </form>
+</div>

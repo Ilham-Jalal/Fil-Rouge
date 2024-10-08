@@ -22,6 +22,12 @@ export class UserService {
     return this.http.post<User>(`${this.apiUrl}/admin/add/${role}`, userDTO);
   }
 
+  getAllUsers(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(`${this.apiUrl}/admin/users`);
+  }
+  getAllLivreurs(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(`${this.apiUrl}/admin/livreurs`);
+  }
   logout(): void {
     localStorage.removeItem('jwt');
   }

@@ -1,0 +1,49 @@
+.ajout-annonce {
+  height: 90%;
+  width: 90%;
+  padding: 0 10%;
+}
+
+.ajout-annonce h1 {
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.ajout-annonce span {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.ajout-annonce .input {
+  width: 90%;
+  outline: none;
+  border: none;
+  border-radius: 0;
+}
+
+.ajout-annonce .button {
+  width: 90%;
+}
+
+.ajout-annonce .button button {
+  width: 40%;
+  height: 30px;
+  background-color: #FF6F30;
+  color: white;
+  align-items: center;
+  margin-left: 110px;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid #130a0a;
+}
+
+.ajout-annonce .button button:hover {
+  background-color: #6f3fc9;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 5px 0;
+}

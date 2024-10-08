@@ -1,12 +1,16 @@
-<mat-sidenav-container class="dashboard-container d-flex flex-row justify-content-between">
-  <mat-sidenav class="sidebar" mode="side" opened>
-    <app-sidebar></app-sidebar>
-  </mat-sidenav>
+<div class="sidenav-container">
+  <mat-sidenav-container class="sidenav-content">
+    <mat-sidenav #sidenav class="sidebar" mode="side" [opened]="!isMobile" [mode]="isMobile ? 'over' : 'side'">
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
 
-  <mat-sidenav-content >
-    <mat-toolbar class="navbar">
+    <mat-sidenav-content class="main-content">
+      <mat-toolbar class="toolbar" color="primary">
+        <button mat-icon-button (click)="sidenav.toggle()" *ngIf="isMobile">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
       <app-main></app-main>
-    </mat-toolbar>
-
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
