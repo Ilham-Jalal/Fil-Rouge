@@ -1,2 +1,12 @@
-<app-sidebar></app-sidebar>
-<app-main></app-main>
+<mat-sidenav-container class="dashboard-container d-flex flex-row justify-content-between">
+  <mat-sidenav class="sidebar" mode="side" opened>
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-container d-flex flex-column justify-content-between">
+    <mat-toolbar class="navbar">
+      <app-main fxFlex="100%"></app-main>
+    </mat-toolbar>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

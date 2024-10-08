@@ -91,4 +91,11 @@ public class UserController {
     public Integer findId(@RequestParam String username){
         return userService.findIdUserByUsername(username);
     }
+
+    @GetMapping("admin/countUsers")
+    public ResponseEntity<Long> getTotalUsers() {
+        long totalAnnonces = userService.countTotalUsers();
+        return new ResponseEntity<>(totalAnnonces, HttpStatus.OK);
+    }
+
 }

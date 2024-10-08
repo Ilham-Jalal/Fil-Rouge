@@ -1,0 +1,77 @@
+.main-content {
+  background-color: #f4f7fa;
+  margin-top: 1000px;
+}
+.card {
+  display: flex;
+  border-radius: 15px;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+}
+
+.bg-gradient-success {
+  background: linear-gradient(45deg, #28a745, #d4edda);
+}
+
+.navbar-main {
+  background-color: #007bff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  display: flex;
+  border-radius: 15px;
+  border: 1px solid rgba(19, 10, 10, 0.8);
+  transition: transform 0.3s;
+&:hover {
+  transform: scale(1.05);
+}
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%; // Rendre l'icône circulaire
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(45deg, #ffc107, #fff3cd);
+}
+
+.bg-gradient-success {
+  background: linear-gradient(45deg, #28a745, #d4edda);
+}
+
+h5 {
+  font-weight: bold;
+  color: #333;
+}
+
+.text-sm {
+  color: #555;
+}
+
+.chart-container {
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

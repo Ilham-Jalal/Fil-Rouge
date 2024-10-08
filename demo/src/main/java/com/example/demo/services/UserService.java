@@ -117,5 +117,9 @@ public class UserService {
     public List<Utilisateur> getAllUtilisateurs() {
         return utilisateurRepository.findAll();
     }
+
+    public  long countTotalUsers() {
+        return utilisateurRepository.count();
+    }
 }
 
