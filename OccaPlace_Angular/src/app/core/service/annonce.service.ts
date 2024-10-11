@@ -11,9 +11,10 @@ import {Annonce} from "../model/Annonce";
   providedIn: 'root'
 })
 export class AnnonceService {
-  private apiUrl = 'http://localhost:8180/user/api/annonces';
-  private adminApiUrl ='http://localhost:8180/admin'
-  private url ='http://localhost:8180/annonces';
+  private apiUrl = 'http://localhost:8181/user/api/annonces';
+  private adminApiUrl ='http://localhost:8181/admin';
+  private url ='http://localhost:8181/annonces';
+
   constructor(private http: HttpClient) { }
 
   createAnnonceWithImages(annonceDTO: AnnonceUpdateDTO, attachments: File[]): Observable<AnnonceResponseDTO> {
@@ -29,9 +30,21 @@ export class AnnonceService {
     );
   }
 
+  // Corrigé : Récupérer les annonces de l'utilisateur courant sans l'ID
+  getAnnoncesByUser(): Observable<AnnonceResponseDTO[]> {
+    return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/annonces`).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la récupération des annonces de l\'utilisateur:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  // Autres méthodes
   findById(id: number): Observable<AnnonceResponseDTO> {
     return this.http.get<AnnonceResponseDTO>(`${this.apiUrl}/${id}`);
   }
+
   getAllAnnonces(): Observable<AnnonceResponseDTO[]> {
     return this.http.get<AnnonceResponseDTO[]>(this.url);
   }
@@ -41,7 +54,7 @@ export class AnnonceService {
   }
 
   deleteAnnonce(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.url}/${id}`);
   }
 
   getAnnoncesByCategory(category: Categorie): Observable<AnnonceResponseDTO[]> {
@@ -52,10 +65,8 @@ export class AnnonceService {
     return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/disponibilite/${disponibilite}`);
   }
 
-
   searchAnnonces(titleOrDescription: string, category: Categorie, priceMin: number, priceMax: number): Observable<AnnonceResponseDTO[]> {
-    console.log('Recherche avec les paramètres :', { titleOrDescription, category, priceMin, priceMax });
-    return this.http.get<AnnonceResponseDTO[]>(`${this.apiUrl}/search`, {
+    return this.http.get<AnnonceResponseDTO[]>(`${this.url}/search`, {
       params: {
         title: titleOrDescription,
         description: titleOrDescription,
@@ -65,7 +76,6 @@ export class AnnonceService {
       }
     });
   }
-
 
   countTotalAnnonces(): Observable<number> {
     return this.http.get<number>(`${this.adminApiUrl}/count`).pipe(

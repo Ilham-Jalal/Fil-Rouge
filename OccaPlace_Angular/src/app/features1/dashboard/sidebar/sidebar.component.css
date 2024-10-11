@@ -1,20 +1,14 @@
 /* Sidebar styling */
 .sidenav-container {
-  height: 90vh;
-  margin-top: 30px;
+  height: 50vh;
   margin-left: 20px;
 }
 
-.sidenav {
-  width: 250px;
-  background-color: #fff;
-  border: 1px solid #e3e3e3;
-  padding: 20px;
-  border-radius: 11px;
-}
+
 
 .sidenav-header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 10px;
 }
@@ -27,7 +21,7 @@
 .brand-title {
   font-weight: bold;
   font-size: 18px;
-  color: #FF4500; /* Color matching your logo */
+  color: #ff6f30; /* Color matching your logo */
 }
 
 .mat-nav-list {
@@ -62,5 +56,5 @@
 }
 
 .logout {
-  color: #e74c3c;
+  color: #ff6f30;
 }

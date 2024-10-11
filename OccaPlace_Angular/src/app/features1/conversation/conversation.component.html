@@ -70,16 +70,6 @@
         <p>Cet espace est dédié à votre conversation. Discutez des détails, négociez le prix et finalisez votre transaction en toute confiance.</p>
       </div>
 
-      <div class="annonce-details" *ngIf="annonceDetails">
-        <h3>Détails de l'annonce</h3>
-        <div class="image-container">
-          <img [src]="annonceDetails?.images || 'assets/default-image.png'" [alt]="annonceDetails?.title">
-        </div>
-        <h4>{{ annonceDetails?.title }}</h4>
-        <p>Prix : {{ annonceDetails?.price }} Dhs</p>
-        <p>{{ annonceDetails?.description }}</p>
-        <button mat-button (click)="backToAnnonce()">Retour à l'annonce</button>
-      </div>
     </div>
   </div>
 </div>

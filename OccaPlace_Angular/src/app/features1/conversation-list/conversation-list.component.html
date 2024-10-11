@@ -1,0 +1,27 @@
+<app-header2></app-header2>
+<div style="display: flex;">
+  <div class="conversation-list-container">
+    <h2>Liste des conversations</h2>
+
+    <div *ngIf="isLoading" class="loading-message">Chargement des conversations...</div>
+    <div *ngIf="!isLoading && conversations.length === 0" class="no-conversations-message">Aucune conversation trouvée.</div>
+
+    <ul *ngIf="!isLoading && conversations.length > 0" class="conversation-list">
+      <li *ngFor="let conversation of conversations" class="conversation-item">
+        <div class="conversation-info">
+          <strong>{{ conversation.acheteurUsername }} - {{ conversation.vendeurUsername }}</strong>
+          <small>{{ conversation.lastMessageDate | date: 'short' }}</small>
+        </div>
+        <button class="visit-button" (click)="afficherCoversation(conversation)">Visiter la conversation</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="info-section">
+    <div class="info-message">
+      <h3>Communiquez, négociez, concluez !</h3>
+      <p>Cet espace est dédié à votre conversation. Discutez des détails, négociez le prix et finalisez votre transaction en toute confiance.</p>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

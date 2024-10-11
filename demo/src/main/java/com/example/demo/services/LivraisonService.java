@@ -3,12 +3,14 @@ package com.example.demo.services;
 import com.example.demo.enums.StatutLivraison;
 import com.example.demo.models.Livraison;
 import com.example.demo.models.Livreur;
+import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.LivraisonRepository;
 import com.example.demo.repositorys.LivreurRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class LivraisonService {
@@ -58,6 +60,45 @@ public class LivraisonService {
         return livraison;
     }
 
+    public List<Livraison> getLivraisonsByUser(Utilisateur utilisateur) {
+        return livraisonRepository.findByUtilisateur(utilisateur);
+    }
+
+    public Optional<Livraison> updateLivraisonByUser(Long livraisonId, Livraison updatedLivraison, Utilisateur utilisateur) {
+        Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
+
+        if (livraisonOpt.isPresent()) {
+            Livraison livraison = livraisonOpt.get();
+            if (!livraison.getUtilisateur().equals(utilisateur)) {
+                throw new IllegalStateException("Unauthorized to update this delivery");
+            }
+
+            livraison.setAdresseVendeur(updatedLivraison.getAdresseVendeur());
+            livraison.setAdresseAchteteur(updatedLivraison.getAdresseAchteteur());
+            livraison.setMontant(updatedLivraison.getMontant());
+            livraison.setStatut(updatedLivraison.getStatut());
+
+            return Optional.of(livraisonRepository.save(livraison));
+        }
+
+        return Optional.empty();
+    }
+
+    public boolean deleteLivraisonByUser(Long livraisonId, Utilisateur utilisateur) {
+        Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
+
+        if (livraisonOpt.isPresent()) {
+            Livraison livraison = livraisonOpt.get();
+            if (!livraison.getUtilisateur().equals(utilisateur)) {
+                throw new IllegalStateException("Unauthorized to delete this delivery");
+            }
+
+            livraisonRepository.deleteById(livraisonId);
+            return true;
+        }
+
+        return false;
+    }
     public Livraison createLivraison(Livraison livraison) {
         return livraisonRepository.save(livraison);
     }

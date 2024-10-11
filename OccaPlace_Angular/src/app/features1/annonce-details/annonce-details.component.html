@@ -8,7 +8,7 @@
     <div class="details-container">
       <div class="user-info">
         <div class="user">
-          <span class="username">{{ annonce?.vendeurName ?? 'Nom inconnu' }}</span>
+          {{ annonce?.vendeurName ?? 'Nom inconnu' }}
         </div>
         <div class="annonce-icons">
           <i class="icon-heart"><img src="assets/images%20(1).png" alt="favoris" width="32"></i>
@@ -35,9 +35,7 @@
           {{ annonce?.creationDate | date: 'short' }}
         </span>
       </div>
-      <button class="buy-button" (click)="toggleMessageForm()">CONTACTER LE VENDEUR</button>
-
-<!--      <app-message *ngIf="messageFormVisible" [annonce]="annonce"></app-message>-->
+      <button class="buy-button" (click)="contacterVendeur()">CONTACTER LE VENDEUR</button>
       <button class="comments-button" (click)="toggleComments()">Commentaires</button>
     </div>
   </div>

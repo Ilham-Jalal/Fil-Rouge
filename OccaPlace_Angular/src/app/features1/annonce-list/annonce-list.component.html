@@ -1,56 +1,61 @@
-<div class="container mt-4">
-  <!-- Search Form -->
-  <div class="annonce-search-form">
-    <form (ngSubmit)="searchAnnonces()">
-      <!-- Title or Description -->
-      <div class="form-group">
-        <label for="titleOrDescription">Titre ou Description</label>
-        <input type="text" class="form-control" id="titleOrDescription" [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description">
-      </div>
+<div class="container mt-4 main-content">
+  <!-- Header -->
+  <header class="d-flex justify-content-between align-items-center mb-4">
+    <img src="assets/OccaPlace_Logo__2_-removebg-preview.png" alt="Logo" class="navbar-brand-img">
 
-      <!-- Category -->
-      <div class="form-group">
-        <label for="category">Catégorie</label>
-        <select class="form-control" id="category" [(ngModel)]="searchQuery.category" name="category">
-          <option *ngFor="let key of categorieKeys" [value]="Categorie[key]">{{ key }}</option>
-        </select>
-      </div>
+    <div class="annonce-search-form d-flex flex-row">
+      <form (ngSubmit)="searchAnnonces()" class="d-flex">
+        <!-- Title or Description -->
+        <div class="form-group me-2">
+          <label for="titleOrDescription" class="visually-hidden">Titre ou Description</label>
+          <input type="text" class="form-control" id="titleOrDescription" [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description">
+        </div>
 
-      <!-- Price Minimum -->
-      <div class="form-group">
-        <label for="priceMin">Prix Minimum</label>
-        <input type="number" class="form-control" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0">
-      </div>
+        <!-- Category -->
+        <div class="form-group me-2">
+          <label for="category" class="visually-hidden">Catégorie</label>
+          <select class="form-control" id="category" [(ngModel)]="searchQuery.category" name="category">
+            <option *ngFor="let key of categorieKeys" [value]="Categorie[key]">{{ key }}</option>
+          </select>
+        </div>
 
-      <!-- Price Maximum -->
-      <div class="form-group">
-        <label for="priceMax">Prix Maximum</label>
-        <input type="number" class="form-control" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000">
-      </div>
+        <!-- Price Minimum -->
+        <div class="form-group me-2">
+          <label for="priceMin" class="visually-hidden">Prix Minimum</label>
+          <input type="number" class="form-control" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0">
+        </div>
 
-      <!-- Button Group -->
-      <div class="d-flex justify-content-between mt-3">
-        <button type="submit" class="btn btn-primary">Rechercher</button>
-        <button type="button" class="btn btn-danger" (click)="resetSearch()">Annuler</button>
-      </div>
-    </form>
-  </div>
+        <!-- Price Maximum -->
+        <div class="form-group me-2">
+          <label for="priceMax" class="visually-hidden">Prix Maximum</label>
+          <input type="number" class="form-control" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000">
+        </div>
+
+        <!-- Button Group -->
+        <button type="submit" class="delete" style="background-color: #ff6f30; border-color: #e57418; color: #fff;">Rechercher</button>
+      </form>
+    </div>
+  </header>
+  <div class="ligne"></div>
 
   <!-- Annonce List -->
   <h2 class="text-center my-4">All Annonces</h2>
   <div class="row">
-    <div *ngFor="let annonce of annonces" class="col-md-4 mb-4">
+    <div *ngFor="let annonce of annonces" class="col-md-3 mb-3">
       <div class="card">
         <img [src]="annonce.images[0]" class="card-img-top" alt="Annonce Image">
         <div class="card-body">
           <h5 class="card-title">{{ annonce.title }}</h5>
           <p class="card-text">{{ annonce.description }}</p>
           <p class="card-text">
-            <strong>Price:</strong> {{ annonce.price }} USD<br>
+            <strong>Price:</strong> {{ annonce.price }} Dhs<br>
             <strong>Category:</strong> {{ annonce.category }}<br>
             <strong>Disponibility:</strong> {{ annonce.disponibilite }}
           </p>
+          <!-- Delete Button -->
         </div>
+        <button class="btn fixed-button" style="background-color:#ff6f30; border-color: #e57418; color: #fff; margin-bottom: 4px; margin-left:50px; width: 50%" (click)="deleteAnnonce(annonce.id)">Supprimer</button>
+
       </div>
     </div>
   </div>

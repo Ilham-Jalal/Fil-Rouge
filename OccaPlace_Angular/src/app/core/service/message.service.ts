@@ -9,7 +9,7 @@ import {MessageResponseDTO} from "../dto/MessageResponseDTO";
   providedIn: 'root',
 })
 export class MessageService {
-  private baseUrl = 'http://localhost:8180/user/api/messages'; // Remplacez par votre URL de base
+  private baseUrl = 'http://localhost:8181/user/api/messages'; // Remplacez par votre URL de base
 
   constructor(private http: HttpClient) {}
 

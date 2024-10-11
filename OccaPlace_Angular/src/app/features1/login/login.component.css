@@ -3,13 +3,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 93vh;
+  min-height: 100vh;
   background-image: url("https://images.pexels.com/photos/3965548/pexels-photo-3965548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
   background-size: cover;
   background-position: center;
   color: white;
   font-family: 'Poppins', sans-serif;
-  padding: 20px;
+  padding: 30px;
 }
 
 .form-container {

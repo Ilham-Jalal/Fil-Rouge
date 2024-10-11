@@ -15,11 +15,14 @@ import {ConversationComponent} from "./features1/conversation/conversation.compo
 import {SidebarComponent} from "./features1/dashboard/sidebar/sidebar.component";
 import {DashboardComponent} from "./features1/dashboard/dashboard.component";
 import {MainComponent} from "./features1/dashboard/main/main.component";
+import {ConversationListComponent} from "./features1/conversation-list/conversation-list.component";
+import {ProfileComponent} from "./features1/profile/profile.component";
+import {UserLivraisonsComponent} from "./features1/user-livraisons/user-livraisons.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'add-user', component: AddUserComponent , canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
-  { path: 'annonce', component: AnnonceComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
+  { path: 'annonces', component: AnnonceComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'annonceByUser', component: AnnonceListComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'annonceByCategorie', component: AnnoncesByCategoryComponent , canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: '', component: HomeComponent, },
@@ -27,10 +30,34 @@ const routes: Routes = [
   { path: 'annonce-details/:id', component: AnnonceDetailsComponent,  canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'message', component: MessageComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'conversation/:id', component: ConversationComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
+  { path: 'conversations', component: ConversationListComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
+  { path: 'livraison', component: UserLivraisonsComponent, canActivate: [AuthGuard], data: { expectedRole: Role.USER }},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
-  { path: 'main', component: SidebarComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
+  { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
   { path: 'annoncesList', component: AnnonceListComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
-
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN },
+    children: [
+      {
+        path: '',
+        redirectTo: 'main',
+        pathMatch: 'full'
+      },
+      {
+        path: 'main',
+        component: MainComponent,
+        canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }
+      },
+      {
+        path: 'annoncesList',
+        component: AnnonceListComponent,
+        canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }
+      },
+    ]
+  }
 
 
 

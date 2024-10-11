@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AnnonceResponseDTO} from "../../core/dto/AnnonceResponseDTO";
-import {Categorie} from "../../core/enum/Categorie";
-import {AnnonceService} from "../../core/service/annonce.service";
-
+import { AnnonceResponseDTO } from "../../core/dto/AnnonceResponseDTO";
+import { Categorie } from "../../core/enum/Categorie";
+import { AnnonceService } from "../../core/service/annonce.service";
 
 @Component({
   selector: 'app-annonce-list',
@@ -22,6 +21,7 @@ export class AnnonceListComponent implements OnInit {
     priceMin: 0,
     priceMax: 10000
   };
+
   categorieKeys = Object.keys(Categorie) as Array<keyof typeof Categorie>;
 
   constructor(private annonceService: AnnonceService) {}
@@ -60,6 +60,17 @@ export class AnnonceListComponent implements OnInit {
       });
   }
 
+  deleteAnnonce(id: number): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')) {
+      this.annonceService.deleteAnnonce(id).subscribe({
+        next: () => {
+          this.annonces = this.annonces.filter(annonce => annonce.id !== id);
+          console.log('Annonce supprimée avec succès');
+        },
+        error: (err) => console.error('Erreur lors de la suppression de l\'annonce', err)
+      });
+    }
+  }
 
   protected readonly Categorie = Categorie;
 }

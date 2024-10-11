@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.ConversationResponseDTO;
 import com.example.demo.dto.MessageResponseDTO;
+import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.Conversation;
 import com.example.demo.models.Message;
 import com.example.demo.models.Utilisateur;
@@ -12,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,10 +50,53 @@ public class ConversationService {
         }).collect(Collectors.toList());
     }
 
+
+    @Transactional
+    public Conversation createOrGetConversation(Long vendeurId, Long acheteurId) {
+        Conversation conversation = conversationRepository.findByVendeurIdAndAcheteur_Id(vendeurId, acheteurId)
+                .orElse(conversationRepository.findByVendeurIdAndAcheteur_Id(acheteurId, vendeurId)
+                        .orElse(null));
+
+        if (conversation == null) {
+            Utilisateur vendeur = utilisateurRepository.findById(vendeurId)
+                    .orElseThrow(() -> new UserNotFoundException("Vendeur not found"));
+            Utilisateur acheteur = utilisateurRepository.findById(acheteurId)
+                    .orElseThrow(() -> new UserNotFoundException("Acheteur not found"));
+
+            conversation = new Conversation();
+            conversation.setVendeur(vendeur);
+            conversation.setAcheteur(acheteur);
+            conversation = conversationRepository.save(conversation);
+        }
+
+        return conversation;
+    }
     @Transactional
     public Conversation createConversation(Conversation conversation) {
         return conversationRepository.save(conversation);
     }
+    public List<ConversationResponseDTO> getConversationsByUserId(Long userId) {
+        return conversationRepository.findAllByUserId(userId).stream()
+                .map(conversation -> new ConversationResponseDTO(
+                        conversation.getId(),
+                        conversation.getAcheteur() != null ? conversation.getAcheteur().getUsername() : null,
+                        conversation.getVendeur() != null ? conversation.getVendeur().getUsername() : null,
+                        conversation.getLastMessage() != null ? conversation.getLastMessage().getContent() : null,
+                        conversation.getLastMessage() != null ? conversation.getLastMessage().getTimestamp() : null
+                ))
+                .collect(Collectors.toList());
+    }
+
+
+
+    public List<ConversationResponseDTO> getConversationsByUsername(String username) {
+        Optional<Utilisateur> user = utilisateurRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return getConversationsByUserId(user.get().getId());
+    }
+
 
     @Transactional(readOnly = true)
     public List<Conversation> getAllConversations() {

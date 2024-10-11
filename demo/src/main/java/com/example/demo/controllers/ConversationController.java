@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.ConversationResponseDTO;
 import com.example.demo.dto.MessageResponseDTO;
 import com.example.demo.models.Conversation;
 import com.example.demo.models.Message;
@@ -30,7 +31,24 @@ public class ConversationController {
         return new ResponseEntity<>(createdConversation, HttpStatus.CREATED);
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<Conversation> createOrGetConversation(@RequestParam Long vendeurId, @RequestParam Long acheteurId) {
+        Conversation conversation = conversationService.createOrGetConversation(vendeurId, acheteurId);
+        return new ResponseEntity<>(conversation, HttpStatus.OK);
+    }
 
+    @GetMapping("/current")
+    public ResponseEntity<List<ConversationResponseDTO>> getConversationsForCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        List<ConversationResponseDTO> conversations = conversationService.getConversationsByUsername(username);
+
+        if (conversations.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(conversations);
+    }
     @GetMapping("/{conversationId}/messages")
     public ResponseEntity<List<MessageResponseDTO>> getMessagesByConversationId(@PathVariable Long conversationId) {
         // Get the authenticated user

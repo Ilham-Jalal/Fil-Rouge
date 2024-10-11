@@ -22,7 +22,8 @@ public class Livraison {
     private Long id;
 
     @Column(nullable = false)
-    private String adresse;
+    private String adresseVendeur;
+    private String adresseAchteteur;
     private double montant;
 
     @Enumerated(EnumType.STRING)

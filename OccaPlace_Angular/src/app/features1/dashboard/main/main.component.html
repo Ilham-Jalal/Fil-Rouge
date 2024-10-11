@@ -1,16 +1,12 @@
 <main class="main-content position-relative border-radius-lg">
-  <mat-toolbar class="mat-toolbar">
-    <div>
-      <span class="font-weight-bolder text-white mb-0">Dashboard</span>
-    </div>
-  </mat-toolbar>
+
 
   <div class="container-fluid py-4">
     <div class="row" style="display: flex; justify-content: space-around">
       <!-- Total Annonces Card -->
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <mat-card class="card">
-          <mat-card-content class="p-3">
+        <mat-card class="small-card">
+          <mat-card-content class="p-3" style="height: 160px">
             <div class="row">
               <div class="col-8">
                 <div class="numbers">
@@ -19,8 +15,8 @@
                 </div>
               </div>
               <div class="col-4 text-end">
-                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center">
-                  <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                <div class="icon icon-shape shadow-primary text-center">
+                  <mat-icon style="color: black" class="text-lg opacity-10">attach_money</mat-icon>
                 </div>
               </div>
             </div>
@@ -30,8 +26,8 @@
 
       <!-- Total Users Card -->
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <mat-card class="card">
-          <mat-card-content class="p-3">
+        <mat-card class="small-card" >
+          <mat-card-content class="p-3" style="height: 160px" >
             <div class="row">
               <div class="col-8">
                 <div class="numbers">
@@ -40,8 +36,8 @@
                 </div>
               </div>
               <div class="col-4 text-end">
-                <div class="icon icon-shape bg-gradient-warning shadow-warning text-center">
-                  <i class="ni ni-circle-08 text-lg opacity-10" aria-hidden="true"></i>
+                <div class="icon icon-shape shadow-warning text-center">
+                  <mat-icon style="color: black" class="text-lg opacity-10">people</mat-icon>
                 </div>
               </div>
             </div>
@@ -49,10 +45,10 @@
         </mat-card>
       </div>
 
-      <!-- Total livreurs Card -->
+      <!-- Total Livreurs Card -->
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <mat-card class="card">
-          <mat-card-content class="p-3">
+        <mat-card class="small-card">
+          <mat-card-content class="p-3" style="height: 160px">
             <div class="row">
               <div class="col-8">
                 <div class="numbers">
@@ -61,8 +57,8 @@
                 </div>
               </div>
               <div class="col-4 text-end">
-                <div class="icon icon-shape bg-gradient-warning shadow-warning text-center">
-                  <i class="ni ni-circle-08 text-lg opacity-10" aria-hidden="true"></i>
+                <div class="icon icon-shape shadow-success text-center">
+                  <mat-icon style="color: black" class="text-lg opacity-10">delivery_dining</mat-icon>
                 </div>
               </div>
             </div>
@@ -70,6 +66,7 @@
         </mat-card>
       </div>
     </div>
+
 
     <div class="dashboard-container">
       <div class="chart-container">

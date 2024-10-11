@@ -5,11 +5,12 @@ import {StatutLivraison} from "../enum/StatutLivraison";
 
 export interface Livraison {
   id: number;
-  adresse: string;
+  adresseVendeur: string;
+  adresseAcheteur: string;
   montant: number;
   statut: StatutLivraison;
   dateLivraison: Date;
-  utilisateur?: Utilisateur;  // Optional to handle @JsonIgnore
-  livreur?: Livreur;  // Optional to handle @JsonIgnore
-  annonces?: Annonce[];  // Optional to handle @JsonIgnore
+  utilisateur?: Utilisateur;
+  livreur?: Livreur;
+  annonces?: Annonce[];
 }

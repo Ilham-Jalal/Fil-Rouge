@@ -6,6 +6,7 @@ import { MessageResponseDTO } from "../../core/dto/MessageResponseDTO";
 import { AnnonceResponseDTO } from "../../core/dto/AnnonceResponseDTO";
 import { AnnonceService } from "../../core/service/annonce.service";
 import { AuthService } from "../../core/service/auth-service.service";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-conversation',
@@ -18,7 +19,7 @@ export class ConversationComponent implements OnInit {
   newMessage: string = '';
   editingMessage: MessageResponseDTO | null = null;
   currentUser: string | null = null;
-  currentUserId: string | null = null;
+  currentUserId: number | null = null;  // Updated to hold the actual number
   isLoading: boolean = false;
   toUserId: number = 0;
   charCount: number = 0;
@@ -46,27 +47,33 @@ export class ConversationComponent implements OnInit {
       this.loadAnnonceDetails(+annonceId);
     }
 
-    this.currentUserId = this.authService.getCurrentUserId();
-    if (this.currentUserId) {
-      this.authService.findUtilisateurByUsername(this.currentUserId).subscribe(
-        user => {
-          this.currentUser = user.username || 'Utilisateur inconnu';
-        },
-        error => {
-          console.error('Erreur lors de la récupération du nom d\'utilisateur:', error);
-          this.currentUser = 'Utilisateur inconnu';
-        }
-      );
-    } else {
-      this.currentUser = 'Utilisateur inconnu';
-    }
+    // Subscribe to getCurrentUserId observable to get the actual userId
+    this.authService.getCurrentUserId().subscribe({
+      next: (userId: number) => {
+        this.currentUserId = userId;
+        this.authService.findUtilisateurByUsername(userId.toString()).subscribe(
+          user => {
+            this.currentUser = user.username;
+          },
+          error => {
+            console.error('Erreur lors de la récupération du nom d\'utilisateur:', error);
+            this.currentUser = 'Utilisateur inconnu';
+          }
+        );
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération de l\'ID utilisateur:', err.message);
+        this.currentUser = 'Utilisateur inconnu';
+      }
+    });
   }
 
   loadConversation(id: number): void {
     this.conversationService.getConversation(id).subscribe(
       (conversation: Conversation) => {
         this.conversation = conversation;
-        this.toUserId = conversation.vendeur.id === Number(this.currentUserId) ? conversation.acheteur.id : conversation.vendeur.id;
+        // Assigning toUserId based on the conversation and currentUserId
+        this.toUserId = conversation.vendeur.id === this.currentUserId ? conversation.acheteur.id : conversation.vendeur.id;
       },
       error => console.error('Erreur lors du chargement de la conversation:', error)
     );

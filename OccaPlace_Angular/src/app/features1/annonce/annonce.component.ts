@@ -48,10 +48,6 @@ export class AnnonceComponent implements OnInit {
     });
   }
 
-
-
-
-
   viewDetails(annonceId: number): void {
     this.router.navigate(['/annonce-details', annonceId]);
   }

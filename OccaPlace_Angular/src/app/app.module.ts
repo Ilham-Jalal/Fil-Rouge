@@ -35,7 +35,7 @@ import { AnnonceDialogComponent } from './features1/annonce-dialog/annonce-dialo
 // Importation des modules MatDialog et MatSelect
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import { MessageComponent } from './features1/message/message.component';
 import { ConversationComponent } from './features1/conversation/conversation.component';
 import { SidebarComponent } from './features1/dashboard/sidebar/sidebar.component';
@@ -53,6 +53,11 @@ import {
 } from "@angular/material/table";
 import { AddLivreurDialogComponent } from './features1/add-livreur-dialog/add-livreur-dialog.component';
 import {DashboardComponent} from "./features1/dashboard/dashboard.component";
+import { ConversationListComponent } from './features1/conversation-list/conversation-list.component';
+import { ProfileComponent } from './features1/profile/profile.component';
+import { LivraisonDialogComponent } from './features1/livraison-dialog/livraison-dialog.component';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import { UserLivraisonsComponent } from './features1/user-livraisons/user-livraisons.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +79,10 @@ import {DashboardComponent} from "./features1/dashboard/dashboard.component";
     SidebarComponent,
     MainComponent,
     AddLivreurDialogComponent,
+    ConversationListComponent,
+    ProfileComponent,
+    LivraisonDialogComponent,
+    UserLivraisonsComponent,
 
   ],
   imports: [
@@ -116,6 +125,10 @@ import {DashboardComponent} from "./features1/dashboard/dashboard.component";
     MatRowDef,
     MatRow,
     MatSidenavModule,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatDatepickerInput,
+    MatNativeDateModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

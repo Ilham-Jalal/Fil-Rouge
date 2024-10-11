@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Créer Livraison</h2>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Adresse de Vendeur</mat-label>
+    <input matInput [(ngModel)]="livraisonData.adresseVendeur" placeholder="Adresse de livraison">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Adresse D'acheteur</mat-label>
+    <input matInput [(ngModel)]="livraisonData.adresseAcheteur" placeholder="Adresse de livraison">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Montant</mat-label>
+    <input matInput [(ngModel)]="livraisonData.montant" type="number" placeholder="Montant">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Date de livraison</mat-label>
+    <input matInput [(ngModel)]="livraisonData.dateLivraison" [matDatepicker]="picker" placeholder="Choisissez la date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Statut</mat-label>
+    <mat-select [(ngModel)]="livraisonData.statut">
+      <mat-option *ngFor="let statut of statuts" [value]="statut">{{ statut }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Confirmer</button>
+</div>

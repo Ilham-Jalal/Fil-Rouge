@@ -1,18 +1,84 @@
-.annonce-search-form {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 15px;
-}
+.main-content {
+  header {
+    display: flex;
 
-.annonce-search-form .form-group {
-  flex: 1 1 200px;
-}
+    .navbar-brand-img {
+      max-width: 170px;
+    }
 
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  flex-basis: 100%;
+    .header-title {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 2rem;
+      color: #333;
+    }
+  }
+
+  .annonce-search-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+
+    .form-group {
+      flex: 1 1 200px;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-basis: 100%;
+  }
+
+  .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ff7b00;
+
+
+    img.card-img-top {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border: 1px solid #ff7b00;
+    }
+
+    .card-body {
+      flex-grow: 1;
+    }
+  }
+  .ligne {
+    margin-top: -8px;
+    background-color: rgb(19, 10, 10);
+    border: 1px solid rgba(19, 10, 10, 0.76);
+  }
+
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .navbar-brand-img {
+      margin-bottom: 15px;
+    }
+
+    .annonce-search-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .form-group {
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}
 }

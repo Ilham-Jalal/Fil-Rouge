@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Annonce {
     private Categorie category;
 
     private LocalDateTime creationDate;
+
     @ElementCollection
     @CollectionTable(name = "annonce_images", joinColumns = @JoinColumn(name = "annonce_id"))
     @Column(name = "image_url")
@@ -49,17 +52,18 @@ public class Annonce {
     @JoinColumn(name = "acheteur_id")
     private Utilisateur acheteur;
 
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "livraison_id")
     private Livraison livraison;
 
-    @OneToMany(mappedBy = "annonce")
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Commentaire> commentaires;
 
-    @OneToMany(mappedBy = "annonce")
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Favori> favoris;
 }

@@ -79,8 +79,8 @@ public class AnnonceController {
             AnnonceResponseDTO updatedAnnonce = annonceService.updateAnnonce(id, updatedAnnonceDTO);
             return new ResponseEntity<>(updatedAnnonce, HttpStatus.OK);
     }
-
-    @DeleteMapping("/user/api/annonces/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @DeleteMapping("/annonces/{id}")
     public ResponseEntity<Void> deleteAnnonce(@PathVariable Long id) {
 
             annonceService.deleteAnnonce(id);
@@ -105,8 +105,8 @@ public class AnnonceController {
         List<AnnonceResponseDTO> annonces = annonceService.findAnnoncesByDisponibilite(disponibilite);
         return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
-
-    @GetMapping("/user/api/annonces/search")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @GetMapping("/annonces/search")
     public ResponseEntity<List<AnnonceResponseDTO>> searchAnnonces(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String description,

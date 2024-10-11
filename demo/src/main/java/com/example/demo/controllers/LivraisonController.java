@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -74,10 +75,53 @@ public class LivraisonController {
         return ResponseEntity.ok(livraisonService.createLivraison(livraison));
     }
 
+
+
+    @GetMapping("/user/api/livraisons")
+    public ResponseEntity<List<Livraison>> getUserLivraisons() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Utilisateur user = optionalUser.get();
+        List<Livraison> livraisons = livraisonService.getLivraisonsByUser(user);
+        return ResponseEntity.ok(livraisons);
+    }
+
+    @PutMapping("/user/api/livraisons/{id}")
+    public ResponseEntity<Livraison> updateUserLivraison(@PathVariable Long id, @RequestBody Livraison updatedLivraison) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Utilisateur user = optionalUser.get();
+        Optional<Livraison> livraison = livraisonService.updateLivraisonByUser(id, updatedLivraison, user);
+
+        return livraison.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/user/api/livraisons/{id}")
-    public ResponseEntity<Void> deleteLivraison(@PathVariable Long id) {
-        if (livraisonService.getLivraisonById(id).isPresent()) {
-            livraisonService.deleteLivraison(id);
+    public ResponseEntity<Void> deleteUserLivraison(@PathVariable Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<Utilisateur> optionalUser = userService.findUtilisateurByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Utilisateur user = optionalUser.get();
+        boolean isDeleted = livraisonService.deleteLivraisonByUser(id, user);
+
+        if (isDeleted) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

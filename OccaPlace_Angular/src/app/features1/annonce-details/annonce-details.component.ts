@@ -5,6 +5,8 @@ import { AnnonceService } from "../../core/service/annonce.service";
 import { CommentaireDto } from "../../core/dto/CommentaireDto";
 import { CommentaireService } from "../../core/service/commentaire.service";
 import { AuthService } from "../../core/service/auth-service.service";
+import {ConversationService} from "../../core/service/conversation.service";
+import {Conversation} from "../../core/model/Conversation";
 
 @Component({
   selector: 'app-annonce-details',
@@ -21,6 +23,7 @@ export class AnnonceDetailsComponent implements OnInit {
   messageFormVisible = false;
 
   constructor(
+    private conversationService: ConversationService,
     private route: ActivatedRoute,
     private annonceService: AnnonceService,
     private commentaireService: CommentaireService,
@@ -32,19 +35,7 @@ export class AnnonceDetailsComponent implements OnInit {
     this.messageFormVisible = !this.messageFormVisible;
   }
 
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.annonceService.findById(id).subscribe(
-        (data) => {
-          this.annonce = data;
-          this.getCommentairesByAnnonce(id);
-        }
-      );
-    }
 
-    this.currentUserId = this.authService.getCurrentUserId();
-  }
 
   getCommentairesByAnnonce(annonceId: number): void {
     this.commentaireService.getCommentairesByAnnonce(annonceId).subscribe(
@@ -123,5 +114,41 @@ export class AnnonceDetailsComponent implements OnInit {
     this.router.navigate(['/annonce']);
   }
 
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.annonceService.findById(id).subscribe(
+        (data) => {
+          this.annonce = data;
+          this.getCommentairesByAnnonce(id);
+        }
+      );
+    }
+
+    this.authService.getCurrentUserId().subscribe(
+      userId => {
+        this.currentUserId = userId.toString();
+      },
+      error => {
+        console.error('Error fetching current user ID:', error);
+      }
+    );
+  }
+
+  contacterVendeur() {
+    if (!this.currentUserId || !this.annonce) {
+      console.error('User ID or annonce details are missing');
+      return;
+    }
+
+    this.conversationService.createOrGetConversation(this.annonce.vendeurId, Number(this.currentUserId))
+      .subscribe(
+        (conversation: Conversation) => {
+          this.router.navigate(['/conversation', conversation.id]);
+        },
+        (error) => {
+          console.error('Error creating conversation:', error);
+        }
+      );}
   protected readonly Number = Number;
 }

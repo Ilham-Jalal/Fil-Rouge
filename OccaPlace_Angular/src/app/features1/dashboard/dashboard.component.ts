@@ -24,4 +24,10 @@ export class DashboardComponent {
         }
       });
   }
+  sidebarOpen = true;
+
+  onSidebarToggle(isOpen: boolean) {
+    this.sidebarOpen = isOpen;
+  }
+
 }
