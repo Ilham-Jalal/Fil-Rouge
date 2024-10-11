@@ -84,6 +84,7 @@ import { UserLivraisonsComponent } from './features1/user-livraisons/user-livrai
     LivraisonDialogComponent,
     UserLivraisonsComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -104,7 +105,6 @@ import { UserLivraisonsComponent } from './features1/user-livraisons/user-livrai
     MatSelectModule, // Ajoutez ce module
     MatOptionModule, // Ajoutez ce module
     NgOptimizedImage,
-    Header2Component,
     LoginComponent,
     AddUserComponent,
     FooterComponent,
@@ -129,6 +129,8 @@ import { UserLivraisonsComponent } from './features1/user-livraisons/user-livrai
     MatDatepickerToggle,
     MatDatepickerInput,
     MatNativeDateModule,
+    Header2Component,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

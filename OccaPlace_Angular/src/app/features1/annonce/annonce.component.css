@@ -6,13 +6,26 @@
   text-align: center;
   margin-bottom: 20px;
 }
+.search-container {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
 .annonce-search-form {
   display: flex;
-  flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 0 2%;
+  padding: 20px 0;
+}
+
+.annonce-search-form form {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .annonce-search-form p {
@@ -22,12 +35,13 @@
 }
 
 .annonce-search-form .mat-form-field {
-  width: 80%;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .annonce-search-form .mat-form-field .mat-form-field-infix {
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
@@ -42,17 +56,44 @@
 }
 
 .annonce-search-form .button-group {
-  width: 35%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .annonce-search-form button {
   flex: 1;
-  margin: 0 5px;
+  margin: 0 10px;
 }
 
+@media (max-width: 600px) {
+  .search-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+ .search-form{
+   display: flex;
+   flex-direction: column;
+ }
+  .annonce-search-form {
+    padding: 10px 0;
+    flex-direction: column;
+  }
+
+  .annonce-search-form .button-group {
+    flex-direction: column;
+
+  }
+  .annonce-search-form form{
+  flex-direction: column;
+  }
+  .annonce-search-form button {
+    margin: 5px 0;
+    flex-direction: column;
+  }
+}
 .annonces-list {
   display: grid;
   justify-content: center;
@@ -181,7 +222,7 @@
   margin-bottom: 20px;
 }
 .nous-donnons-la-priorite-a-la-mode-durable {
-  color: var(--Heading-Color, #1b1717);
+  color: #1b1717;
   font-size: 20px;
   font-weight: 900;
   letter-spacing: 2.8px;
@@ -195,7 +236,7 @@
   }
 }
 .decouvrez-une-selection-unique-de-vetements-de-seconde-main-soigneusement-choisis-pour-vous-chez-occa-place-nous-croyons-en-leconomie-circulaire-et-a-la-qualite-a-petit-prix-pour-que-vous-puissiez-vous-habiller-tout-en-preservant-lenvironnement {
-  color: var(--Paragraph-Color, #6e6e6e);
+  color: #6e6e6e;
   font-size: 17px;
   font-weight: 400;
   margin-top: 54px;
@@ -216,6 +257,8 @@
 @media (max-width: 991px) {
   .column-2 {
     width: 100%;
+    margin-left: -15px;
+    margin-bottom: 60px;
   }
 }
 .img {
@@ -228,5 +271,6 @@
   .img {
     max-width: 100%;
     margin-top: 40px;
+    margin-left: 0;
   }
 }

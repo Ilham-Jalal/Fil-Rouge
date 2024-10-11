@@ -27,43 +27,44 @@
 
 
 <div class="annonce-container">
-<div style="display: flex">
-  <button mat-raised-button color="primary" (click)="toggleSearchForm()">
-    <mat-icon style="padding-right: 10px">search</mat-icon>
-    {{ showSearchForm ?   '  Annuler' : 'Recherche' }}
-  </button>
+  <div class="search-container">
+    <button mat-raised-button color="primary" (click)="toggleSearchForm()">
+      <mat-icon>search</mat-icon>
+      {{ showSearchForm ? 'Annuler' : 'Recherche' }}
+    </button>
 
-  <div *ngIf="showSearchForm" class="annonce-search-form">
-    <form style="display: flex" (ngSubmit)="searchAnnonces()">
-      <mat-form-field appearance="fill">
-        <mat-label>Titre ou Description</mat-label>
-        <input matInput [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description" />
-      </mat-form-field>
+    <div *ngIf="showSearchForm" class="annonce-search-form">
+      <form (ngSubmit)="searchAnnonces()">
+        <div class="search-form">
+        <mat-form-field appearance="fill">
+          <mat-label>Titre ou Description</mat-label>
+          <input matInput [(ngModel)]="searchQuery.titleOrDescription" name="titleOrDescription" placeholder="Recherche par titre ou description" />
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Catégorie</mat-label>
-        <mat-select id="category" [(ngModel)]="searchQuery.category" name="category">
-          <mat-option *ngFor="let key of categorieKeys" [value]="Categorie[key]">{{ key }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Catégorie</mat-label>
+          <mat-select id="category" [(ngModel)]="searchQuery.category" name="category">
+            <mat-option *ngFor="let key of categorieKeys" [value]="Categorie[key]">{{ key }}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Prix Minimum</mat-label>
-        <input matInput type="number" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0" />
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Prix Minimum</mat-label>
+          <input matInput type="number" id="priceMin" [(ngModel)]="searchQuery.priceMin" name="priceMin" placeholder="0" />
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Prix Maximum</mat-label>
-        <input matInput type="number" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000" />
-      </mat-form-field>
-
-      <div class="button-group">
-        <button mat-raised-button color="primary" type="submit">Rechercher</button>
-        <button mat-raised-button color="warn" type="button" (click)="resetSearch()">Annuler</button>
-      </div>
-    </form>
+        <mat-form-field appearance="fill">
+          <mat-label>Prix Maximum</mat-label>
+          <input matInput type="number" id="priceMax" [(ngModel)]="searchQuery.priceMax" name="priceMax" placeholder="10000" />
+        </mat-form-field>
+        </div>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit">Rechercher</button>
+          <button mat-raised-button color="warn" type="button" (click)="resetSearch()">Annuler</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
 
   <!-- Liste des annonces affichées sous forme de cartes -->

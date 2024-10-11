@@ -1,19 +1,19 @@
 .div {
   display: flex;
   flex-direction: column;
-  width: 94%;
+  width: 95%;
   margin-top: -50px;
 }
 .div-2 {
   display: flex;
-  padding-left: 35px;
+  padding-left: 60px;
   flex-direction: column;
   align-items: start;
 }
 
 .info-box {
   align-self: end;
-  margin-right: 35px;
+  margin-right: 10px;
   max-width: 100%;
   display: flex;
 }
@@ -95,7 +95,7 @@
   flex-grow: 1;
   flex-direction: column;
   font-family: Poppins, sans-serif;
-  color:  #fff;
+  color: #ffffff;
   padding: 30px 30px 30px;
 }
 .occa-place-simplifiez-vos-transactions {
@@ -103,7 +103,7 @@
   font-weight: 700;
   letter-spacing: 1.75px;
   text-transform: uppercase;
-  width: 343px;
+  align-self: start;
 }
 .creez-recherchez-et-gerez-vos-annonces-rapidement-grace-a-notre-interface-conviviale {
   font-size: 17px;
@@ -307,18 +307,15 @@
 }
 
 .gestion-des-transactions {
-  color:#1b1717;
   font-size: 20px;
   letter-spacing: 1.75px;
   text-transform: uppercase;
   margin-top: 20px;
-  width: 366px;
 }
 .nous-facilitons-la-gestion-des-transactions-securisees-et-le-suivi-des-livraisons-pour-assurer-une-experience-utilisateur-fluide-et-satisfaisante {
-  color: #6e6e6e;
   font-size: 15px;
   font-weight: 300;
-  margin-top: 26px;
+  margin-top: 15px;
 }
 
 .div-19 {
@@ -335,7 +332,13 @@
   width: 50%;
   margin-left: 0px;
 }
-
+.Votre-Référence-pour-les-Articles-Occasion {
+  color: #757575;
+  letter-spacing: 1.19px;
+  text-transform: uppercase;
+  margin: 130px 100px 0 15px;
+  font: 900 17px Poppins, sans-serif;
+}
 .div-20 {
   display: flex;
   flex-direction: column;
@@ -452,4 +455,97 @@
   color: #6e6e6e;
   flex-basis: auto;
   font: 400 17px Poppins, sans-serif;
+}
+
+
+
+@media screen and (max-width: 1200px) {
+  .info-box {
+    flex-direction: column;
+    align-items: center;
+    margin-right: 40px;
+  }
+  .div{
+    max-width: 94%;
+    margin-top: -10px;
+  }
+  .column, .column-2, .column-3 {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .div-7,  .why-choice-us {
+    flex-direction: column;
+    margin-top: 1px;
+    justify-content: center
+  }
+  .div-19{
+    flex-direction: column;
+    margin-top: -30px;
+    justify-content: center
+  }
+  .column-5, .column-10, .column-11, .column-12, .column-13 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .div-10 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .img, .img-2, .img-3 {
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .div-14 {
+    flex-direction: column;
+    width: 90%;
+    margin-bottom: -69px;
+  }
+
+  .column, .column-8, .column-9 {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .lequipe-ideale-pour-votre-achat-et-vente-darticles-doccasion,
+  .pourquoi-choisir-occa-place-pour-vos-transactions-d-occasion,
+  .notre-procedure-de-travail{
+    font-size: 20px;
+  }
+  .optimisez-vos-achats-et-ventes-avec-occa-place{
+    font-size: 20px;
+  }
+  .Votre-Référence-pour-les-Articles-Occasion{
+    margin-bottom: 50px;
+    font-size: 15px;
+    width: 90%;
+    justify-content: center;
+  }
+
+  .div-22 {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .consultation-pour-vente-d-articles-d-occasion,
+  .vendez-et-achetez-en-toute-securite-avec-occa-place,
+  .occa-place-simplifiez-vos-transactions {
+    font-size: 10px;
+    padding: 10px;
+  }
+
+  .decouvrez-comment-maximiser-vos-ventes-et-trouver-des-tresors-doccasion-avec-occa-place,
+  .gerez-vos-annonces-facilement-effectuez-des-paiements-securises-et-suivez-vos-livraisons-sans-souci,
+  .creez-recherchez-et-gerez-vos-annonces-rapidement-grace-a-notre-interface-conviviale {
+    font-size: 10px;
+  }
 }

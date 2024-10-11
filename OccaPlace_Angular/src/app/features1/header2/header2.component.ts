@@ -1,14 +1,12 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {Categorie} from "../../core/enum/Categorie";
-import {AnnonceService} from "../../core/service/annonce.service";
-import {AnnonceResponseDTO} from "../../core/dto/AnnonceResponseDTO";
+
 import {FormsModule} from "@angular/forms";
 import {NgOptimizedImage} from "@angular/common";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconAnchor} from "@angular/material/button";
 import {AuthService} from "../../core/service/auth-service.service";
 import {Router, RouterLink} from "@angular/router";
+import {Component} from "@angular/core";
 
 @Component({
   selector: 'app-header2',
@@ -20,15 +18,22 @@ import {Router, RouterLink} from "@angular/router";
     MatToolbar,
     MatIcon,
     MatButton,
-    RouterLink
+    RouterLink,
+    MatIconAnchor
   ],
   styleUrl: './header2.component.css'
 })
 export class Header2Component {
+  showMenu = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+  }
+
   onLogout() {
-    this.authService.logout();  // Call logout from AuthService
-    this.router.navigate(['/login']);  // Redirect to the login page after logout
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

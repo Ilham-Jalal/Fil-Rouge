@@ -2,14 +2,10 @@
   color: white;
   text-align: center;
   padding: 50px 0;
-
-
-
   .hero-logo {
     width: 200px;
     margin-top: 20px;
   }
-
   .hero-content {
     h1 {
       font-size: 2.5rem;
@@ -18,9 +14,6 @@
       margin-top: 20px;
     }
   }
-}
-.hero{
-
 }
 .div-6 {
   width: 100%;
@@ -45,29 +38,32 @@
   }
 }
 .column {
-  display: flex;
-  flex-direction: column;
-  line-height: normal;
-  padding: 20px;
-  width: 62%;
+
 }
 @media (max-width: 991px) {
   .column {
     width: 100%;
+  }
+  .hero-logo{
+    display: none;
   }
 }
 .div-8 {
   display: flex;
   flex-direction: column;
   font-family: Poppins, sans-serif;
-  color: var(--White, #fff);
+  color:  #fff;
   font-weight: 900;
   text-transform: uppercase;
+  line-height: normal;
+  padding: 20px;
+  width: 100%;
 }
 @media (max-width: 991px) {
   .div-8 {
     max-width: 100%;
-    margin-top: 40px;
+    justify-content: center;
+    align-items: center;
   }
 }
 .bienvenue-sur-occa-place {
@@ -87,23 +83,29 @@
 }
 @media (max-width: 991px) {
   .achetez-et-vendez-en-toute-confiance-sur-occa-place {
-    max-width: 100%;
-    font-size: 40px;
+
+  }
+  .bienvenue-sur-occa-place {
+    max-width: 30%;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: -60px;
+    margin-left: 50px;
   }
 }
 .se-connecter-2 {
   border-radius: 10px;
   background-color: rgba(229, 116, 24, 1);
-  align-self: start;
-  display: flex;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 800;
   text-align: center;
   letter-spacing: 1px;
+  width: 30%;
 }
 @media (max-width: 991px) {
   .se-connecter-2 {
-    padding: 0 20px;
+    padding: 20px 20px;
+    width: 60%;
   }
 }
 .img-8 {
@@ -139,8 +141,12 @@
 }
 @media (max-width: 991px) {
   .img-4 {
-    margin-top: 40px;
+    display: none;
   }
+  .img-8 {
+    display: none;
+  }
+
 }
 
 .header {

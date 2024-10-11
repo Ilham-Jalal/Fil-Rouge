@@ -1,7 +1,12 @@
-.logo {
-  height: 40px;
-  margin-right: 16px;
+mat-toolbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 }
+ .logo {
+   height: 40px;
+   margin-right: 16px;
+ }
 
 .spacer {
   flex: 1 1 auto;
@@ -15,61 +20,105 @@ button {
 }
 
 mat-icon {
-  margin-bottom: -8px;
+  margin-bottom: -4px;
 }
 
 .ligne {
-  margin-top: -8px;
   background-color: rgb(19, 10, 10);
   border: 1px solid rgba(19, 10, 10, 0.76);
+  height: 1px;
+  width: 100%;
+  margin-top: 16px;
+  position: fixed;
+  top: 48px;
+  z-index: 999;
+margin-left: 70px;
 }
 
-/* Responsive adjustments */
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-text {
+  font-size: 12px;
+}
+
 @media (max-width: 768px) {
   mat-toolbar {
-    flex-direction: column;
-    text-align: center;
+    width: 90%;
+    padding: 0 8px;
+  }
+
+  .menu-button {
+    display: block;
+  }
+  .ligne {
+    width:80%;
+    margin-left:15px;
+  }
+  .nav-buttons {
+    display: none;
   }
 
   .logo {
-    height: 30px;
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
-
-  button {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  mat-icon {
-    margin-bottom: 0;
-    margin-right: 4px;
-  }
-
-  span {
-    font-size: 10px;
+    height: 35px;
   }
 }
 
-@media (max-width: 480px) {
-  mat-toolbar {
-    padding: 8px;
+@media (min-width: 769px) {
+  .menu-button {
+    display: none;
   }
 
-  button {
-    padding: 8px;
+  .nav-buttons {
+    display: flex;
   }
 
-  mat-icon {
-    font-size: 20px;
+  .mobile-menu {
+    display: none;
   }
+  .ligne {
 
-  span {
-    font-size: 8px;
+    width:90%
   }
+  .mat-toolbar {
+    padding: 0 24px;
+  }
+}
 
+@media (min-width: 481px) and (max-width: 1024px) {
   .logo {
-    height: 25px;
+    height: 35px;
+    margin-right: 8px;
+  }
+
+
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  button {
+    padding: 8px;
+  }
+
+
+
+  mat-icon {
+    margin-bottom: -2px;
   }
 }
+

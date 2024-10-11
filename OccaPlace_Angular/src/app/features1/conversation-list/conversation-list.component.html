@@ -1,5 +1,12 @@
 <app-header2></app-header2>
-<div style="display: flex;">
+<div class="page-container">
+  <div class="info-section">
+    <div class="info-message">
+      <h3>Communiquez, négociez, concluez !</h3>
+      <p>Cet espace est dédié à votre conversation. Discutez des détails, négociez le prix et finalisez votre transaction en toute confiance.</p>
+    </div>
+  </div>
+
   <div class="conversation-list-container">
     <h2>Liste des conversations</h2>
 
@@ -12,16 +19,11 @@
           <strong>{{ conversation.acheteurUsername }} - {{ conversation.vendeurUsername }}</strong>
           <small>{{ conversation.lastMessageDate | date: 'short' }}</small>
         </div>
-        <button class="visit-button" (click)="afficherCoversation(conversation)">Visiter la conversation</button>
+        <button class="visit-button" (click)="afficherCoversation(conversation)">Visiter</button>
       </li>
     </ul>
   </div>
 
-  <div class="info-section">
-    <div class="info-message">
-      <h3>Communiquez, négociez, concluez !</h3>
-      <p>Cet espace est dédié à votre conversation. Discutez des détails, négociez le prix et finalisez votre transaction en toute confiance.</p>
-    </div>
-  </div>
+
 </div>
 <app-footer></app-footer>

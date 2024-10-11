@@ -1,26 +1,30 @@
-
-  <mat-toolbar color="primary">
+<mat-toolbar color="primary">
   <img src="assets/OccaPlace_Logo__2_-removebg-preview.png" alt="OccaPlace Logo" class="logo">
   <span class="spacer"></span>
-  <button mat-button routerLink="/">
-  <mat-icon>home</mat-icon>
-  <span style="font-size:12px">ACCUEIL</span>
-  </button>
-  <button mat-button routerLink="/annonces">
-  <mat-icon>announcement</mat-icon>
-  <span style="font-size:12px">ANNONCES</span>
-  </button>
-  <button mat-button routerLink="/favoris">
-  <mat-icon>favorite</mat-icon>
-  <span style="font-size:12px">FAVORI</span>
-  </button>
+  <a mat-icon-button (click)="toggleMenu()" class="menu-button">
+    <mat-icon>menu</mat-icon>
+  </a>
+  <div class="nav-items" [class.show-menu]="showMenu">
+    <button mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+      <span>ACCUEIL</span>
+    </button>
+    <button mat-button routerLink="/annonces">
+      <mat-icon>announcement</mat-icon>
+      <span>ANNONCES</span>
+    </button>
+    <button mat-button routerLink="/favoris">
+      <mat-icon>favorite</mat-icon>
+      <span>FAVORI</span>
+    </button>
     <button mat-button routerLink="/conversations">
-  <mat-icon>message</mat-icon>
-  <span style="font-size:12px">MESSAGES</span>
-  </button>
+      <mat-icon>message</mat-icon>
+      <span>MESSAGES</span>
+    </button>
     <button mat-button (click)="onLogout()">
       <mat-icon>logout</mat-icon>
-      <span style="font-size:12px">LOGOUT</span>
+      <span>LOGOUT</span>
     </button>
-  </mat-toolbar>
-  <div class="ligne"></div>
+  </div>
+</mat-toolbar>
+<div class="ligne"></div>

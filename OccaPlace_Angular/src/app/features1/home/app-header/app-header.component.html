@@ -1,13 +1,35 @@
 <mat-toolbar color="primary">
   <img src="assets/OccaPlace_Logo__2_-removebg-preview.png" alt="OccaPlace Logo" class="logo">
   <span class="spacer"></span>
-  <button mat-button routerLink="/">
-    <mat-icon>home</mat-icon>
-    <span style="font-size: 12px">ACCUEIL</span>
+
+  <!-- Menu button for mobile view -->
+  <button mat-icon-button class="menu-button" (click)="onMenuClick()">
+    <mat-icon>menu</mat-icon>
   </button>
-  <button mat-button routerLink="/login">
-    <mat-icon>login</mat-icon>
-    <span style="font-size:12px">CONNEXION</span>
-  </button>
+
+  <!-- Regular navigation buttons for larger screens -->
+  <div class="nav-buttons">
+    <button mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+      <span class="nav-text">ACCUEIL</span>
+    </button>
+    <button mat-button routerLink="/login">
+      <mat-icon>login</mat-icon>
+      <span class="nav-text">CONNEXION</span>
+    </button>
+  </div>
 </mat-toolbar>
+
+
+<!-- Simple dropdown menu for mobile -->
+<div *ngIf="menuOpen" class="mobile-menu">
+  <button mat-button routerLink="/" (click)="closeMenu()">
+    <mat-icon>home</mat-icon>
+    <span>ACCUEIL</span>
+  </button>
+  <button mat-button routerLink="/login" (click)="closeMenu()">
+    <mat-icon>login</mat-icon>
+    <span>CONNEXION</span>
+  </button>
+</div>
 <div class="ligne"></div>

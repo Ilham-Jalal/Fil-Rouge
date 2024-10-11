@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatSidenav } from "@angular/material/sidenav";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 
@@ -7,7 +7,7 @@ import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isMobile = false;
 

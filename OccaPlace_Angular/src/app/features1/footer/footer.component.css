@@ -2,40 +2,101 @@
   background-color: rgba(19, 10, 10, 0.8);
   color: white;
   margin-top: 30px;
+  padding: 20px;
 }
-.top-banner {
-  background-color:#e57418;
-  width: 80%;
-  margin-left: 100px;
-  margin-bottom: 20px;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.top-banner h2 {
-  margin: 0;
-}
+
 .footer-content {
   display: flex;
   justify-content: space-between;
   padding: 40px;
+  flex-wrap: wrap;
 }
+
 .information, .navigation, .contact-us {
   flex: 1;
   margin-right: 20px;
+  min-width: 250px;
 }
+
+.information h3, .navigation h3, .contact-us h3 {
+  margin-bottom: 10px;
+}
+
 .social-icons {
   margin-top: 20px;
+  display: flex;
+  gap: 10px;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 a {
   color: white;
   text-decoration: none;
 }
+
 mat-form-field {
   width: 100%;
+}
+
+button {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+  }
+
+  .information, .navigation, .contact-us {
+    margin-right: 0;
+    margin-bottom: 20px;
+    min-width: 100%;
+  }
+
+  .information h3, .navigation h3, .contact-us h3 {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+  mat-form-field {
+    width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .information, .navigation, .contact-us {
+    max-width: 100%;
+  }
+
+  .information h3, .navigation h3, .contact-us h3 {
+    margin-bottom: 3px;
+    font-size: 12px;
+  }
+  .information p, .navigation p, .contact-us p{
+    font-size: 8px;
+  }
+  .social-icons img {
+    width: 25px;
+    height: 25px;
+  }
+  mat-form-field {
+    width: 70%;
+  }
 }

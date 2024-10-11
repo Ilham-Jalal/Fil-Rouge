@@ -1,11 +1,18 @@
-.conversation-list-container {
+.page-container {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.conversation-list-container {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 100%;
-  margin: 30px;
-  position: relative;
+  padding: 20px;
+  margin-bottom: 20px;
+}
 
 h2 {
   font-size: 1.5rem;
@@ -19,23 +26,22 @@ h2 {
   overflow-y: auto;
   list-style-type: none;
   padding: 0;
-
-  .conversation-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background-color: #ffffff;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  }
 }
+
+.conversation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s;
+}
+
+.conversation-item:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .loading-message,
@@ -53,7 +59,6 @@ h2 {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  margin-top: 20pX;
   background-image: url('https://i.pinimg.com/564x/ce/a3/76/cea37646e18def9ae70e2aec728fe9da.jpg');
   background-size: cover;
   background-position: center;
@@ -64,16 +69,14 @@ h2 {
   text-align: center;
 }
 
-.conversation-info {
-  strong {
-    font-weight: bold;
-    color: #e57418;
-  }
+.conversation-info strong {
+  font-weight: bold;
+  color: #e57418;
+}
 
-  small {
-    color: #aaa;
-    font-size: 0.9rem;
-  }
+.conversation-info small {
+  color: #aaa;
+  font-size: 0.9rem;
 }
 
 .visit-button {
@@ -84,8 +87,39 @@ h2 {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
 
-  &:hover {
-    background-color: #0056b3;
+.visit-button:hover {
+  background-color: #0056b3;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    flex-direction: row;
+  }
+
+  .conversation-list-container {
+    flex: 2;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  .info-section {
+    flex: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .conversation-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .conversation-info {
+    margin-bottom: 10px;
+  }
+
+  .visit-button {
+    width: 100%;
   }
 }
