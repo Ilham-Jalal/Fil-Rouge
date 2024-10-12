@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { AnnonceResponseDTO } from '../../core/dto/AnnonceResponseDTO';
 import { Categorie } from '../../core/enum/Categorie';
-import { Disponibilite } from '../../core/enum/Disponibilite';
-import { AnnonceUpdateDTO } from '../../core/dto/AnnonceUpdateDTO';
+
 import { AnnonceService } from '../../core/service/annonce.service';
 import {Router} from "@angular/router";
 

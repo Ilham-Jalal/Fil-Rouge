@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AnnonceUpdateDTO } from "../../core/dto/AnnonceUpdateDTO";
+import {Disponibilite} from "../../core/enum/Disponibilite";
 
 @Component({
   selector: 'app-update-annonce-dialog',
@@ -21,4 +22,6 @@ export class UpdateAnnonceDialogComponent {
     // Pass the updated data to the parent component
     this.dialogRef.close(this.data);
   }
+
+  protected readonly Disponibilite = Disponibilite;
 }

@@ -24,6 +24,7 @@ export class LivraisonDialogComponent {
   }
 
   onSubmit(): void {
+    console.log('Données de livraison soumises:', this.livraisonData); // Ajoutez ce log pour déboguer
     this.dialogRef.close(this.livraisonData);
   }
 }

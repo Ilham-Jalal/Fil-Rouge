@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
+import com.example.demo.enums.StatutLivraison;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class AnnonceResponseDTO {
     private String vendeurName;
     private String vendeurEmail;
     private Long acheteurId;
-    private Long livraisonId;
     private List<String> images;
+    private Long livraisonId;
+    private StatutLivraison statutLivraison;
 }

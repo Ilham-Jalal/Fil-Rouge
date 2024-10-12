@@ -60,6 +60,7 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/m
 import { UserLivraisonsComponent } from './features1/user-livraisons/user-livraisons.component';
 import { UpdateCommentComponent } from './features1/update-comment/update-comment.component';
 import { UpdateAnnonceDialogComponent } from './features1/update-annonce-dialog/update-annonce-dialog.component';
+import { LivraisonListComponent } from './features1/livraison-list/livraison-list.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { UpdateAnnonceDialogComponent } from './features1/update-annonce-dialog/
     UserLivraisonsComponent,
     UpdateCommentComponent,
     UpdateAnnonceDialogComponent,
+    LivraisonListComponent,
 
 
   ],

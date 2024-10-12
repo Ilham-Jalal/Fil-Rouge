@@ -74,7 +74,7 @@ public class LivraisonService {
             }
 
             livraison.setAdresseVendeur(updatedLivraison.getAdresseVendeur());
-            livraison.setAdresseAchteteur(updatedLivraison.getAdresseAchteteur());
+            livraison.setAdresseAcheteur(updatedLivraison.getAdresseAcheteur());
             livraison.setMontant(updatedLivraison.getMontant());
             livraison.setStatut(updatedLivraison.getStatut());
 
@@ -84,6 +84,9 @@ public class LivraisonService {
         return Optional.empty();
     }
 
+    public List<Livraison> getAllLivraisons() {
+        return livraisonRepository.findAll();
+    }
     public boolean deleteLivraisonByUser(Long livraisonId, Utilisateur utilisateur) {
         Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
 

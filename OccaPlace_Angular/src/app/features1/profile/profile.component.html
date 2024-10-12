@@ -33,7 +33,9 @@
             <h4 class="card-title">{{ annonce.title }}</h4>
             <p class="card-text">{{ annonce.description }}</p>
             <p><strong>Prix:</strong> {{ annonce.price }} €</p>
-
+            <p *ngIf="annonce.statutLivraison">
+              <strong>Statut de livraison:</strong> {{ annonce.statutLivraison }}
+            </p>
             <div class="d-flex justify-content-between">
               <button class="btn btn-outline-primary btn-sm" (click)="openUpdateAnnonceDialog(annonce)">
                 Mettre à jour

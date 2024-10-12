@@ -18,6 +18,7 @@ import {MainComponent} from "./features1/dashboard/main/main.component";
 import {ConversationListComponent} from "./features1/conversation-list/conversation-list.component";
 import {ProfileComponent} from "./features1/profile/profile.component";
 import {UserLivraisonsComponent} from "./features1/user-livraisons/user-livraisons.component";
+import {LivraisonListComponent} from "./features1/livraison-list/livraison-list.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -54,6 +55,11 @@ const routes: Routes = [
       {
         path: 'annoncesList',
         component: AnnonceListComponent,
+        canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }
+      },
+      {
+        path: 'livrisonsList',
+        component: LivraisonListComponent,
         canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }
       },
     ]

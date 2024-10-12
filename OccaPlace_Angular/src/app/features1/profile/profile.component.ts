@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LivraisonDialogComponent } from "../livraison-dialog/livraison-dialog.component";
 import {AnnonceResponseDTO} from "../../core/dto/AnnonceResponseDTO";
 import {UpdateAnnonceDialogComponent} from "../update-annonce-dialog/update-annonce-dialog.component";
+import {StatutLivraison} from "../../core/enum/StatutLivraison";
 
 @Component({
   selector: 'app-profile',
@@ -87,7 +88,8 @@ export class ProfileComponent implements OnInit {
   creerLivraison(livraisonData: any, annonceId: number): void {
     const livraison = {
       ...livraisonData,
-      annonceId
+      annonceId,
+      statut: StatutLivraison.EN_COURS
     };
 
     this.livraisonService.createLivraison(livraison).subscribe(
@@ -96,6 +98,7 @@ export class ProfileComponent implements OnInit {
 
         this.livraisonService.associerLivraison(annonceId, response.id).subscribe(
           (updatedAnnonce) => {
+            // Actualisation des annonces après association de la livraison
             this.getUserAnnonces();
           },
           (error) => {
@@ -110,6 +113,7 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+
   openUpdateAnnonceDialog(annonce: AnnonceResponseDTO): void {
     const dialogRef = this.dialog.open(UpdateAnnonceDialogComponent, {
       width: '500px',

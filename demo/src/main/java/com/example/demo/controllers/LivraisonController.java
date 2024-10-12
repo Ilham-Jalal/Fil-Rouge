@@ -7,6 +7,7 @@ import com.example.demo.services.LivraisonService;
 import com.example.demo.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,12 @@ public class LivraisonController {
         this.livraisonService = livraisonService;
         this.userService = userService;
         this.annonceService = annonceService;
+    }
+    @GetMapping("/admin/livraisons")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Livraison>> getAllLivraisons() {
+        List<Livraison> livraisons = livraisonService.getAllLivraisons();
+        return ResponseEntity.ok(livraisons);
     }
 
     @PostMapping("/admin/{id}/assigner-livreur/{livreurId}")
@@ -75,9 +82,8 @@ public class LivraisonController {
         return ResponseEntity.ok(livraisonService.createLivraison(livraison));
     }
 
-
-
-    @GetMapping("/user/api/livraisons")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @GetMapping("/livraisons")
     public ResponseEntity<List<Livraison>> getUserLivraisons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -91,8 +97,8 @@ public class LivraisonController {
         List<Livraison> livraisons = livraisonService.getLivraisonsByUser(user);
         return ResponseEntity.ok(livraisons);
     }
-
-    @PutMapping("/user/api/livraisons/{id}")
+    @PreAuthorize("hasRole('LIVREUR') or hasRole('USER')")
+    @PutMapping("/livraisons/{id}")
     public ResponseEntity<Livraison> updateUserLivraison(@PathVariable Long id, @RequestBody Livraison updatedLivraison) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -107,8 +113,8 @@ public class LivraisonController {
 
         return livraison.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    @DeleteMapping("/user/api/livraisons/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @DeleteMapping("/livraisons/{id}")
     public ResponseEntity<Void> deleteUserLivraison(@PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

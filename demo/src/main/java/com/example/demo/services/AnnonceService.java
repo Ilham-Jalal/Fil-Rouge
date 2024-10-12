@@ -148,6 +148,15 @@ public class AnnonceService {
             dto.setVendeurName(null);
             dto.setVendeurEmail(null);
         }
+
+        if (annonce.getLivraison() != null) {
+            dto.setLivraisonId(annonce.getLivraison().getId());
+            dto.setStatutLivraison(annonce.getLivraison().getStatut());
+        } else {
+            dto.setLivraisonId(null);
+            dto.setStatutLivraison(null);
+        }
+
         dto.setImages(annonce.getImages());
         return dto;
     }

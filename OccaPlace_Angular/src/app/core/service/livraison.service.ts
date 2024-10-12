@@ -14,7 +14,9 @@ export class LivraisonService {
   private baseUrl = 'http://localhost:8181';
 
   constructor(private http: HttpClient) { }
-
+  getAllLivraisons(): Observable<Livraison[]> {
+    return this.http.get<Livraison[]>(`${this.baseUrl}/admin/livraisons`);
+  }
   assignerLivreur(id: number, livreurId: number): Observable<Livraison> {
     return this.http.post<Livraison>(`${this.baseUrl}/admin/${id}/assigner-livreur/${livreurId}`, {});
   }
@@ -40,12 +42,12 @@ export class LivraisonService {
   }
 
   getUserLivraisons(): Observable<Livraison[]> {
-    return this.http.get<Livraison[]>(`${this.baseUrl}/user/api/livraisons`);
+    return this.http.get<Livraison[]>(`${this.baseUrl}/livraisons`);
   }
   updateUserLivraison(id: number, updatedLivraison: Livraison): Observable<Livraison> {
-    return this.http.put<Livraison>(`${this.baseUrl}/user/api/livraisons/${id}`, updatedLivraison);
+    return this.http.put<Livraison>(`${this.baseUrl}/livraisons/${id}`, updatedLivraison);
   }
   deleteUserLivraison(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/user/api/livraisons/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/livraisons/${id}`);
   }
 }
