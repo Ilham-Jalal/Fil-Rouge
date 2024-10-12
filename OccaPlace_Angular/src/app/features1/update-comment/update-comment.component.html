@@ -1,0 +1,10 @@
+<div class="popup-overlay" *ngIf="isOpen">
+  <div class="popup-content">
+    <h2>modifier votre commentaire</h2>
+    <textarea [(ngModel)]="editedComment" rows="4"></textarea>
+    <div class="popup-actions">
+      <button (click)="onSave()" style="background-color:#ff7b00;color:white; border: 1px solid black;">modifier</button>
+      <button (click)="onCancel()" style="background-color: white;border: 1px solid black;">annuler</button>
+    </div>
+  </div>
+</div>

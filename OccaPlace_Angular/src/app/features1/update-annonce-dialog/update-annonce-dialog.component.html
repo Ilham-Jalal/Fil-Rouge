@@ -1,0 +1,21 @@
+<h1 class="mat-title">Mettre à jour l'annonce</h1>
+
+<div class="form-group">
+  <label for="title">Titre</label>
+  <input id="title" class="form-control" [(ngModel)]="data.title" required />
+</div>
+
+<div class="form-group">
+  <label for="description">Description</label>
+  <textarea id="description" class="form-control" [(ngModel)]="data.description"></textarea>
+</div>
+
+<div class="form-group">
+  <label for="price">Prix</label>
+  <input id="price" type="number" class="form-control" [(ngModel)]="data.price" />
+</div>
+
+<div class="d-flex justify-content-between mt-3">
+  <button class="btn btn-outline-secondary" (click)="onNoClick()">Annuler</button>
+  <button class="btn btn-primary" (click)="updateAnnonce()">Enregistrer</button>
+</div>

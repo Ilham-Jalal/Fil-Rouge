@@ -58,6 +58,8 @@ import { ProfileComponent } from './features1/profile/profile.component';
 import { LivraisonDialogComponent } from './features1/livraison-dialog/livraison-dialog.component';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import { UserLivraisonsComponent } from './features1/user-livraisons/user-livraisons.component';
+import { UpdateCommentComponent } from './features1/update-comment/update-comment.component';
+import { UpdateAnnonceDialogComponent } from './features1/update-annonce-dialog/update-annonce-dialog.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { UserLivraisonsComponent } from './features1/user-livraisons/user-livrai
     ProfileComponent,
     LivraisonDialogComponent,
     UserLivraisonsComponent,
+    UpdateCommentComponent,
+    UpdateAnnonceDialogComponent,
 
 
   ],

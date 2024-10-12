@@ -24,7 +24,7 @@
 </mat-nav-list>
 
 <div class="mt-auto logout-section">
-  <a mat-list-item routerLink="/logout" routerLinkActive="active" class="nav-link logout">
+  <a mat-list-item (click)="onLogout()"  class="logout">
     <mat-icon class="me-3">logout</mat-icon>
     <span>Logout</span>
   </a>

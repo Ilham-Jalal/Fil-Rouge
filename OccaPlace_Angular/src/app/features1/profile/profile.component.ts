@@ -5,57 +5,72 @@ import { AnnonceService } from "../../core/service/annonce.service";
 import { LivraisonService } from "../../core/service/livraison.service";
 import { MatDialog } from '@angular/material/dialog';
 import { LivraisonDialogComponent } from "../livraison-dialog/livraison-dialog.component";
+import {AnnonceResponseDTO} from "../../core/dto/AnnonceResponseDTO";
+import {UpdateAnnonceDialogComponent} from "../update-annonce-dialog/update-annonce-dialog.component";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   utilisateur: any;
-  annonces: any[] = [];
+  annonces: AnnonceResponseDTO[] = [];
+  loading = true;
+  error = '';
 
   constructor(
     private authService: AuthService,
     private annonceService: AnnonceService,
     private livraisonService: LivraisonService,
     private router: Router,
-    public dialog: MatDialog  // Inject MatDialog
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.getCurrentUser();
   }
 
-  // Fetch the current user's details
+
   getCurrentUser(): void {
     const username = this.authService.getCurrentUsername();
     if (username) {
       this.authService.findUtilisateurByUsername(username).subscribe(
         (user) => {
+          console.log('Utilisateur récupéré:', user);
           this.utilisateur = user;
           this.getUserAnnonces();
         },
         (error) => {
           console.error('Erreur lors de la récupération de l\'utilisateur:', error);
+          this.error = 'Erreur lors de la récupération de l\'utilisateur';
+          this.loading = false;
         }
       );
+    } else {
+      console.error('Pas de nom d\'utilisateur trouvé');
+      this.error = 'Pas de nom d\'utilisateur trouvé';
+      this.loading = false;
     }
   }
 
-  // Fetch the user's annonces (ads)
   getUserAnnonces(): void {
     this.annonceService.getAnnoncesByUser().subscribe(
       (annonces) => {
+        console.log('Annonces reçues:', annonces);
         this.annonces = annonces;
+        this.loading = false;
       },
       (error) => {
         console.error('Erreur lors de la récupération des annonces:', error);
+        this.error = 'Erreur lors de la récupération des annonces';
+        this.loading = false;
       }
     );
   }
 
-  // Open the dialog for creating a new delivery
+
+
   openLivraisonDialog(annonceId: number): void {
     const dialogRef = this.dialog.open(LivraisonDialogComponent, {
       width: '400px',
@@ -69,7 +84,6 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-
   creerLivraison(livraisonData: any, annonceId: number): void {
     const livraison = {
       ...livraisonData,
@@ -96,19 +110,34 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+  openUpdateAnnonceDialog(annonce: AnnonceResponseDTO): void {
+    const dialogRef = this.dialog.open(UpdateAnnonceDialogComponent, {
+      width: '500px',
+      data: annonce
+    });
 
-
-
-  // Optional: Methods for updating and deleting an announcement
-  updateAnnonce(annonceId: number): void {
-    this.router.navigate([`/annonce/update`, annonceId]);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.annonceService.updateAnnonce(annonce.id, result).subscribe(
+          () => {
+            window.alert('Annonce mise à jour avec succès !');
+            this.getUserAnnonces();
+          },
+          (error) => {
+            window.alert('Erreur lors de la mise à jour de l\'annonce.');
+            console.error('Erreur:', error);
+          }
+        );
+      }
+    });
   }
+
 
   deleteAnnonce(annonceId: number): void {
     this.annonceService.deleteAnnonce(annonceId).subscribe(
       () => {
         console.log('Annonce supprimée');
-        this.getUserAnnonces(); // Refresh the list after deletion
+        this.getUserAnnonces();
       },
       (error) => {
         console.error('Erreur lors de la suppression de l\'annonce:', error);

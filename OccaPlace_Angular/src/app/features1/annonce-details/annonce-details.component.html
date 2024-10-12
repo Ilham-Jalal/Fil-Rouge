@@ -19,8 +19,7 @@
       <p class="product-description" [class.expanded]="isDescriptionExpanded" (click)="toggleDescription()">
         {{ annonce?.description ?? 'Description indisponible' }}
       </p>
-
-      <a *ngIf="(annonce?.description?.length ?? 0) > 100" (click)="toggleDescription()">
+      <a *ngIf="(annonce?.description?.length ?? 0) > 100" (click)="toggleDescription()" class="toggle-description">
         {{ isDescriptionExpanded ? 'Voir moins' : 'Voir plus' }}
       </a>
       <div class="badges">
@@ -30,7 +29,7 @@
       <div class="date-time">
         <span class="date">
           <i class="calendar-icon">
-            <img style="margin-top: 5px" src="assets/icons8-date-24.png" alt="date">
+            <img src="assets/icons8-date-24.png" alt="date">
           </i>
           {{ annonce?.creationDate | date: 'short' }}
         </span>
@@ -44,23 +43,21 @@
     <h3>Commentaires</h3>
     <div *ngIf="commentaires.length === 0">No comments available yet.</div>
 
-    <div *ngFor="let commentaire of commentaires">
-      <div class="comment">
-        <div class="comment-header">
-          <span class="username">{{ commentaire.utilisateurName }}</span>
-          <p class="comment-date">{{ commentaire?.dateCreation | date: 'short' }}</p>
-        </div>
-        <p class="comment-content">{{ commentaire.contenu }}</p>
-        <div class="comment-actions">
-          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)"
-                  (click)="updateCommentaire(commentaire)">
-            Modifier
-          </button>
-          <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)"
-                  (click)="deleteCommentaire(commentaire.id)">
-            Supprimer
-          </button>
-        </div>
+    <div *ngFor="let commentaire of commentaires" class="comment">
+      <div class="comment-header">
+        <span class="username">{{ commentaire.utilisateurName }}</span>
+        <p class="comment-date">{{ commentaire?.dateCreation | date: 'short' }}</p>
+      </div>
+      <p class="comment-content">{{ commentaire.contenu }}</p>
+      <div class="comment-actions">
+        <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)"
+                (click)="updateCommentaire(commentaire)">
+          Modifier
+        </button>
+        <button *ngIf="currentUserId !== null && commentaire.utilisateurId === Number(currentUserId)"
+                (click)="deleteCommentaire(commentaire.id)">
+          Supprimer
+        </button>
       </div>
     </div>
 
@@ -70,5 +67,12 @@
     </div>
   </div>
 </div>
+
+<app-update-comment
+  [isOpen]="isUpdatePopupOpen"
+  [comment]="commentToUpdate"
+  (save)="onSaveComment($event)"
+  (cancel)="onCancelUpdate()">
+</app-update-comment>
 
 <app-footer></app-footer>

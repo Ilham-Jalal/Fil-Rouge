@@ -1,22 +1,54 @@
-<div class="profile-container">
-  <h2>Profil de {{ utilisateur?.username }}</h2>
+<app-header2></app-header2>
+<div class="container profile-container">
+  <h2 class="text-center my-4">Votre profil {{ utilisateur?.username }}</h2>
 
-  <div class="user-info">
-    <p><strong>Nom:</strong> {{ utilisateur?.username }}</p>
-    <p><strong>Email:</strong> {{ utilisateur?.email }}</p>
-    <p><strong>Rôle:</strong> {{ utilisateur?.role }}</p>
+  <div *ngIf="error" class="alert alert-danger text-center">
+    {{ error }}
   </div>
 
-  <h3>Vos Annonces</h3>
-  <div class="annonce-list">
-    <div *ngFor="let annonce of annonces" class="annonce-item">
-      <h4>{{ annonce.title }}</h4>
-      <p>{{ annonce.description }}</p>
-      <p><strong>Prix:</strong> {{ annonce.price }} €</p>
+  <div *ngIf="!error && loading" class="text-center text-primary">
+    <div class="spinner-border" role="status"></div>
+    <span>Chargement des informations...</span>
+  </div>
 
-      <button (click)="updateAnnonce(annonce.id)">Mettre à jour</button>
-      <button (click)="deleteAnnonce(annonce.id)">Supprimer</button>
-      <button (click)="openLivraisonDialog(annonce.id)">Créer une livraison</button>
+  <div *ngIf="!error && !loading">
+    <div class="user-info bg-light p-4 rounded">
+      <p><strong>Nom:</strong> {{ utilisateur?.username }}</p>
+      <p><strong>Email:</strong> {{ utilisateur?.email }}</p>
+    </div>
+
+    <h3 class="my-4">Vos Annonces</h3>
+
+    <div *ngIf="annonces.length === 0" class="alert alert-info text-center">
+      Vous n'avez pas encore d'annonces.
+    </div>
+
+    <div *ngIf="annonces.length > 0" class="row annonce-list">
+      <div *ngFor="let annonce of annonces" class="col-lg-4 col-md-6 mb-4 annonce-item">
+        <div class="card shadow-sm">
+          <div class="annonce-image text-center">
+            <img class="img-fluid p-2" [src]="annonce.images || 'default-image.jpg'" alt="{{ annonce.title }}">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ annonce.title }}</h4>
+            <p class="card-text">{{ annonce.description }}</p>
+            <p><strong>Prix:</strong> {{ annonce.price }} €</p>
+
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-outline-primary btn-sm" (click)="openUpdateAnnonceDialog(annonce)">
+                Mettre à jour
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteAnnonce(annonce.id)">
+                Supprimer
+              </button>
+              <button class="btn btn-outline-success btn-sm" (click)="openLivraisonDialog(annonce.id)">
+                Créer une livraison
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<app-footer></app-footer>
