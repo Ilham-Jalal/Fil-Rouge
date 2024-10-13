@@ -86,6 +86,16 @@ public class LivraisonService {
 
         return Optional.empty();
     }
+    public Optional<Livraison> getLivraisonDetails(Long livraisonId) {
+        Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);
+
+        if (livraisonOpt.isPresent()) {
+            Livraison livraison = livraisonOpt.get();
+            return Optional.of(livraison);
+        }
+
+        return Optional.empty();
+    }
 
     public List<Livraison> getAllLivraisons() {
         return livraisonRepository.findAll();

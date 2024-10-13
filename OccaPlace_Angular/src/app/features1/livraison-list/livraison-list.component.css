@@ -1,105 +1,25 @@
-/* livraison-list.component.css */
-
-.livraison-list {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-th {
-  background-color: #f8fafc;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.75rem 1rem;
-  text-align: left;
-  font-size: 0.75rem;
-  color: #4a5568;
-}
-
-td {
-  padding: 1rem;
-  border-top: 1px solid #e2e8f0;
-  font-size: 0.875rem;
-}
-
-tr:hover {
-  background-color: #f7fafc;
-}
-
-select {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #e2e8f0;
+/* Add styles for assigned livreur */
+.livreur-assigned {
+  background-color: #e0f7fa; /* Light cyan background for assigned livreurs */
+  color: #00695c;            /* Dark cyan text color */
+  padding: 0.5rem 1rem;
   border-radius: 0.25rem;
-  background-color: white;
-  font-size: 0.875rem;
+  font-weight: bold;
 }
 
-@media (max-width: 640px) {
-  .livraison-list {
-    padding: 1rem;
-  }
-
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  tr {
-    border: 1px solid #e2e8f0;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
-  }
-
-  td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-  }
-
-  td:before {
-    content: attr(data-label);
-    position: absolute;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    font-weight: bold;
-  }
-
-  select {
-    width: 100%;
-  }
+/* Add styles for the select button when no livreur is assigned */
+.livreur-unassigned select {
+  background-color: #ffe0e0; /* Light red background for unassigned livreurs */
+  border: 1px solid #ff5c5c; /* Red border */
+  color: #d32f2f;            /* Dark red text color */
 }
 
-@media (min-width: 641px) and (max-width: 1024px) {
-  .livraison-list {
-    padding: 1.5rem;
-  }
-
-  th, td {
-    padding: 0.75rem 0.5rem;
-  }
+.livreur-unassigned select:hover {
+  background-color: #ffcccc; /* Slightly lighter red when hovering */
 }
 
-@media (min-width: 1025px) {
-  .livraison-list {
-    padding: 2rem;
-  }
+.livraison-list select:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 0 3px rgba(102, 175, 233, 0.5);
 }

@@ -1,7 +1,27 @@
-<div class="dashboard-container">
-  <h1>Tableau de Bord - Livreur</h1>
+<mat-toolbar color="primary">
+  <img src="assets/OccaPlace_Logo__2_-removebg-preview.png" alt="OccaPlace Logo" class="logo">
+  <span class="spacer"></span>
 
-  <table mat-table [dataSource]="livraisons" class="mat-elevation-z8">
+  <button mat-icon-button class="menu-button" (click)="onMenuClick()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="nav-buttons">
+    <button mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+      <span class="nav-text">ACCUEIL</span>
+    </button>
+    <button mat-button (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span class="nav-text">LOGOUT</span>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <h1 class="dashboard-title">Vos livraison - {{ livreur?.username }}</h1>
+
+  <table mat-table [dataSource]="livraisons" class="mat-elevation-z8 livraison-table">
     <!-- ID Livraison Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID Livraison </th>
@@ -20,10 +40,18 @@
       <td mat-cell *matCellDef="let livraison"> {{ livraison.adresseVendeur }} </td>
     </ng-container>
 
+    <ng-container matColumnDef="telephoneVendeur">
+      <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Telephone Vendeur </th>
+      <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.telephoneVendeur }} </td>
+    </ng-container>
     <!-- Adresse Acheteur Column -->
     <ng-container matColumnDef="adresseAcheteur">
       <th mat-header-cell *matHeaderCellDef> Adresse Acheteur </th>
       <td mat-cell *matCellDef="let livraison"> {{ livraison.adresseAcheteur }} </td>
+    </ng-container>
+    <ng-container matColumnDef="telephoneAcheteur">
+      <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Telephone Acheteur </th>
+      <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.telephoneAcheteur }} </td>
     </ng-container>
 
     <!-- Statut Column -->
@@ -32,17 +60,17 @@
       <td mat-cell *matCellDef="let livraison"> {{ livraison.statut }} </td>
     </ng-container>
 
-    <!-- Confirm Column -->
+    <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let livraison">
-        <button mat-raised-button color="primary" (click)="confirmerLivraison(livraison.id)">
+        <button mat-raised-button color="accent" (click)="confirmerLivraison(livraison.id)">
           Confirmer
         </button>
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['id', 'dateLivraison', 'adresseVendeur', 'adresseAcheteur', 'statut', 'actions']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['id', 'dateLivraison', 'adresseVendeur', 'adresseAcheteur', 'statut', 'actions'];"></tr>
+    <tr mat-header-row *matHeaderRowDef="['id', 'dateLivraison', 'adresseVendeur','telephoneVendeur', 'adresseAcheteur','telephoneAcheteur', 'statut', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'dateLivraison', 'adresseVendeur','telephoneVendeur', 'adresseAcheteur','telephoneAcheteur', 'statut', 'actions'];"></tr>
   </table>
 </div>

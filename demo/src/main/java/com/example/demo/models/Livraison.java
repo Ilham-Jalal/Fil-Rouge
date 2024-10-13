@@ -23,8 +23,16 @@ public class Livraison {
 
     @Column(nullable = false)
     private String adresseVendeur;
+
+    @Column(nullable = false)
+    private String telephoneVendeur; // Numéro de téléphone du vendeur
+
     @Column(nullable = false)
     private String adresseAcheteur;
+
+    @Column(nullable = false)
+    private String telephoneAcheteur; // Numéro de téléphone de l'acheteur
+
     private double montant;
 
     @Enumerated(EnumType.STRING)

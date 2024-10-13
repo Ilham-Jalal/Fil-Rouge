@@ -3,8 +3,6 @@ package com.example.demo.controllers;
 import com.example.demo.config.JwtUtil;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.models.User;
-import com.example.demo.models.Utilisateur;
-import com.example.demo.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,7 +21,7 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UserService userService) {
+    public AuthenticationController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 

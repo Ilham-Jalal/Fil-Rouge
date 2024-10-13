@@ -11,14 +11,25 @@
 
       <!-- Adresse Vendeur Column -->
       <ng-container matColumnDef="adresseVendeur">
-        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Adresse Vendeur </th>
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Telephone Vendeur </th>
         <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.adresseVendeur }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="telephoneVendeur">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Telephone Vendeur </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.telephoneVendeur }} </td>
       </ng-container>
 
       <!-- Adresse Acheteur Column -->
       <ng-container matColumnDef="adresseAcheteur">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Adresse Acheteur </th>
         <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.adresseAcheteur }} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="telephoneAcheteur">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Adresse Acheteur </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.telephoneAcheteur }} </td>
       </ng-container>
 
       <!-- Montant Column -->
@@ -42,7 +53,6 @@
         </td>
       </ng-container>
 
-      <!-- Livreur Column -->
       <ng-container matColumnDef="livreur">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Livreur </th>
         <td mat-cell *matCellDef="let livraison" class="px-6 py-4">

@@ -1,17 +1,19 @@
 package com.example.demo.services;
 
-import com.example.demo.exceptions.AnnonceNotFoundException;
 import com.example.demo.dto.AnnonceCreateDTO;
 import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
+import com.example.demo.exceptions.AnnonceNotFoundException;
 import com.example.demo.models.Annonce;
+import com.example.demo.models.Livraison;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.repositorys.AnnonceRepository;
 import com.example.demo.repositorys.LivraisonRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -19,16 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class AnnonceServiceTest {
-
-    @InjectMocks
-    private AnnonceService annonceService;
 
     @Mock
     private AnnonceRepository annonceRepository;
@@ -39,124 +38,153 @@ class AnnonceServiceTest {
     @Mock
     private CloudinaryService cloudinaryService;
 
+    @InjectMocks
+    private AnnonceService annonceService;
+
+    private Utilisateur testUser;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        testUser = new Utilisateur();
+        testUser.setId(1L);
+        testUser.setUsername("testUser");
     }
 
     @Test
-    void testCreateAnnonce()  {
-        // Arrange
-        AnnonceCreateDTO annonceCreateDTO = new AnnonceCreateDTO();
-        annonceCreateDTO.setTitle("Test Title");
-        annonceCreateDTO.setDescription("Test Description");
-        annonceCreateDTO.setPrice(100.0);
-        annonceCreateDTO.setCategory(Categorie.IMMOBILIER);
-        annonceCreateDTO.setDisponibilite(Disponibilite.DISPONIBLE);
+    void testCreateAnnonce() {
+        // Given
+        AnnonceCreateDTO annonceDTO = new AnnonceCreateDTO();
+        annonceDTO.setTitle("Test Annonce");
+        annonceDTO.setDescription("Test Description");
+        annonceDTO.setPrice(100.0);
+        annonceDTO.setCategory(Categorie.ELECTRONIQUE);
+        annonceDTO.setDisponibilite(Disponibilite.DISPONIBLE);
 
-        Utilisateur user = new Utilisateur();
-        user.setId(1L);
-        user.setUsername("TestUser");
+        MultipartFile[] images = new MultipartFile[0];
+        when(cloudinaryService.uploadImages(images)).thenReturn(Collections.singletonList("http://image.url"));
 
-        MultipartFile[] images = new MultipartFile[0]; // Empty array for simplicity
-        when(cloudinaryService.uploadImages(images)).thenReturn(Collections.emptyList());
+        Annonce savedAnnonce = new Annonce();
+        savedAnnonce.setId(1L);
+        savedAnnonce.setTitle(annonceDTO.getTitle());
+        savedAnnonce.setDescription(annonceDTO.getDescription());
+        savedAnnonce.setPrice(annonceDTO.getPrice());
+        savedAnnonce.setCategory(annonceDTO.getCategory());
+        savedAnnonce.setDisponibilite(annonceDTO.getDisponibilite());
+        savedAnnonce.setCreationDate(LocalDateTime.now());
+        savedAnnonce.setVendeur(testUser);
+        savedAnnonce.setImages(Collections.singletonList("http://image.url"));
 
+        when(annonceRepository.save(any(Annonce.class))).thenReturn(savedAnnonce);
+
+        // When
+        AnnonceResponseDTO responseDTO = annonceService.createAnnonce(annonceDTO, testUser, images);
+
+        // Then
+        assertNotNull(responseDTO);
+        assertEquals("Test Annonce", responseDTO.getTitle());
+        verify(annonceRepository, times(1)).save(any(Annonce.class));
+    }
+
+    @Test
+    void testFindById() {
+        // Given
         Annonce annonce = new Annonce();
         annonce.setId(1L);
-        annonce.setTitle(annonceCreateDTO.getTitle());
-        annonce.setCreationDate(LocalDateTime.now());
-        annonce.setVendeur(user);
+        annonce.setTitle("Test Annonce");
+        when(annonceRepository.findById(1L)).thenReturn(Optional.of(annonce));
 
-        when(annonceRepository.save(any(Annonce.class))).thenReturn(annonce);
+        // When
+        AnnonceResponseDTO responseDTO = annonceService.findById(1L);
 
-        // Act
-        AnnonceResponseDTO responseDTO = annonceService.createAnnonce(annonceCreateDTO, user, images);
-
-        // Assert
+        // Then
         assertNotNull(responseDTO);
-        assertEquals(1L, responseDTO.getId());
-        assertEquals("Test Title", responseDTO.getTitle());
-        verify(annonceRepository, times(1)).save(any(Annonce.class));
+        assertEquals("Test Annonce", responseDTO.getTitle());
+    }
+
+    @Test
+    void testFindById_NotFound() {
+        // Given
+        when(annonceRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(AnnonceNotFoundException.class, () -> annonceService.findById(1L));
     }
 
     @Test
     void testUpdateAnnonce() {
-        // Arrange
+        // Given
         Long annonceId = 1L;
         AnnonceUpdateDTO updateDTO = new AnnonceUpdateDTO();
         updateDTO.setTitle("Updated Title");
         updateDTO.setDescription("Updated Description");
-        updateDTO.setPrice(200.0);
-        updateDTO.setCategory(Categorie.VETEMENTS);
+        updateDTO.setPrice(150.0);
+        updateDTO.setCategory(Categorie.ELECTRONIQUE);
+        updateDTO.setDisponibilite(Disponibilite.DISPONIBLE);
 
         Annonce existingAnnonce = new Annonce();
         existingAnnonce.setId(annonceId);
         existingAnnonce.setTitle("Old Title");
-
         when(annonceRepository.findById(annonceId)).thenReturn(Optional.of(existingAnnonce));
-        when(annonceRepository.save(any(Annonce.class))).thenReturn(existingAnnonce);
+        when(annonceRepository.save(existingAnnonce)).thenReturn(existingAnnonce);
 
-        // Act
+        // When
         AnnonceResponseDTO responseDTO = annonceService.updateAnnonce(annonceId, updateDTO);
 
-        // Assert
+        // Then
         assertNotNull(responseDTO);
         assertEquals("Updated Title", responseDTO.getTitle());
-        verify(annonceRepository, times(1)).findById(annonceId);
-        verify(annonceRepository, times(1)).save(any(Annonce.class));
-    }
-
-    @Test
-    void testUpdateAnnonce_AnnonceNotFound() {
-        // Arrange
-        Long annonceId = 1L;
-        AnnonceUpdateDTO updateDTO = new AnnonceUpdateDTO();
-        when(annonceRepository.findById(annonceId)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        assertThrows(AnnonceNotFoundException.class, () -> annonceService.updateAnnonce(annonceId, updateDTO));
-        verify(annonceRepository, times(1)).findById(annonceId);
+        verify(annonceRepository, times(1)).save(existingAnnonce);
     }
 
     @Test
     void testDeleteAnnonce() {
-        // Arrange
+        // Given
         Long annonceId = 1L;
         when(annonceRepository.existsById(annonceId)).thenReturn(true);
 
-        // Act
+        // When
         annonceService.deleteAnnonce(annonceId);
 
-        // Assert
+        // Then
         verify(annonceRepository, times(1)).deleteById(annonceId);
     }
 
     @Test
-    void testDeleteAnnonce_AnnonceNotFound() {
-        // Arrange
+    void testDeleteAnnonce_NotFound() {
+        // Given
         Long annonceId = 1L;
         when(annonceRepository.existsById(annonceId)).thenReturn(false);
 
-        // Act & Assert
+        // When & Then
         assertThrows(AnnonceNotFoundException.class, () -> annonceService.deleteAnnonce(annonceId));
-        verify(annonceRepository, times(1)).existsById(annonceId);
     }
 
     @Test
     void testFindAllAnnonces() {
-        // Arrange
+        // Given
         Annonce annonce = new Annonce();
         annonce.setId(1L);
         annonce.setTitle("Test Annonce");
-
         when(annonceRepository.findAll()).thenReturn(Collections.singletonList(annonce));
 
-        // Act
-        var annonces = annonceService.findAllAnnonces();
+        // When
+        List<AnnonceResponseDTO> annonces = annonceService.findAllAnnonces();
 
-        // Assert
+        // Then
         assertEquals(1, annonces.size());
         assertEquals("Test Annonce", annonces.get(0).getTitle());
-        verify(annonceRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testCountTotalAnnonces() {
+        // Given
+        when(annonceRepository.count()).thenReturn(10L);
+
+        // When
+        long count = annonceService.countTotalAnnonces();
+
+        // Then
+        assertEquals(10L, count);
     }
 }

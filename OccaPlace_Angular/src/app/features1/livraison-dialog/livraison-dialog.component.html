@@ -1,19 +1,36 @@
 <h2 mat-dialog-title>Créer Livraison</h2>
 <div mat-dialog-content>
+  <!-- Adresse du vendeur -->
   <mat-form-field appearance="fill">
     <mat-label>Adresse de Vendeur</mat-label>
     <input matInput [(ngModel)]="livraisonData.adresseVendeur" placeholder="Adresse de livraison">
   </mat-form-field>
+
+  <!-- Téléphone du vendeur -->
+  <mat-form-field appearance="fill">
+    <mat-label>Téléphone de Vendeur</mat-label>
+    <input matInput [(ngModel)]="livraisonData.telephoneVendeur" placeholder="Numéro de téléphone du vendeur">
+  </mat-form-field>
+
+  <!-- Adresse de l'acheteur -->
   <mat-form-field appearance="fill">
     <mat-label>Adresse D'acheteur</mat-label>
     <input matInput [(ngModel)]="livraisonData.adresseAcheteur" placeholder="Adresse de livraison">
   </mat-form-field>
 
+  <!-- Téléphone de l'acheteur -->
+  <mat-form-field appearance="fill">
+    <mat-label>Téléphone de l'acheteur</mat-label>
+    <input matInput [(ngModel)]="livraisonData.telephoneAcheteur" placeholder="Numéro de téléphone de l'acheteur">
+  </mat-form-field>
+
+  <!-- Montant -->
   <mat-form-field appearance="fill">
     <mat-label>Montant</mat-label>
     <input matInput [(ngModel)]="livraisonData.montant" type="number" placeholder="Montant">
   </mat-form-field>
 
+  <!-- Date de livraison -->
   <mat-form-field appearance="fill">
     <mat-label>Date de livraison</mat-label>
     <input matInput [(ngModel)]="livraisonData.dateLivraison" [matDatepicker]="picker" placeholder="Choisissez la date">
@@ -21,6 +38,7 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
+  <!-- Statut de livraison -->
   <mat-form-field appearance="fill">
     <mat-label>Statut</mat-label>
     <mat-select [(ngModel)]="livraisonData.statut">

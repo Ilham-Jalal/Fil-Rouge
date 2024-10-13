@@ -11,7 +11,9 @@ export class LivraisonDialogComponent {
   livraisonData: any = {
     statut: StatutLivraison.EN_COURS,
     adresseVendeur: '',
+    telephoneVendeur: '', // Ajout du téléphone du vendeur
     adresseAcheteur: '',
+    telephoneAcheteur: '', // Ajout du téléphone de l'acheteur
     montant: 0,
     dateLivraison: new Date()
   };

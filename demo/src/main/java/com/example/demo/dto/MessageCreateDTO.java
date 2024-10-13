@@ -1,9 +1,7 @@
 package com.example.demo.dto;
 
-import jakarta.persistence.PrePersist;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 
 @NoArgsConstructor

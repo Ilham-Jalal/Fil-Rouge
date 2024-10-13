@@ -5,6 +5,7 @@ import { SignUpRequest } from '../dto/SignUpRequest';
 import { User } from '../model/User';
 import { Role } from '../enum/Role';
 import { UserDTO } from '../dto/UserDTO';
+import {Livreur} from "../model/Livreur";
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class UserService {
   getAllUsers(): Observable<UserDTO[]> {
     return this.http.get<UserDTO[]>(`${this.apiUrl}/admin/users`);
   }
-  getAllLivreurs(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>(`${this.apiUrl}/admin/livreurs`);
+  getAllLivreurs(): Observable<Livreur[]> {
+    return this.http.get<Livreur[]>(`${this.apiUrl}/admin/livreurs`);
   }
   logout(): void {
     localStorage.removeItem('jwt');

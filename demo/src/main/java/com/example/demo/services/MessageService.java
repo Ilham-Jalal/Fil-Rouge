@@ -13,8 +13,8 @@ import com.example.demo.repositorys.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -78,17 +78,21 @@ public class MessageService {
 
     public List<MessageResponseDTO> getSentMessages(Long userId) {
         List<Message> sentMessages = messageRepository.findByFromUserId(userId);
-        return sentMessages.stream()
-                .map(this::convertToResponseDTO)
-                .collect(Collectors.toList());
+        return Collections.unmodifiableList(
+                sentMessages.stream()
+                        .map(this::convertToResponseDTO)
+                        .toList()
+        );
     }
+
 
     public List<MessageResponseDTO> getReceivedMessages(Long userId) {
         List<Message> receivedMessages = messageRepository.findByToUserId(userId);
         return receivedMessages.stream()
                 .map(this::convertToResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
+
 
     private MessageResponseDTO convertToResponseDTO(Message message) {
         return new MessageResponseDTO(

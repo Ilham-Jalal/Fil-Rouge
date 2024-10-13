@@ -37,6 +37,15 @@ public class LivraisonController {
         return ResponseEntity.ok(livraisons);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('LIVREUR')")
+    @GetMapping("/livraisons/{id}/details")
+    public ResponseEntity<Livraison> getLivraisonDetails(@PathVariable Long id) {
+        Optional<Livraison> livraisonOpt = livraisonService.getLivraisonDetails(id);
+
+        return livraisonOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
     @PostMapping("/admin/{id}/assigner-livreur/{livreurId}")
     public ResponseEntity<Livraison> assignerLivreur(@PathVariable Long id, @PathVariable Long livreurId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

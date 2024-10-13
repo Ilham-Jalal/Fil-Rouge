@@ -7,7 +7,6 @@ import com.example.demo.dto.AnnonceResponseDTO;
 import com.example.demo.dto.AnnonceUpdateDTO;
 import com.example.demo.enums.Categorie;
 import com.example.demo.enums.Disponibilite;
-import com.example.demo.models.Annonce;
 import com.example.demo.models.Utilisateur;
 import com.example.demo.services.AnnonceService;
 import com.example.demo.services.CloudinaryService;

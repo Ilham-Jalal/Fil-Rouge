@@ -87,7 +87,6 @@
 
   }
   .annonce-search-form form{
-  flex-direction: column;
   }
   .annonce-search-form button {
     margin: 5px 0;

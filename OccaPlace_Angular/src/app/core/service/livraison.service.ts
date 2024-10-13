@@ -40,7 +40,9 @@ export class LivraisonService {
   }): Observable<Livraison> {
     return this.http.post<Livraison>(`${this.baseUrl}/user/api/livraisons`, livraison);
   }
-
+  getLivraisonDetails(id: number): Observable<Livraison> {
+    return this.http.get<Livraison>(`${this.baseUrl}/livraisons/${id}`);
+  }
   getUserLivraisons(): Observable<Livraison[]> {
     return this.http.get<Livraison[]>(`${this.baseUrl}/livraisons`);
   }
