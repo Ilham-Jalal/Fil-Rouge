@@ -44,6 +44,9 @@ export class LivraisonService {
   getUserLivraisons(): Observable<Livraison[]> {
     return this.http.get<Livraison[]>(`${this.baseUrl}/livraisons`);
   }
+  getLivreurLivraisons(): Observable<Livraison[]> {
+    return this.http.get<Livraison[]>(`${this.baseUrl}/livraison`);
+  }
   updateUserLivraison(id: number, updatedLivraison: Livraison): Observable<Livraison> {
     return this.http.put<Livraison>(`${this.baseUrl}/livraisons/${id}`, updatedLivraison);
   }

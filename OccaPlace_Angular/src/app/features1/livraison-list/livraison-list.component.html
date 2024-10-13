@@ -1,55 +1,71 @@
-<div class="livraison-list">
-  <h2>Liste des Livraisons</h2>
-  <table mat-table [dataSource]="livraisons" class="mat-elevation-z8">
+<div class="livraison-list container mx-auto px-4 py-8">
+  <h2 class="text-2xl font-bold mb-6">Liste des Livraisons</h2>
+  <div class="overflow-x-auto">
+    <table mat-table [dataSource]="livraisons" class="w-full min-w-full bg-white shadow-md rounded-lg overflow-hidden">
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let livraison"> {{ livraison.id }} </td>
-    </ng-container>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> ID </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4 whitespace-nowrap"> {{ livraison.id }} </td>
+      </ng-container>
 
-    <!-- Adresse Vendeur Column -->
-    <ng-container matColumnDef="adresseVendeur">
-      <th mat-header-cell *matHeaderCellDef> Adresse Vendeur </th>
-      <td mat-cell *matCellDef="let livraison"> {{ livraison.adresseVendeur }} </td>
-    </ng-container>
+      <!-- Adresse Vendeur Column -->
+      <ng-container matColumnDef="adresseVendeur">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Adresse Vendeur </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.adresseVendeur }} </td>
+      </ng-container>
 
-    <!-- Adresse Acheteur Column -->
-    <ng-container matColumnDef="adresseAcheteur">
-      <th mat-header-cell *matHeaderCellDef> Adresse Acheteur </th>
-      <td mat-cell *matCellDef="let livraison"> {{ livraison.adresseAcheteur }} </td>
-    </ng-container>
+      <!-- Adresse Acheteur Column -->
+      <ng-container matColumnDef="adresseAcheteur">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Adresse Acheteur </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.adresseAcheteur }} </td>
+      </ng-container>
 
-    <!-- Montant Column -->
-    <ng-container matColumnDef="montant">
-      <th mat-header-cell *matHeaderCellDef> Montant </th>
-      <td mat-cell *matCellDef="let livraison"> {{ livraison.montant }} </td>
-    </ng-container>
+      <!-- Montant Column -->
+      <ng-container matColumnDef="montant">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Montant </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4"> {{ livraison.montant }} DH</td>
+      </ng-container>
 
-    <!-- Statut Column -->
-    <ng-container matColumnDef="statut">
-      <th mat-header-cell *matHeaderCellDef> Statut </th>
-      <td mat-cell *matCellDef="let livraison"> {{ livraison.statut }} </td>
-    </ng-container>
+      <!-- Statut Column -->
+      <ng-container matColumnDef="statut">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Statut </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4">
+          <span [ngClass]="{
+            'px-2 inline-flex text-xs leading-5 font-semibold rounded-full': true,
+            'bg-green-100 text-green-800': livraison.statut === 'LIVRÉ',
+            'bg-yellow-100 text-yellow-800': livraison.statut === 'EN_COURS',
+            'bg-red-100 text-red-800': livraison.statut === 'ANNULÉ'
+          }">
+            {{ livraison.statut }}
+          </span>
+        </td>
+      </ng-container>
 
-    <!-- Action (Assigner Livreur) Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Assigner Livreur </th>
-      <td mat-cell *matCellDef="let livraison">
-        <ng-container *ngIf="livraison.livreur; else assignButton">
-          <span>Déjà Assigné</span>
-        </ng-container>
-        <ng-template #assignButton>
-          <select (change)="onSelectLivreur(livraison.id, $event)">
-            <option value="" disabled selected>Choisir un livreur</option>
-            <option *ngFor="let livreur of livreurs" [value]="livreur.id">{{ livreur.username }}</option>
-          </select>
-        </ng-template>
-      </td>
-    </ng-container>
+      <!-- Livreur Column -->
+      <ng-container matColumnDef="livreur">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 uppercase tracking-wider"> Livreur </th>
+        <td mat-cell *matCellDef="let livraison" class="px-6 py-4">
+          <ng-container *ngIf="isLivreurAssigned(livraison); else assignButton">
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+              {{ getLivreurName(livraison) }}
+            </span>
+          </ng-container>
+          <ng-template #assignButton>
+            <select
+              *ngIf="canAssignLivreur(livraison)"
+              (change)="onSelectLivreur(livraison.id, $event)"
+              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="" disabled selected>Choisir un livreur</option>
+              <option *ngFor="let livreur of livreurs" [value]="livreur.id">{{ livreur.username }}</option>
+            </select>
+          </ng-template>
+        </td>
+      </ng-container>
 
-    <!-- Header and Row Definitions -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-50"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-gray-50"></tr>
+    </table>
+  </div>
 </div>

@@ -63,6 +63,9 @@ public class LivraisonService {
     public List<Livraison> getLivraisonsByUser(Utilisateur utilisateur) {
         return livraisonRepository.findByUtilisateur(utilisateur);
     }
+    public List<Livraison> getLivraisonsByLivreur(Livreur livreur) {
+        return livraisonRepository.findByLivreur(livreur);
+    }
 
     public Optional<Livraison> updateLivraisonByUser(Long livraisonId, Livraison updatedLivraison, Utilisateur utilisateur) {
         Optional<Livraison> livraisonOpt = livraisonRepository.findById(livraisonId);

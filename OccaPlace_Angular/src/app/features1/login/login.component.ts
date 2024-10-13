@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/annonces']);
         break;
       case Role.LIVREUR:
-        this.router.navigate(['/technician/technician']);
+        this.router.navigate(['/livreurDashboard']);
         break;
       default:
         this.router.navigate(['/access-denied']);

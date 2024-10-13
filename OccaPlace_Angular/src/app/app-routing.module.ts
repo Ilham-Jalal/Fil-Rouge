@@ -19,6 +19,7 @@ import {ConversationListComponent} from "./features1/conversation-list/conversat
 import {ProfileComponent} from "./features1/profile/profile.component";
 import {UserLivraisonsComponent} from "./features1/user-livraisons/user-livraisons.component";
 import {LivraisonListComponent} from "./features1/livraison-list/livraison-list.component";
+import {LivreurDashboardComponent} from "./features1/livreur-dashboard/livreur-dashboard.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,6 +38,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
   { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
   { path: 'annoncesList', component: AnnonceListComponent, canActivate: [AuthGuard], data: { expectedRole: Role.ADMIN }},
+  { path: 'livreurDashboard', component: LivreurDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: Role.LIVREUR }},
+
   {
     path: 'dashboard',
     component: DashboardComponent,

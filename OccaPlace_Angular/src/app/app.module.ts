@@ -61,6 +61,7 @@ import { UserLivraisonsComponent } from './features1/user-livraisons/user-livrai
 import { UpdateCommentComponent } from './features1/update-comment/update-comment.component';
 import { UpdateAnnonceDialogComponent } from './features1/update-annonce-dialog/update-annonce-dialog.component';
 import { LivraisonListComponent } from './features1/livraison-list/livraison-list.component';
+import { LivreurDashboardComponent } from './features1/livreur-dashboard/livreur-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { LivraisonListComponent } from './features1/livraison-list/livraison-lis
     UpdateCommentComponent,
     UpdateAnnonceDialogComponent,
     LivraisonListComponent,
+    LivreurDashboardComponent,
 
 
   ],

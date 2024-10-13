@@ -97,6 +97,21 @@ public class LivraisonController {
         List<Livraison> livraisons = livraisonService.getLivraisonsByUser(user);
         return ResponseEntity.ok(livraisons);
     }
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIVREUR')")
+    @GetMapping("/livraison")
+    public ResponseEntity<List<Livraison>> getLivreurLivraisons() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<Livreur> optionalUser = userService.findLivreurByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Livreur livreur = optionalUser.get();
+        List<Livraison> livraisons = livraisonService.getLivraisonsByLivreur(livreur);
+        return ResponseEntity.ok(livraisons);
+    }
     @PreAuthorize("hasRole('LIVREUR') or hasRole('USER')")
     @PutMapping("/livraisons/{id}")
     public ResponseEntity<Livraison> updateUserLivraison(@PathVariable Long id, @RequestBody Livraison updatedLivraison) {

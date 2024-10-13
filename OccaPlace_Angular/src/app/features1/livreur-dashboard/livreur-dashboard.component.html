@@ -1,0 +1,48 @@
+<div class="dashboard-container">
+  <h1>Tableau de Bord - Livreur</h1>
+
+  <table mat-table [dataSource]="livraisons" class="mat-elevation-z8">
+    <!-- ID Livraison Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID Livraison </th>
+      <td mat-cell *matCellDef="let livraison"> {{ livraison.id }} </td>
+    </ng-container>
+
+    <!-- Date Livraison Column -->
+    <ng-container matColumnDef="dateLivraison">
+      <th mat-header-cell *matHeaderCellDef> Date Livraison </th>
+      <td mat-cell *matCellDef="let livraison"> {{ livraison.dateLivraison | date }} </td>
+    </ng-container>
+
+    <!-- Adresse Vendeur Column -->
+    <ng-container matColumnDef="adresseVendeur">
+      <th mat-header-cell *matHeaderCellDef> Adresse Vendeur </th>
+      <td mat-cell *matCellDef="let livraison"> {{ livraison.adresseVendeur }} </td>
+    </ng-container>
+
+    <!-- Adresse Acheteur Column -->
+    <ng-container matColumnDef="adresseAcheteur">
+      <th mat-header-cell *matHeaderCellDef> Adresse Acheteur </th>
+      <td mat-cell *matCellDef="let livraison"> {{ livraison.adresseAcheteur }} </td>
+    </ng-container>
+
+    <!-- Statut Column -->
+    <ng-container matColumnDef="statut">
+      <th mat-header-cell *matHeaderCellDef> Statut </th>
+      <td mat-cell *matCellDef="let livraison"> {{ livraison.statut }} </td>
+    </ng-container>
+
+    <!-- Confirm Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let livraison">
+        <button mat-raised-button color="primary" (click)="confirmerLivraison(livraison.id)">
+          Confirmer
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'dateLivraison', 'adresseVendeur', 'adresseAcheteur', 'statut', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'dateLivraison', 'adresseVendeur', 'adresseAcheteur', 'statut', 'actions'];"></tr>
+  </table>
+</div>
