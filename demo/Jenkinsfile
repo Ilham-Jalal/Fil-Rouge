@@ -10,8 +10,8 @@ pipeline {
         DOCKER_IMAGE = 'occasion-demo'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_CREDENTIALS_ID = 'docker-credentials-id'
-        SONARQUBE = 'occa-sonnar-server'
-        SONARTOKEN = credentials('occa-token')
+        SONARQUBE = 'sonar-occa-server'
+        SONARTOKEN = credentials('token-occca')
     }
 
     stages {

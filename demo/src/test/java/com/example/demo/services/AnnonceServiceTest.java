@@ -53,7 +53,7 @@ class AnnonceServiceTest {
 
     @Test
     void testCreateAnnonce() {
-        // Given
+
         AnnonceCreateDTO annonceDTO = new AnnonceCreateDTO();
         annonceDTO.setTitle("Test Annonce");
         annonceDTO.setDescription("Test Description");
@@ -77,7 +77,6 @@ class AnnonceServiceTest {
 
         when(annonceRepository.save(any(Annonce.class))).thenReturn(savedAnnonce);
 
-        // When
         AnnonceResponseDTO responseDTO = annonceService.createAnnonce(annonceDTO, testUser, images);
 
         // Then

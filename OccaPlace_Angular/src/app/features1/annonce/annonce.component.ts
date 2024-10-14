@@ -69,12 +69,21 @@ export class AnnonceComponent implements OnInit {
 
 
   searchAnnonces(): void {
-    this.annonceService.searchAnnonces(this.searchQuery.titleOrDescription, this.searchQuery.category, this.searchQuery.priceMin, this.searchQuery.priceMax)
-      .subscribe({
-        next: (data) => this.annonces = data,
-        error: (err) => console.error('Erreur lors de la recherche des annonces', err)
-      });
+    console.log('Search query:', this.searchQuery);
+    this.annonceService.searchAnnonces(
+      this.searchQuery.titleOrDescription,
+      this.searchQuery.category,
+      this.searchQuery.priceMin,
+      this.searchQuery.priceMax
+    ).subscribe({
+      next: (data) => {
+        this.annonces = data;
+        console.log('Search results:', data);
+      },
+      error: (err) => console.error('Erreur lors de la recherche des annonces', err)
+    });
   }
+
 
 
 
