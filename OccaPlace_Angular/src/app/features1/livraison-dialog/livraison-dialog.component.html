@@ -1,53 +1,76 @@
-<h2 mat-dialog-title>Créer Livraison</h2>
-<div mat-dialog-content>
-  <!-- Adresse du vendeur -->
-  <mat-form-field appearance="fill">
-    <mat-label>Adresse de Vendeur</mat-label>
-    <input matInput [(ngModel)]="livraisonData.adresseVendeur" placeholder="Adresse de livraison">
-  </mat-form-field>
+<h1 class="mat-title text-center" style="font-size: 24px;">Créer une Livraison</h1>
 
-  <!-- Téléphone du vendeur -->
-  <mat-form-field appearance="fill">
-    <mat-label>Téléphone de Vendeur</mat-label>
-    <input matInput [(ngModel)]="livraisonData.telephoneVendeur" placeholder="Numéro de téléphone du vendeur">
-  </mat-form-field>
+<form #livraisonForm="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-group">
+    <label for="adresseVendeur">
+      <mat-icon>home</mat-icon> Adresse de Vendeur
+    </label>
+    <input id="adresseVendeur" name="adresseVendeur" class="form-control" placeholder="Adresse du vendeur" [(ngModel)]="livraisonData.adresseVendeur" required #adresseVendeur="ngModel" />
+    <div *ngIf="adresseVendeur.invalid && (adresseVendeur.dirty || adresseVendeur.touched)" class="alert alert-danger">
+      L'adresse du vendeur est requise.
+    </div>
+  </div>
 
-  <!-- Adresse de l'acheteur -->
-  <mat-form-field appearance="fill">
-    <mat-label>Adresse D'acheteur</mat-label>
-    <input matInput [(ngModel)]="livraisonData.adresseAcheteur" placeholder="Adresse de livraison">
-  </mat-form-field>
+  <div class="form-group">
+    <label for="telephoneVendeur">
+      <mat-icon>phone</mat-icon> Téléphone de Vendeur
+    </label>
+    <input id="telephoneVendeur" name="telephoneVendeur" class="form-control" placeholder="Téléphone du vendeur" [(ngModel)]="livraisonData.telephoneVendeur" required #telephoneVendeur="ngModel" />
+    <div *ngIf="telephoneVendeur.invalid && (telephoneVendeur.dirty || telephoneVendeur.touched)" class="alert alert-danger">
+      Le téléphone du vendeur est requis.
+    </div>
+  </div>
 
-  <!-- Téléphone de l'acheteur -->
-  <mat-form-field appearance="fill">
-    <mat-label>Téléphone de l'acheteur</mat-label>
-    <input matInput [(ngModel)]="livraisonData.telephoneAcheteur" placeholder="Numéro de téléphone de l'acheteur">
-  </mat-form-field>
+  <div class="form-group">
+    <label for="adresseAcheteur">
+      <mat-icon>location_on</mat-icon> Adresse D'acheteur
+    </label>
+    <input id="adresseAcheteur" name="adresseAcheteur" class="form-control" placeholder="Adresse de l'acheteur" [(ngModel)]="livraisonData.adresseAcheteur" required #adresseAcheteur="ngModel" />
+    <div *ngIf="adresseAcheteur.invalid && (adresseAcheteur.dirty || adresseAcheteur.touched)" class="alert alert-danger">
+      L'adresse de l'acheteur est requise.
+    </div>
+  </div>
 
-  <!-- Montant -->
-  <mat-form-field appearance="fill">
-    <mat-label>Montant</mat-label>
-    <input matInput [(ngModel)]="livraisonData.montant" type="number" placeholder="Montant">
-  </mat-form-field>
+  <div class="form-group">
+    <label for="telephoneAcheteur">
+      <mat-icon>stay_current_portrait</mat-icon> Téléphone de l'acheteur
+    </label>
+    <input id="telephoneAcheteur" name="telephoneAcheteur" class="form-control" placeholder="Téléphone de l'acheteur" [(ngModel)]="livraisonData.telephoneAcheteur" required #telephoneAcheteur="ngModel" />
+    <div *ngIf="telephoneAcheteur.invalid && (telephoneAcheteur.dirty || telephoneAcheteur.touched)" class="alert alert-danger">
+      Le téléphone de l'acheteur est requis.
+    </div>
+  </div>
 
-  <!-- Date de livraison -->
-  <mat-form-field appearance="fill">
-    <mat-label>Date de livraison</mat-label>
-    <input matInput [(ngModel)]="livraisonData.dateLivraison" [matDatepicker]="picker" placeholder="Choisissez la date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+  <div class="form-group">
+    <label for="montant">
+      <mat-icon>attach_money</mat-icon> Montant
+    </label>
+    <input id="montant" name="montant" type="number" class="form-control" placeholder="Montant" [(ngModel)]="livraisonData.montant" required #montant="ngModel" />
+    <div *ngIf="montant.invalid && (montant.dirty || montant.touched)" class="alert alert-danger">
+      Le montant est requis.
+    </div>
+  </div>
 
-  <!-- Statut de livraison -->
-  <mat-form-field appearance="fill">
-    <mat-label>Statut</mat-label>
-    <mat-select [(ngModel)]="livraisonData.statut">
-      <mat-option *ngFor="let statut of statuts" [value]="statut">{{ statut }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Annuler</button>
-  <button mat-button (click)="onSubmit()" cdkFocusInitial>Confirmer</button>
-</div>
+
+  <div class="form-group">
+    <label for="statut">
+      <mat-icon>info</mat-icon> Statut
+    </label>
+    <select id="statut" name="statut" class="form-control" [(ngModel)]="livraisonData.statut" required #statut="ngModel">
+      <option *ngFor="let statut of statuts" [value]="statut">{{ statut }}</option>
+    </select>
+    <div *ngIf="statut.invalid && (statut.dirty || statut.touched)" class="alert alert-danger">
+      Le statut est requis.
+    </div>
+  </div>
+
+  <div class="button-group d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-secondary" (click)="onNoClick()">
+      <mat-icon>close</mat-icon> Annuler
+    </button>
+    <button type="submit" class="btn btn-primary" [disabled]="!livraisonForm.form.valid">
+      <mat-icon>save</mat-icon> Confirmer
+    </button>
+  </div>
+</form>
