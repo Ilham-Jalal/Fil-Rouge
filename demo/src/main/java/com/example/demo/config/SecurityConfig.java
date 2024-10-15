@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/livreur/**").hasRole("LIVREUR")
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable()) // Disable form login for JWT authentication
+                .formLogin(form -> form.disable())
                 .addFilterBefore(new JwtAuthorizationFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

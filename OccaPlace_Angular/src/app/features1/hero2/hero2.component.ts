@@ -18,7 +18,7 @@ export class Hero2Component {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.annonceAdded.emit(result); // Émet l'annonce ajoutée
+        this.annonceAdded.emit(result);
       }
     });
   }
